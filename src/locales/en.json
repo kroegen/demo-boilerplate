@@ -1,0 +1,62 @@
+{
+  "views": {
+    "login": {
+      "modal": {
+        "title": "Find random user credentials",
+        "link": "You can use any user's credentials from this",
+        "please": "I made this process a little bit easier for you so please feel free to click the button. It will find one automatically."
+      }
+    }
+  },
+  "dialogs": {
+    "info": {
+      "title": "Hello dear guest or potential employer!",
+      "p1": "This is a small demo project made not only for curiosity purposes but as a quick presentation of my skills. I decided to create an open-source boilerplate project and gather the most common features a modern application can have. Those might not be the best and since I am open for any particular critique I will leave a link for github repository. The list of features is not full and I will be adding them step by step if I will have time.",
+      "p2": "I am a javascript engineer with about 9 years of experience in web development. I started my career as a HTML/CSS coder. We've been working on different landing pages for WordPress sites. I learned how to write styles with the SASS preprocessor but I started to hate WordPress instead. After a year of work I decided to quit so I could have more time to learn programming. Since I already know how to write styles I decided to move further and learn JavaScript with some modern tools.",
+      "p3": "I learned React, Node.js and Express in a half a year and got a full-stack position in the company named WabbyLab. This company became my home for the next few years. I learned how to write proper code and how to follow the guidelines. I learned how to build an API for my UI, how to design complex UI interfaces and even how to deploy your dist on some remote server. I used React to build basically everything. We've been working on web applications, desktop applications and even mobile applications. Yeah! React Native was so fun I even had to turn my asus ux305fa ultrabook into a hackintosh for being able to build iOS applications.",
+      "p4": "But the story didn't end. Later my company sold me as an outstaff worker in another company where I found out about Vue.js. I have about 5 years of experience using Vue.js now. I have fallen in love since the first day of using this tool. Last 2 years I've been working in a decent team on a project related to concrete scanning. My responsibility was implementing new modules and supporting(refactoring) the old ones. Even though that was my first production experience with TypeScript the whole project was nothing like those I worked before because of the previous developer’s decision to use tools like vuex-module-decorators and vue-property-decorator. The good thing was that I finally had a chance to try three.js. Last year I've been working basically on the same app but with Vue 3, TypeScript and Electron for the scanner's tablet this time.",
+      "p5": "After the project was done and I was finally free I decided to create a demo project for the demo purposes to present my skills and tools I enjoy to use. So here we go! This is a Vue 3 app with TypeScript. I didn't use any library components. I didn't write my own API and I decided to choose dummyJSON instead https://dummyjson.com/ since I found this tool very handy for a starting point. Especially if you are not an experienced developer this tool can be a really good way to practice the usage of different APIs. I know that today the new trend is to use Tailwind for writing styles. But I still think there is nothing better than an SCSS preprocessor used with BEM methodology. "
+    }
+  },
+  "modals": {
+    "confirm": {
+      "action": "Confirm your action",
+      "text": "Are you realy sure you want to confirm the action?"
+    }
+  },
+  "sidebar": {
+    "logout": "Logout",
+    "dashboard": "Dashboard",
+    "products": "Products",
+    "users": "Users"
+  },
+  "actions": {
+    "skip": "Skip",
+    "next": "Next",
+    "start": "Start",
+    "login": "Login",
+    "copy": "Copy",
+    "close": "Close",
+    "confirm": "Confirm",
+    "decline": "Decline",
+    "findRandom": "Find random credentials"
+  },
+  "labels": {
+    "username": "Username",
+    "password": "Password"
+  },
+  "placeholders": {
+    "username": "Enter your username",
+    "password": "Enter the password"
+  },
+  "notifications": {
+    "login": {
+      "copy": "Copied to clipboard",
+      "success": "You have successfully logged in to the system"
+    },
+    "user": {
+      "successRemove": "The user has been successfully removed",
+      "errorRemove": "Something went wrong"
+    }
+  }
+}
