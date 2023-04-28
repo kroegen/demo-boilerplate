@@ -53,6 +53,7 @@
 import { computed, onMounted, reactive } from "vue";
 import { usersStore } from "@/stores/users";
 import type { UserCreds } from "@/api/services/interfaces";
+import { unsecuredCopyToClipboard } from "@/utils/helpers";
 
 const emit = defineEmits(["close", "copy"]);
 
@@ -74,7 +75,12 @@ function handleFindCreds() {
 }
 
 function handleCopyValue(target: string) {
-  navigator.clipboard.writeText(target);
+  if (window.isSecureContext && navigator.clipboard) {
+    navigator.clipboard.writeText(target);
+  } else {
+    unsecuredCopyToClipboard(target);
+  }
+
   emit("copy");
 }
 </script>
