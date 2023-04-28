@@ -57,6 +57,7 @@ pm2 start pm2.json
 
 # TODO list of improvements and possible features
 
+- [ ] Not found route and page(404)
 - [ ] Table component, header config for table as a prop, list items in single slot
 - [ ] Categories page -> Products by category > Product page
 - [ ] Comments, posts

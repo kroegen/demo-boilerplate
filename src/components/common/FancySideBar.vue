@@ -14,9 +14,17 @@
           class="f-sidebar__menu-icon"
           :src="menuItem.icon"
         />
-        <router-link :to="{ name: menuItem.name }">
+        <router-link v-if="!menuItem.link" :to="{ name: menuItem.name }">
           {{ menuItem.label }}
         </router-link>
+        <a
+          v-else
+          :href="menuItem.link"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          {{ menuItem.label }}
+        </a>
       </li>
     </ul>
   </nav>
@@ -32,6 +40,7 @@ export interface MenuItem {
   icon?: string;
   label: string;
   name?: RouteRecordName;
+  link?: string;
 }
 
 const props = withDefaults(

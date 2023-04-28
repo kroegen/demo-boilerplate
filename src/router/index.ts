@@ -60,7 +60,7 @@ const router = createRouter({
   ],
 });
 
-router.beforeEach((to, from) => {
+router.beforeEach((to) => {
   const auth = authStore();
 
   if (to.name === "logout") {

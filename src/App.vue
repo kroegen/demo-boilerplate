@@ -24,6 +24,8 @@ import DashboardIcon from "@/assets/icons/dashboard-line.svg";
 import ProductsIcon from "@/assets/icons/store-line.svg";
 import UsersIcon from "@/assets/icons/group-line.svg";
 import LogoutIcon from "@/assets/icons/logout-line.svg";
+import GithubIcon from "@/assets/icons/github-fill.svg";
+
 import { useI18n } from "vue-i18n";
 
 const icons = {
@@ -31,6 +33,7 @@ const icons = {
   products: ProductsIcon,
   users: UsersIcon,
   logout: LogoutIcon,
+  github: GithubIcon,
 };
 
 const { t } = useI18n();
@@ -53,13 +56,19 @@ const menuItems = computed(() => {
     // },
     {
       icon: icons.products,
-      label: "Products",
+      label: t("sidebar.products"),
       name: "products",
     },
     {
       icon: icons.users,
-      label: "Users",
+      label: t("sidebar.users"),
       name: "users",
+    },
+    {
+      icon: icons.github,
+      label: t("sidebar.github"),
+      name: "github",
+      link: "https://github.com/kroegen/demo-boilerplate",
     },
   ];
 });

@@ -28,7 +28,8 @@
     "logout": "Logout",
     "dashboard": "Dashboard",
     "products": "Products",
-    "users": "Users"
+    "users": "Users",
+    "github": "GitHub"
   },
   "actions": {
     "skip": "Skip",
