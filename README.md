@@ -57,6 +57,7 @@ pm2 start pm2.json
 
 # TODO list of improvements and possible features
 
+- [ ] Checkbox component, progress page with chart
 - [ ] Add fancy login page with some cool animation so people would likely choose to stay
 - [ ] Not found route and page(404)
 - [ ] Table component, header config for table as a prop, list items in single slot
