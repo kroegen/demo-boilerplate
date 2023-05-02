@@ -66,7 +66,7 @@ pm2 start pm2.json
 - [ ] Listing search, pagination
 - [ ] Login with google account?
 - [ ] Initial mobile and tablet support (responsive styles)
-- [ ] Github actions to automate the deploy
+- [x] Github actions to automate the deploy
 - [ ] Storybook for common components
 - [ ] Initial unit tests setup
 - [ ] Initial E2E tests setup
