@@ -49,11 +49,11 @@ const menuItems = computed(() => {
       label: t("sidebar.logout"),
       name: "logout",
     },
-    // {
-    //   icon: icons.dashboard,
-    //   label: "Dashboard",
-    //   name: "dashboard",
-    // },
+    {
+      icon: icons.dashboard,
+      label: "Dashboard",
+      name: "dashboard",
+    },
     {
       icon: icons.products,
       label: t("sidebar.products"),
