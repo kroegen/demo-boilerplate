@@ -55,7 +55,7 @@ pm2 start pm2.json
 - [x] Data flow through Pinia store on Users page
 - [x] All icons are from remix icon pack https://remixicon.com/
 
-# TODO list of improvements and possible features
+## TODO list of improvements and possible features
 
 - [ ] Checkbox component, progress page with chart
 - [ ] Add fancy login page with some cool animation so people would likely choose to stay
