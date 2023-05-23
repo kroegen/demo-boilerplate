@@ -14,7 +14,11 @@
           class="f-sidebar__menu-icon"
           :src="menuItem.icon"
         />
-        <router-link v-if="!menuItem.link" :to="{ name: menuItem.name }">
+        <router-link
+          v-if="!menuItem.link"
+          :to="{ name: menuItem.name }"
+          class="f-sidebar__menu-label"
+        >
           {{ menuItem.label }}
         </router-link>
         <a
@@ -22,6 +26,7 @@
           :href="menuItem.link"
           target="_blank"
           rel="noopener noreferrer"
+          class="f-sidebar__menu-label"
         >
           {{ menuItem.label }}
         </a>
@@ -67,44 +72,70 @@ const activeName = computed(() => {
 }
 
 .f-sidebar {
+  $this: &;
+
   height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  cursor: pointer;
+  transition: width 900ms;
+  width: 60px;
+
+  &:hover {
+    width: var(--sidebar-width);
+
+    #{$this}__menu-label {
+      visibility: visible;
+    }
+  }
 
   &__menu {
     list-style: none;
-    margin-bottom: 85%;
-  }
-
-  &__menu-icon {
-    width: 24px;
-    height: 24px;
-    margin-right: 5px;
-    --icon-color: inherit;
+    padding: 0;
   }
 
   &__menu-item {
     display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+
     font-size: 0.875rem;
     font-weight: 600;
     color: var(--grey-color);
     fill: var(--grey-color);
     line-height: 3rem;
-    padding-left: 1rem;
-    transition: all 300ms;
-    align-items: center;
+    height: 3rem;
     width: 100%;
-    margin-top: 10px;
+    padding: 0 1rem;
+
+    &:not(:first-child) {
+      margin-top: 10px;
+    }
 
     &:hover,
     &--active {
       background: var(--blue-color);
       color: var(--beige-color);
       fill: var(--beige-color);
-      cursor: pointer;
       transform: scale(1.1);
+      transform-origin: center left;
     }
+  }
+
+  &__menu-icon {
+    display: inline-flex;
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+    --icon-color: inherit;
+  }
+
+  &__menu-label {
+    margin-left: 1rem;
+    visibility: hidden;
+    transition: visibility 400ms;
   }
 }
 </style>

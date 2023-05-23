@@ -69,17 +69,13 @@ main {
 }
 
 aside {
-  flex: 2;
   background: var(--beige-color);
-  display: flex;
-  flex-direction: column;
   z-index: 2;
-  max-width: 350px;
 }
 
 article {
-  flex: 8;
   background: var(--white-color);
   z-index: 1;
+  width: 100%;
 }
 </style>
