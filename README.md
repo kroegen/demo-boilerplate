@@ -63,7 +63,7 @@ pm2 start pm2.json
 - [ ] Table component, header config for table as a prop, list items in single slot
 - [ ] Categories page -> Products by category > Product page
 - [ ] Comments, posts
-- [ ] Auto-minimization of sidebar
+- [x] Auto-minimization of sidebar
 - [ ] Listing search, pagination
 - [ ] Login with google account?
 - [ ] Initial mobile and tablet support (responsive styles)
