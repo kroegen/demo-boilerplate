@@ -54,14 +54,18 @@ pm2 start pm2.json
 - [x] svg-icon component
 - [x] Data flow through Pinia store on Users page
 - [x] All icons are from remix icon pack https://remixicon.com/
+- [x] Two different layouts for admin and main for products
+- [x] Main store page with products
 
 ## TODO list of improvements and possible features
 
+
+- [ ] Product card improvements(rating, add to cart, add to favorites)
 - [ ] Checkbox component, progress page with chart
 - [ ] Add fancy login page with some cool animation so people would likely choose to stay
 - [ ] Not found route and page(404)
 - [ ] Table component, header config for table as a prop, list items in single slot
-- [ ] Categories page -> Products by category > Product page
+- [ ] Categories page, categories sidebar -> Products by category > Product page
 - [ ] Comments, posts
 - [x] Auto-minimization of sidebar
 - [ ] Listing search, pagination

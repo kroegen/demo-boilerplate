@@ -1,71 +1,122 @@
 <template>
-  <main class="layout">
-    <aside v-if="showSidebar">
-      <slot name="sidebar"></slot>
-    </aside>
-    <article>
-      <slot></slot>
-    </article>
+  <router-view v-slot="{ Component }">
+    <header class="header">
+      <f-container>
+        <div class="header__name">
+          <h2>{{ routeName }}</h2>
+        </div>
+        <div class="header__actions">
+          <svg-icon
+            v-if="icons.login"
+            class="header__login-icon"
+            :src="icons.login"
+            @click="handleLogin"
+          />
+        </div>
+      </f-container>
+    </header>
+    <main class="layout">
+      <f-container>
+        <aside v-if="showSidebar">
+          <slot name="sidebar"></slot>
+        </aside>
+        <article>
+          <transition name="fade" mode="out-in">
+            <keep-alive>
+              <component :is="Component" :key="routeName" />
+            </keep-alive>
+          </transition>
+        </article>
+      </f-container>
+    </main>
     <footer>
       <slot name="footer"></slot>
-      <transition name="slide">
-        <FancySnack
-          v-if="state.showSnack && state.snackConfig"
-          :snack="state.snackConfig"
-          @close="handleCloseSnack"
-        />
-      </transition>
     </footer>
-  </main>
+  </router-view>
 </template>
 
 <script setup lang="ts">
-import { computed, reactive } from "vue";
-import { useRoute } from "vue-router";
-import FancySnack, {
-  type SnackConfig,
-} from "@/components/common/FancySnack.vue";
+import { computed } from "vue";
+// import { useI18n } from "vue-i18n";
+import { useRoute, useRouter, RouterView } from "vue-router";
+import SvgIcon from "@/components/common/SvgIcon.vue";
 
-import { emitter } from "@/utils/emitter";
+import LoginIcon from "@/assets/icons/login-line.svg";
 
-emitter.on("showSnack", (config: SnackConfig) => {
-  handleShowSnack(config);
-});
+const icons = {
+  login: LoginIcon,
+};
 
-interface MainLayout {
-  showSnack: boolean;
-  snackConfig: SnackConfig | null;
-}
-
-const state: MainLayout = reactive({
-  showSnack: false,
-  snackConfig: null,
-});
+// const { t } = useI18n();
 const route = useRoute();
+const router = useRouter();
+
 const showSidebar = computed(() => {
   return route?.meta.showSidebar;
 });
 
-function handleShowSnack(config: SnackConfig) {
-  state.snackConfig = config;
-  state.showSnack = true;
-}
+const routeName = computed(() => {
+  return route?.name ? route.name : "";
+});
 
-function handleCloseSnack() {
-  state.snackConfig = null;
-  state.showSnack = false;
+function handleLogin() {
+  router.push({ name: "login" });
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+.header {
+  height: var(--header-height);
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  background: var(--black-color);
+
+  &__login-icon {
+    --icon-color: var(--beige-color);
+
+    display: inline-flex;
+    flex-shrink: 0;
+    width: 36px;
+    height: 36px;
+
+    &:hover {
+      --icon-color: var(--white-color);
+      cursor: pointer;
+    }
+
+    &:active {
+      transform: scale(1.1);
+    }
+  }
+
+  &__actions {
+    margin-left: auto;
+    padding: 0 20px;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  &__name {
+    color: var(--beige-color);
+    text-transform: capitalize;
+
+    &:hover {
+      color: var(--white-color);
+      transform: scale(1.05);
+      cursor: pointer;
+    }
+  }
+}
+
 main {
   display: flex;
   width: 100%;
-  height: 100%;
+  height: calc(100% - var(--header-height));
   flex-direction: row;
-  justify-content: space-between;
-  align-items: stretch;
-  position: relative;
+  justify-content: center;
 }
 
 aside {
