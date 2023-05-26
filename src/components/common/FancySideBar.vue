@@ -87,6 +87,7 @@ const activeName = computed(() => {
 
     #{$this}__menu-label {
       visibility: visible;
+      opacity: 1;
     }
   }
 
@@ -109,6 +110,7 @@ const activeName = computed(() => {
     height: 3rem;
     width: 100%;
     padding: 0 1rem;
+    border-radius: 0 5px 5px 0;
 
     &:not(:first-child) {
       margin-top: 10px;
@@ -119,7 +121,7 @@ const activeName = computed(() => {
       background: var(--blue-color);
       color: var(--beige-color);
       fill: var(--beige-color);
-      transform: scale(1.1);
+      transform: scale(1.05);
       transform-origin: center left;
     }
   }
@@ -135,7 +137,8 @@ const activeName = computed(() => {
   &__menu-label {
     margin-left: 1rem;
     visibility: hidden;
-    transition: visibility 400ms;
+    opacity: 0;
+    transition: opacity, visibility 700ms;
   }
 }
 </style>

@@ -15,6 +15,7 @@ import FancyCard from "@/components/common/FancyCard.vue";
 import FancyModal from "@/components/common/FancyModal.vue";
 import FancyDialog from "@/components/common/FancyDialog.vue";
 import FancyButton from "@/components/common/FancyButton.vue";
+import FancyContainer from "@/components/common/FancyContainer.vue";
 
 const i18n = createI18n({
   locale: "en",
@@ -35,5 +36,6 @@ app.component("f-card", FancyCard);
 app.component("f-modal", FancyModal);
 app.component("f-dialog", FancyDialog);
 app.component("f-button", FancyButton);
+app.component("f-container", FancyContainer);
 
 app.mount("body");
