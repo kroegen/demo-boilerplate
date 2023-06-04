@@ -1,5 +1,5 @@
 <template>
-  <fancy-dialog
+  <f-dialog
     v-if="isOppened"
     :opened="isOppened"
     closable
@@ -29,7 +29,7 @@
       </div>
     </transition>
     <template #actions-right>
-      <fancy-button
+      <f-button
         v-for="(action, index) in currentStepActions"
         :key="index"
         :variant="action.variant"
@@ -38,17 +38,14 @@
         style="margin-left: 20px"
       >
         {{ action.label }}
-      </fancy-button>
+      </f-button>
     </template>
-  </fancy-dialog>
+  </f-dialog>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import FancyButton, {
-  type ButtonVariant,
-} from "@/components/common/FancyButton.vue";
-import FancyDialog from "@/components/common/FancyDialog.vue";
+import type { ButtonVariant } from "@/components/common/FancyButton.vue";
 
 interface Action {
   label: string;
@@ -63,10 +60,6 @@ interface Step {
 }
 
 export default defineComponent({
-  components: {
-    FancyButton,
-    FancyDialog,
-  },
   props: {
     opened: Boolean,
   },

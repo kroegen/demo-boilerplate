@@ -40,7 +40,8 @@
     "close": "Close",
     "confirm": "Confirm",
     "decline": "Decline",
-    "findRandom": "Find random credentials"
+    "findRandom": "Find random credentials",
+    "addToCart": "Add to Cart"
   },
   "labels": {
     "username": "Username",

@@ -78,6 +78,9 @@ export default defineComponent({
 
   &__icon {
     width: var(--button-icon-width);
+    height: var(--button-icon-width);
+    fill: var(--text-color);
+    margin: 0 10px;
   }
 
   &:hover,

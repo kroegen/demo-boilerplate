@@ -50,7 +50,6 @@ const userName = computed(() => {
 function handleRemoveUser() {
   emit("remove", user.value.id);
 }
-
 </script>
 
 <style lang="scss" scoped>
