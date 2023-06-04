@@ -6,8 +6,27 @@
           <h2>{{ routeName }}</h2>
         </div>
         <div class="header__actions">
+          <a
+            href="https://github.com/kroegen/demo-boilerplate"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="header__github-icon"
+          >
+            <svg-icon :src="icons.github" />
+          </a>
+          <div class="header__heart-icon" @click="handleOpenFavorites">
+            <span class="header__heart-icon-counter">{{
+              favoritesStore.counter
+            }}</span>
+            <svg-icon :src="icons.filled" />
+          </div>
+          <div class="header__cart-icon" @click="handleOpenCart">
+            <span class="header__cart-icon-counter">{{
+              cartsStore.counter
+            }}</span>
+            <svg-icon :src="icons.cart" />
+          </div>
           <svg-icon
-            v-if="icons.login"
             class="header__login-icon"
             :src="icons.login"
             @click="handleLogin"
@@ -37,17 +56,26 @@
 
 <script setup lang="ts">
 import { computed } from "vue";
-// import { useI18n } from "vue-i18n";
 import { useRoute, useRouter, RouterView } from "vue-router";
 import SvgIcon from "@/components/common/SvgIcon.vue";
 
 import LoginIcon from "@/assets/icons/login-line.svg";
+import GithubIcon from "@/assets/icons/github-fill.svg";
+import CartIcon from "@/assets/icons/cart-fill.svg";
+import FilledIcon from "@/assets/icons/heart-fill.svg";
+
+import { CartsStore } from "@/stores/cart";
+import { FavoritesStore } from "@/stores/favorites";
 
 const icons = {
   login: LoginIcon,
+  github: GithubIcon,
+  cart: CartIcon,
+  filled: FilledIcon,
 };
+const cartsStore = CartsStore();
+const favoritesStore = FavoritesStore();
 
-// const { t } = useI18n();
 const route = useRoute();
 const router = useRouter();
 
@@ -62,6 +90,10 @@ const routeName = computed(() => {
 function handleLogin() {
   router.push({ name: "login" });
 }
+
+function handleOpenCart() {}
+
+function handleOpenFavorites() {}
 </script>
 
 <style lang="scss" scoped>
@@ -74,13 +106,18 @@ function handleLogin() {
   width: 100%;
   background: var(--black-color);
 
-  &__login-icon {
+  &__heart-icon,
+  &__login-icon,
+  &__github-icon,
+  &__cart-icon {
     --icon-color: var(--beige-color);
 
     display: inline-flex;
     flex-shrink: 0;
     width: 36px;
     height: 36px;
+    margin-left: 20px;
+    position: relative;
 
     &:hover {
       --icon-color: var(--white-color);
@@ -90,6 +127,24 @@ function handleLogin() {
     &:active {
       transform: scale(1.1);
     }
+  }
+
+  &__cart-icon-counter,
+  &__heart-icon-counter {
+    position: absolute;
+    padding: 5px;
+    color: var(--white-color);
+    background: var(--blue-color);
+    border-radius: 50%;
+    z-index: 2;
+    height: 20px;
+    width: 20px;
+    font-size: 0.75rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: -5px;
+    right: -10px;
   }
 
   &__actions {

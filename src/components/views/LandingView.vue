@@ -1,29 +1,28 @@
 <template>
   <section>
-    <ul>
+    <Loader v-if="loading" />
+    <transition-group name="list" tag="ul" v-else>
       <ProductCard
         v-for="product in products"
         :key="product.id"
         :product="product"
       />
-    </ul>
+    </transition-group>
   </section>
 </template>
 
 <script lang="ts" setup>
 import { onMounted, ref, type Ref } from "vue";
-import { useRouteData } from "@/composables/useRouteData";
 import type { Product } from "@/api/services/interfaces";
+
+import Loader from "@/components/common/SpinnerLoader.vue";
 import ProductCard from "./LandingView/ProductCard.vue";
 
 import api from "@/api";
 
-const { meta } = useRouteData();
-// const title = computed(() => {
-//   return meta?.value?.title ?? "";
-// });
 const loading = ref(true);
 const products: Ref<Product[]> = ref([]);
+
 onMounted(async () => {
   loading.value = true;
 
@@ -48,5 +47,6 @@ ul {
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
+  padding-top: 50px;
 }
 </style>

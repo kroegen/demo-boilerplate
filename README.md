@@ -55,12 +55,15 @@ pm2 start pm2.json
 - [x] Data flow through Pinia store on Users page
 - [x] All icons are from remix icon pack https://remixicon.com/
 - [x] Two different layouts for admin and main for products
-- [x] Main store page with products
 
 ## TODO list of improvements and possible features
 
-
-- [ ] Product card improvements(rating, add to cart, add to favorites)
+- [ ] Filters for products
+- [ ] Product page
+- [ ] Breadcrumbs for product categories
+- [ ] Image slider on product page
+- [ ] Cart, save, edit, remove products
+- [x] Product card improvements(rating, add to cart, add to favorites)
 - [ ] Checkbox component, progress page with chart
 - [ ] Add fancy login page with some cool animation so people would likely choose to stay
 - [ ] Not found route and page(404)
@@ -81,3 +84,4 @@ pm2 start pm2.json
 - [ ] Edit user info on user's page
 - [ ] Cover all buiseness logic on all pages with E2E tests
 - [ ] 80% code coverege
+- [ ] Localization, currency converter
