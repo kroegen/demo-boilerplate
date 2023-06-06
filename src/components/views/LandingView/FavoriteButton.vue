@@ -31,6 +31,7 @@ const icons = {
   add: AddIcon,
 };
 
+const emit = defineEmits(["add", "remove"]);
 const props = defineProps<{
   productId: number;
 }>();
@@ -43,8 +44,10 @@ const isSelected = computed(() => {
 function toggleSelection() {
   if (!isSelected.value) {
     store.addProductIdToFavoritesIds(props.productId);
+    emit("add");
   } else {
     store.removeProductIdFromFavoritesIds(props.productId);
+    emit("remove");
   }
 }
 </script>

@@ -2,13 +2,13 @@
   <div class="sidebar">
     <ul v-if="categories.length" class="sidebar__list">
       <li
-        v-for="catergory in categories"
-        :key="catergory"
+        v-for="category in categories"
+        :key="category"
         class="sidebar__list-item"
-        :class="{ 'sidebar__list-item--active': currentCategory === catergory }"
-        @click="moveToCategory(catergory)"
+        :class="{ 'sidebar__list-item--active': currentCategory === category }"
+        @click="moveToCategory(category)"
       >
-        {{ catergory }}
+        {{ category }}
       </li>
     </ul>
   </div>
@@ -28,21 +28,26 @@ const currentCategory = ref("");
 
 watch(
   () => route.params.category,
-  async (newValue, oldValue) => {
-    if (oldValue !== newValue) {
+  (newValue, oldValue) => {
+    if (newValue !== oldValue) {
       currentCategory.value = newValue as string;
     }
-  }
+  },
+  { deep: true }
 );
 
 onMounted(async () => {
   loading.value = true;
 
   try {
-    const response = await productsStore.fetchProductsCatgories();
+    const response = await productsStore.fetchProductsCategories();
+    const category = route.params.category;
 
     if (response) {
       categories.value = [...response];
+    }
+    if (category) {
+      currentCategory.value = category as string;
     }
   } catch (error) {
     console.error(error);
