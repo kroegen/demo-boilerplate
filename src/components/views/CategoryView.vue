@@ -12,23 +12,39 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, ref, type Ref } from "vue";
+import { onMounted, ref, watch, type Ref } from "vue";
 import type { Product } from "@/api/services/interfaces";
 
 import Loader from "@/components/common/SpinnerLoader.vue";
 import ProductCard from "./LandingView/ProductCard.vue";
 
 import { ProductsStore } from "@/stores/products";
+import { useRoute } from "vue-router";
 
 const productsStore = ProductsStore();
 const loading = ref(true);
 const products: Ref<Product[]> = ref([]);
+const route = useRoute();
 
 onMounted(async () => {
+  await fetchProducts();
+});
+
+watch(
+  () => route.params.category,
+  async (newValue, oldValue) => {
+    if (oldValue !== newValue) {
+      await fetchProducts();
+    }
+  }
+);
+
+async function fetchProducts() {
   loading.value = true;
 
   try {
-    const response = await productsStore.fetchProducts();
+    const category = route.params.category as string;
+    const response = await productsStore.fetchProductsByCategory(category);
 
     if (response) {
       products.value = [...response];
@@ -38,7 +54,7 @@ onMounted(async () => {
   } finally {
     loading.value = false;
   }
-});
+}
 </script>
 
 <style lang="scss" scoped>

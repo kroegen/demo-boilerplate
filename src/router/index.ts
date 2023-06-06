@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Landing from "@/components/views/LandingView.vue";
+import Category from "@/components/views/CategoryView.vue";
 import Products from "@/components/views/ProductsView.vue";
 import Users from "@/components/views/UsersView.vue";
 import Login from "@/components/views/LoginView.vue";
@@ -19,12 +20,22 @@ const router = createRouter({
         {
           path: "/",
           name: "landing",
-          meta: {
-            title: "Store",
-            showSidebar: false,
-            requiresAuth: false,
-          },
+          // meta: {
+          //   title: "Store",
+          //   showSidebar: false,
+          //   requiresAuth: false,
+          // },
           component: Landing,
+        },
+        {
+          path: "/:category",
+          name: "category",
+          // meta: {
+          //   title: "Store",
+          //   showSidebar: false,
+          //   requiresAuth: false,
+          // },
+          component: Category,
         },
       ],
     },
