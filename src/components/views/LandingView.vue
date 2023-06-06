@@ -12,23 +12,47 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, ref, type Ref } from "vue";
+import { onMounted, ref, watch, type Ref } from "vue";
 import type { Product } from "@/api/services/interfaces";
 
 import Loader from "@/components/common/SpinnerLoader.vue";
 import ProductCard from "./LandingView/ProductCard.vue";
 
 import { ProductsStore } from "@/stores/products";
+import { useRoute } from "vue-router";
 
 const productsStore = ProductsStore();
 const loading = ref(true);
 const products: Ref<Product[]> = ref([]);
+const route = useRoute();
+
+watch(
+  () => route.params.category,
+  async (newValue, oldValue) => {
+    if (oldValue !== newValue && newValue) {
+      await fetchProducts(true);
+    } else if (!newValue) {
+      await fetchProducts();
+    }
+  }
+);
 
 onMounted(async () => {
+  if (route.params.category) {
+    await fetchProducts(true);
+  } else {
+    await fetchProducts();
+  }
+});
+
+async function fetchProducts(forCategory = false) {
   loading.value = true;
 
   try {
-    const response = await productsStore.fetchProducts();
+    const category = route.params.category as string;
+    const response = forCategory
+      ? await productsStore.fetchProductsByCategory(category)
+      : await productsStore.fetchProducts();
 
     if (response) {
       products.value = [...response];
@@ -38,7 +62,7 @@ onMounted(async () => {
   } finally {
     loading.value = false;
   }
-});
+}
 </script>
 
 <style lang="scss" scoped>

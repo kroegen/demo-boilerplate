@@ -10,7 +10,12 @@
           :src="productThumbnail.toString()"
           alt="thumbnail"
         />
-        <FavoriteButton :productId="product.id" class="product__favorite" />
+        <FavoriteButton
+          :productId="product.id"
+          class="product__favorite"
+          @remove="handleRemoveFavorite"
+          @add="handleAddFavorite"
+        />
       </div>
       <div class="product__body">
         <div class="product__prices">
@@ -21,7 +26,7 @@
         </div>
         <RatingStars class="product__rating-stars" :rating="product.rating" />
         <span class="product__title">
-          {{ product.title }}
+          {{ title }}
         </span>
       </div>
       <div class="product__actions">
@@ -38,9 +43,16 @@
 
 <script lang="ts" setup>
 import { computed } from "vue";
+import { useI18n } from "vue-i18n";
+
 import type { Product } from "@/api/services/interfaces";
 import { CartsStore } from "@/stores/cart";
+import { emitter } from "@/utils/emitter";
 
+import {
+  type SnackConfig,
+  SnackType,
+} from "@/components/common/FancySnack.vue";
 import FavoriteButton from "./FavoriteButton.vue";
 import RatingStars from "./RatingStars.vue";
 import SvgIcon from "@/components/common/SvgIcon.vue";
@@ -50,6 +62,7 @@ const icons = {
   cart: CartIcon,
 };
 const store = CartsStore();
+const { t } = useI18n();
 
 const props = defineProps<{
   product: Product;
@@ -57,6 +70,9 @@ const props = defineProps<{
 
 const product = computed(() => {
   return props.product;
+});
+const title = computed(() => {
+  return props.product.title;
 });
 const price = computed(() => {
   const discount =
@@ -70,6 +86,47 @@ const productThumbnail = computed(() => {
 
 function handleAddToCart(product: Product) {
   store.addProductToCart(product);
+  handleShowSuccessMessage();
+}
+
+function handleShowSuccessMessage() {
+  const message = t("notifications.product.cartAdded", { item: title.value });
+  const snackConfig: SnackConfig = {
+    text: message,
+    type: SnackType.success,
+    icon: true,
+    closable: true,
+  };
+
+  emitter.emit("showSnack", snackConfig);
+}
+
+function handleAddFavorite() {
+  const message = t("notifications.product.favoritesAdded", {
+    item: title.value,
+  });
+  const snackConfig: SnackConfig = {
+    text: message,
+    type: SnackType.info,
+    icon: true,
+    closable: true,
+  };
+
+  emitter.emit("showSnack", snackConfig);
+}
+
+function handleRemoveFavorite() {
+  const message = t("notifications.product.favoritesRemoved", {
+    item: title.value,
+  });
+  const snackConfig: SnackConfig = {
+    text: message,
+    type: SnackType.info,
+    icon: true,
+    closable: true,
+  };
+
+  emitter.emit("showSnack", snackConfig);
 }
 </script>
 

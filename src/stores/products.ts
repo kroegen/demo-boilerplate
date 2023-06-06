@@ -25,7 +25,7 @@ export const ProductsStore = defineStore("ProductsStore", {
         return this.products;
       }
     },
-    async fetchProductsCatgories() {
+    async fetchProductsCategories() {
       const response = await api.products.fetchProductsCategories();
 
       if (response.length) {
