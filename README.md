@@ -1,6 +1,6 @@
 # test-project
 
-This is a demo vue3 + ts boilerplate project made to cover the dummyJSON api with UI
+This is a demo vue3 + ts boilerplate project made to cover the dummyJSON api with UI ([Link to Demo](https://d38gr50hwwazmm.cloudfront.net/))
 
 ## Project Setup
 
@@ -58,23 +58,23 @@ pm2 start pm2.json
 
 ## TODO list of improvements and possible features
 
-- [ ] Filters for products
+- [x] Github actions to automate the deploy
+- [x] Product card improvements(rating, add to cart, add to favorites)
+- [x] Filters for products
+- [x] Auto-minimization of sidebar
 - [ ] Product page
 - [ ] Breadcrumbs for product categories
+- [ ] Categories page, categories sidebar -> Products by category > Product page
 - [ ] Image slider on product page
 - [ ] Cart, save, edit, remove products
-- [x] Product card improvements(rating, add to cart, add to favorites)
 - [ ] Checkbox component, progress page with chart
 - [ ] Add fancy login page with some cool animation so people would likely choose to stay
 - [ ] Not found route and page(404)
 - [ ] Table component, header config for table as a prop, list items in single slot
-- [ ] Categories page, categories sidebar -> Products by category > Product page
 - [ ] Comments, posts
-- [x] Auto-minimization of sidebar
 - [ ] Listing search, pagination
 - [ ] Login with google account?
 - [ ] Initial mobile and tablet support (responsive styles)
-- [x] Github actions to automate the deploy
 - [ ] Storybook for common components
 - [ ] Initial unit tests setup
 - [ ] Initial E2E tests setup
