@@ -19,6 +19,7 @@ import { ProductsStore } from "@/stores/products";
 import { onMounted, ref, watch, type Ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 
+const emit = defineEmits(["click-sidebar"]);
 const categories: Ref<string[]> = ref([]);
 const loading = ref(true);
 const router = useRouter();
@@ -58,6 +59,7 @@ onMounted(async () => {
 
 function moveToCategory(category: string) {
   router.push({ name: "category", params: { category } });
+  emit("click-sidebar");
 }
 </script>
 
