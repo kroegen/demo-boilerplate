@@ -1,10 +1,17 @@
 <template>
   <div class="header">
     <f-container>
-      <div class="header__name" @click="handleHome">
-        <h2>{{ routeName }}</h2>
+      <div class="header__actions-left">
+        <svg-icon
+          class="header__menu-icon"
+          :src="icons.menu"
+          @click="handleOpenMenu"
+        />
       </div>
-      <div class="header__actions">
+      <div class="header__name" @click="handleHome">
+        <h2>{{ routeCategory }}</h2>
+      </div>
+      <div class="header__actions-right">
         <a
           href="https://github.com/kroegen/demo-boilerplate"
           target="_blank"
@@ -43,6 +50,7 @@ import LoginIcon from "@/assets/icons/login-line.svg";
 import GithubIcon from "@/assets/icons/github-fill.svg";
 import CartIcon from "@/assets/icons/cart-fill.svg";
 import FilledIcon from "@/assets/icons/heart-fill.svg";
+import MenuIcon from "@/assets/icons/menu-line.svg";
 
 import { CartsStore } from "@/stores/cart";
 import { FavoritesStore } from "@/stores/favorites";
@@ -53,11 +61,13 @@ const icons = {
   github: GithubIcon,
   cart: CartIcon,
   filled: FilledIcon,
+  menu: MenuIcon,
 };
 const route = useRoute();
+const emit = defineEmits(["click-menu"]);
 
-const routeName = computed(() => {
-  return route?.name ? route.name : "";
+const routeCategory = computed(() => {
+  return route.params.category;
 });
 const router = useRouter();
 const cartsStore = CartsStore();
@@ -74,6 +84,10 @@ function handleHome() {
 function handleOpenCart() {}
 
 function handleOpenFavorites() {}
+
+function handleOpenMenu() {
+  emit("click-menu");
+}
 </script>
 
 <style lang="scss" scoped>
@@ -89,14 +103,14 @@ function handleOpenFavorites() {}
   &__heart-icon,
   &__login-icon,
   &__github-icon,
-  &__cart-icon {
+  &__cart-icon,
+  &__menu-icon {
     --icon-color: var(--beige-color);
 
     display: inline-flex;
     flex-shrink: 0;
     width: 36px;
     height: 36px;
-    margin-left: 20px;
     position: relative;
 
     &:hover {
@@ -107,6 +121,13 @@ function handleOpenFavorites() {}
     &:active {
       transform: scale(1.1);
     }
+  }
+
+  &__heart-icon,
+  &__login-icon,
+  &__github-icon,
+  &__cart-icon {
+    margin-left: 20px;
   }
 
   &__cart-icon-counter,
@@ -127,11 +148,20 @@ function handleOpenFavorites() {}
     right: -10px;
   }
 
-  &__actions {
-    margin-left: auto;
+  &__actions-right,
+  &__actions-left {
     padding: 0 20px;
-    display: inline-flex;
     align-items: center;
+  }
+
+  &__actions-right {
+    margin-left: auto;
+    display: inline-flex;
+  }
+
+  &__actions-left {
+    margin-right: auto;
+    display: none;
   }
 
   &__name {
@@ -142,6 +172,32 @@ function handleOpenFavorites() {}
       color: var(--white-color);
       transform: scale(1.05);
       cursor: pointer;
+    }
+  }
+}
+
+@media screen and (max-width: 992px) {
+  .header {
+    &__actions-left {
+      display: inline-flex;
+    }
+
+    &__name {
+      display: inline-flex;
+      align-items: center;
+    }
+
+    &__name h2 {
+      font-size: 1.25rem;
+    }
+
+    &__heart-icon,
+    &__login-icon,
+    &__github-icon,
+    &__cart-icon,
+    &__menu-icon {
+      width: 28px;
+      height: 28px;
     }
   }
 }

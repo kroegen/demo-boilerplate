@@ -82,7 +82,7 @@ const routeName = computed(() => {
 });
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 main {
   display: flex;
   width: 100%;
