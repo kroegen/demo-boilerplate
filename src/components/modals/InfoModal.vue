@@ -6,7 +6,7 @@
     <div class="info-modal__content">
       <p>
         <span>{{ $t("views.login.modal.link") }} </span>
-        <a href="dummyjson.com/users"> link</a>.<br />
+        <a :href="USERS_URL"> link</a>.<br />
         <span>{{ $t("views.login.modal.please") }}</span>
       </p>
       <ul class="info-modal__list">
@@ -55,6 +55,7 @@ import { usersStore } from "@/stores/users";
 import type { UserCreds } from "@/api/services/interfaces";
 import { unsecuredCopyToClipboard } from "@/utils/helpers";
 
+const USERS_URL = "https://dummyjson.com/users";
 const emit = defineEmits(["close", "copy"]);
 
 const initialState: UserCreds = { username: "", password: "" };
