@@ -3,6 +3,7 @@ import Landing from "@/components/views/LandingView.vue";
 import Products from "@/components/views/ProductsView.vue";
 import Users from "@/components/views/UsersView.vue";
 import Login from "@/components/views/LoginView.vue";
+import NotFound from "@/components/views/NotFoundView.vue";
 
 import { authStore } from "@/stores/auth";
 import AdminLayout from "@/components/layouts/AdminLayout.vue";
@@ -17,12 +18,17 @@ const router = createRouter({
       component: MainLayout,
       children: [
         {
+          path: "/:pathMatch(.*)*",
+          name: "not-found",
+          component: NotFound,
+        },
+        {
           path: "/",
           name: "landing",
           component: Landing,
         },
         {
-          path: "/:category",
+          path: "/category/:category",
           name: "category",
           component: Landing,
         },
@@ -33,6 +39,15 @@ const router = createRouter({
       name: "admin",
       component: AdminLayout,
       children: [
+        {
+          path: "/admin/:pathMatch(.*)*",
+          name: "not-found",
+          component: NotFound,
+          meta: {
+            showSidebar: true,
+            requiresAuth: false,
+          },
+        },
         {
           path: "/admin/products",
           name: "products",
