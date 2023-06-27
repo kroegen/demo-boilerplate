@@ -6,6 +6,10 @@
         "link": "You can use any user's credentials from this",
         "please": "I made this process a little bit easier for you so please feel free to click the button. It will find one automatically."
       }
+    },
+    "notFound": {
+      "title": "Page not found",
+      "message": "Page not found, it looks like you are on a wrong page"
     }
   },
   "dialogs": {
@@ -41,7 +45,8 @@
     "confirm": "Confirm",
     "decline": "Decline",
     "findRandom": "Find random credentials",
-    "addToCart": "Add to Cart"
+    "addToCart": "Add to Cart",
+    "goToMain": "Go to main page"
   },
   "labels": {
     "username": "Username",
