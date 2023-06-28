@@ -9,7 +9,7 @@
         />
       </div>
       <div class="header__name" @click="handleHome">
-        <h2>{{ routeCategory }}</h2>
+        <h2>{{ routeCategory || routeName }}</h2>
       </div>
       <div class="header__actions-right">
         <a
@@ -66,6 +66,9 @@ const icons = {
 const route = useRoute();
 const emit = defineEmits(["click-menu"]);
 
+const routeName = computed(() => {
+  return route?.name ? route.name : "";
+});
 const routeCategory = computed(() => {
   return route.params.category;
 });

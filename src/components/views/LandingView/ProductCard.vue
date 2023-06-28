@@ -1,5 +1,5 @@
 <template>
-  <li class="product">
+  <li draggable="true" class="product" @dragstart="handleDragstart">
     <div class="product__wrapper" :title="product.description">
       <div class="product__image-wrapper">
         <span class="product__discount">
@@ -66,6 +66,7 @@ const { t } = useI18n();
 
 const props = defineProps<{
   product: Product;
+  transferData: DataTransfer;
 }>();
 
 const product = computed(() => {
@@ -128,15 +129,28 @@ function handleRemoveFavorite() {
 
   emitter.emit("showSnack", snackConfig);
 }
+
+function handleDragstart(e: DragEvent) {
+  if (e.dataTransfer) {
+    e.dataTransfer.setData("value", JSON.stringify(props.transferData));
+  }
+}
 </script>
 
 <style lang="scss" scoped>
 .product {
   $this: &;
+  --bg-color: var(--white-color);
+
   position: relative;
   height: 349px;
   width: 240px;
 
+  &--active {
+    --bg-color: var(--beige-color);
+  }
+
+  &--active,
   &:hover {
     #{$this}__wrapper {
       position: absolute;
@@ -168,7 +182,7 @@ function handleRemoveFavorite() {
     overflow: hidden;
     height: 100%;
     width: 100%;
-    background: var(--white-color);
+    background: var(--bg-color);
     padding: 20px;
     z-index: 1;
     cursor: pointer;
