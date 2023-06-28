@@ -38,18 +38,18 @@ export function unsecuredCopyToClipboard(text: string) {
 export function findParentElementByClassName(
   el: Element | null,
   className: string
-) {
-  if (el) {
-    while (el.parentNode) {
-      if (el.classList.contains(className)) {
-        return el;
-      } else {
-        return findParentElementByClassName(el.parentElement, className);
-      }
-    }
+): Element | null {
+  if (!el) return null;
 
-    return null;
+  while (el.parentNode) {
+    if (el.classList.contains(className)) {
+      return el;
+    } else {
+      return findParentElementByClassName(el.parentElement, className);
+    }
   }
+
+  return null;
 }
 
 export function debounce(fn: Function, ms = 300) {
