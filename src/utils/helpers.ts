@@ -34,3 +34,30 @@ export function unsecuredCopyToClipboard(text: string) {
 
   document.body.removeChild(textArea);
 }
+
+export function findParentElementByClassName(
+  el: Element | null,
+  className: string
+) {
+  if (el) {
+    while (el.parentNode) {
+      if (el.classList.contains(className)) {
+        return el;
+      } else {
+        return findParentElementByClassName(el.parentElement, className);
+      }
+    }
+
+    return null;
+  }
+}
+
+export function debounce(fn: Function, ms = 300) {
+  let timeoutId: ReturnType<typeof setTimeout>;
+
+  return function (this: any, ...args: any[]) {
+    clearTimeout(timeoutId);
+
+    timeoutId = setTimeout(() => fn.apply(this, args), ms);
+  };
+}

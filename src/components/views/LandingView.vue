@@ -1,11 +1,16 @@
 <template>
-  <section>
+  <section
+    @dragover.prevent="handleDragover"
+    @dragleave.prevent="handleDragleave"
+    @drop.prevent="onDrop"
+  >
     <Loader v-if="loading" />
     <transition-group name="list" tag="ul" v-else>
       <ProductCard
-        v-for="product in products"
+        v-for="(product, index) in products"
         :key="product.id"
         :product="product"
+        :transferData="(({ ...product, index }) as unknown as DataTransfer)"
       />
     </transition-group>
   </section>
@@ -20,6 +25,7 @@ import ProductCard from "./LandingView/ProductCard.vue";
 
 import { ProductsStore } from "@/stores/products";
 import { useRoute } from "vue-router";
+import { findParentElementByClassName, debounce } from "@/utils/helpers";
 
 const productsStore = ProductsStore();
 const loading = ref(true);
@@ -61,6 +67,50 @@ async function fetchProducts(forCategory = false) {
     console.error(error);
   } finally {
     loading.value = false;
+  }
+}
+
+function handleDragover(e: DragEvent) {
+  debounce(onDragover(e) as unknown as Function, 600);
+}
+
+function handleDragleave() {
+  debounce(onDragleave() as unknown as Function, 200);
+}
+
+function onDragover(e: DragEvent) {
+  const target = findParentElementByClassName(e.target as Element, "product");
+
+  target?.classList.add("product--active");
+}
+
+function onDragleave() {
+  const activeNodes = document.querySelectorAll("li.product--active");
+
+  for (const activeNode of activeNodes) {
+    activeNode.classList.remove("product--active");
+  }
+}
+
+function onDrop(e: DragEvent) {
+  const product = e.dataTransfer && JSON.parse(e.dataTransfer.getData("value"));
+
+  if (product) {
+    const sourceIndex = product.index;
+    const target = findParentElementByClassName(e.target as Element, "product");
+    const targetIndex =
+      target && target.parentNode
+        ? [...target.parentNode.children].indexOf(target)
+        : null;
+
+    if (targetIndex !== null && targetIndex !== undefined && sourceIndex >= 0) {
+      [products.value[targetIndex], products.value[sourceIndex]] = [
+        products.value[sourceIndex],
+        products.value[targetIndex],
+      ];
+    }
+
+    target?.classList.remove("product--active");
   }
 }
 </script>

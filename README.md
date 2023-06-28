@@ -60,16 +60,16 @@ pm2 start pm2.json
 
 - [x] Github actions to automate the deploy
 - [x] Product card improvements(rating, add to cart, add to favorites)
-- [x] Filters for products
+- [x] Filters for products (Categories page, categories sidebar -> Products by category > Product page)
 - [x] Auto-minimization of sidebar
+- [x] Github actions to automate the deploy
+- [x] Not found route and page(404)
 - [ ] Product page
 - [ ] Breadcrumbs for product categories
-- [ ] Categories page, categories sidebar -> Products by category > Product page
 - [ ] Image slider on product page
 - [ ] Cart, save, edit, remove products
 - [ ] Checkbox component, progress page with chart
 - [ ] Add fancy login page with some cool animation so people would likely choose to stay
-- [ ] Not found route and page(404)
 - [ ] Table component, header config for table as a prop, list items in single slot
 - [ ] Comments, posts
 - [ ] Listing search, pagination
