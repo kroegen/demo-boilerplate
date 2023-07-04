@@ -64,6 +64,8 @@ function moveToCategory(category: string) {
 </script>
 
 <style lang="scss" scoped>
+@import "@/assets/styles/mixins.scss";
+
 .sidebar {
   width: 200px;
   padding-top: 50px;
@@ -71,6 +73,11 @@ function moveToCategory(category: string) {
   &__list {
     list-style: none;
     padding: 0px;
+    height: auto;
+
+    @include mobile {
+      width: 100%;
+    }
   }
 
   &__list-item {
@@ -80,7 +87,6 @@ function moveToCategory(category: string) {
     font-size: 0.875rem;
     color: var(--grey-color);
     border-left: 3px solid var(--border-color);
-    // border-right: 3px solid var(--border-color);
     transition: all 300ms;
 
     height: 30px;
@@ -97,6 +103,16 @@ function moveToCategory(category: string) {
       cursor: pointer;
       color: var(--blue-color);
     }
+
+    @include mobile {
+      font-size: 1.5rem;
+      border-right: 3px solid var(--border-color);
+    }
+  }
+
+  @include mobile {
+    width: 100%;
+    padding-top: 20px;
   }
 }
 </style>

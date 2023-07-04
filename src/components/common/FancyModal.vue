@@ -44,9 +44,12 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+@import "@/assets/styles/mixins.scss";
+
 .f-modal {
   --modal-height: auto;
   --modal-width: 560px;
+  --modal-border-radious: 20px;
 
   display: flex;
   flex-direction: column;
@@ -62,7 +65,7 @@ export default defineComponent({
     overflow: hidden;
     background: var(--beige-color);
     box-shadow: var(--shadow-xl);
-    border-radius: 20px;
+    border-radius: var(--modal-border-radious);
     width: var(--modal-width);
     height: var(--modal-height);
     white-space: break-spaces;
@@ -97,6 +100,14 @@ export default defineComponent({
     flex: 1;
     align-items: flex-end;
     padding: 0 40px 40px 40px;
+  }
+
+  @include mobile {
+    --modal-width: auto;
+    --modal-height: 100dvh;
+    --modal-border-radious: 0px;
+
+    justify-content: flex-start;
   }
 }
 </style>

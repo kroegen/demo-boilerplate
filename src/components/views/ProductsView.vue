@@ -2,7 +2,7 @@
   <f-view>
     <products-table>
       <Loader v-if="loading" />
-      <transition-group name="list" tag="div" v-else>
+      <transition-group name="list" v-else>
         <ProductsTableItem
           v-for="product in products"
           :key="product.id"

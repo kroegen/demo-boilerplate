@@ -8,7 +8,9 @@
     class="info"
   >
     <template #header>
-      <h3>{{ $t("dialogs.info.title") }}</h3>
+      <h3 class="info__title">
+        {{ $t("dialogs.info.title") }}
+      </h3>
     </template>
     <transition name="slide-fade">
       <div class="info__content">
@@ -155,6 +157,8 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+@import "@/assets/styles/mixins.scss";
+
 .info {
   &.dialog {
     --dialog-max-conent-width: 1200px;
@@ -169,6 +173,12 @@ export default defineComponent({
 
   &__content-paragraph {
     margin-bottom: 20px;
+  }
+
+  &__title {
+    @include mobile {
+      font-size: 1rem;
+    }
   }
 }
 </style>

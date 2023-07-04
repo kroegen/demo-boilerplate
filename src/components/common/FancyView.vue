@@ -25,6 +25,8 @@ const title = computed(() => {
 </script>
 
 <style lang="scss" scope>
+@import "@/assets/styles/mixins.scss";
+
 .f-view {
   --header-height: 110px;
   --spacer-height: 50px;
@@ -37,6 +39,10 @@ const title = computed(() => {
   &__header {
     padding: 50px 50px 0 50px;
     height: var(--header-height);
+
+    @include mobile {
+      display: none;
+    }
   }
 
   &__body {
@@ -47,6 +53,11 @@ const title = computed(() => {
 
   &__bottom-spacer {
     height: var(--spacer-height);
+  }
+
+  @include mobile {
+    --header-height: 0px;
+    --spacer-height: 10px;
   }
 }
 </style>

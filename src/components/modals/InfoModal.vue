@@ -87,6 +87,8 @@ function handleCopyValue(target: string) {
 </script>
 
 <style lang="scss" scoped>
+@import "@/assets/styles/mixins.scss";
+
 .info-modal {
   &__content {
     justify-content: center;
@@ -99,6 +101,10 @@ function handleCopyValue(target: string) {
     margin-top: 10px;
     margin-bottom: 10px;
     padding: 0 40px;
+
+    @include mobile {
+      padding: 0px;
+    }
   }
 
   &__list-item {

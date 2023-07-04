@@ -3,7 +3,7 @@
     <!-- <FancyButton size="large" variant="text" disabled>Test</FancyButton> -->
     <users-table>
       <Loader v-if="loading" />
-      <transition-group name="list" tag="div" v-else>
+      <transition-group name="list" v-else>
         <UsersTableItem
           v-for="user in users.filter((user) => !user.isDeleted)"
           :key="user.id"

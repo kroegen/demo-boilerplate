@@ -76,10 +76,13 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+@import "@/assets/styles/mixins.scss";
+
 .f-dialog {
   --dialog-header-height: 100px;
   --dialog-min-conent-height: 500px;
   --dialog-min-conent-width: 800px;
+  --dialog-border-radius: 20px;
 
   display: flex;
   flex-direction: column;
@@ -95,7 +98,7 @@ export default defineComponent({
     overflow: hidden;
     background: var(--beige-color);
     box-shadow: var(--shadow-xl);
-    border-radius: 20px;
+    border-radius: var(--dialog-border-radius);
     min-width: var(--dialog-min-conent-width);
     min-height: var(--dialog-min-conent-height);
     border: 1px solid var(--blue-color);
@@ -161,6 +164,16 @@ export default defineComponent({
     justify-content: space-between;
     align-items: flex-end;
     padding: 5px 40px 40px 40px;
+  }
+
+  @include mobile {
+    --dialog-min-conent-width: auto;
+    --dialog-min-conent-height: 100svh;
+    --dialog-border-radius: 0px;
+
+    justify-content: flex-start;
+    position: fixed;
+    overflow: hidden;
   }
 }
 </style>

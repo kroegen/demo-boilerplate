@@ -34,6 +34,8 @@ const product = computed(() => {
 </script>
 
 <style lang="scss" scoped>
+@import "@/assets/styles/mixins.scss";
+
 .table-item {
   --border-color: transparent;
 
@@ -67,26 +69,32 @@ const product = computed(() => {
 
   &__title {
     flex: 1;
+    min-width: 100px;
   }
 
   &__brand {
     flex: 1;
+    min-width: 100px;
   }
 
   &__description {
     flex: 3;
+    min-width: 300px;
   }
 
   &__category {
     flex: 1;
+    min-width: 100px;
   }
 
   &__price {
     flex: 1;
+    min-width: 100px;
   }
 
   &__actions {
     flex: 1;
+    min-width: 100px;
   }
 }
 </style>

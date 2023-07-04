@@ -15,6 +15,8 @@
 </template>
 
 <style lang="scss" scoped>
+@import "@/assets/styles/mixins.scss";
+
 .table {
   --header-height: 60px;
 
@@ -52,26 +54,32 @@
 
   &__header-title {
     flex: 1;
+    min-width: 100px;
   }
 
   &__header-brand {
     flex: 1;
+    min-width: 100px;
   }
 
   &__header-description {
     flex: 3;
+    min-width: 300px;
   }
 
   &__header-category {
     flex: 1;
+    min-width: 100px;
   }
 
   &__header-price {
     flex: 1;
+    min-width: 100px;
   }
 
   &__header-actions {
     flex: 1;
+    min-width: 100px;
   }
 
   &__body {
@@ -81,6 +89,15 @@
     display: flex;
     flex-direction: column;
     color: var(--black-color);
+
+    @include mobile {
+      overflow-y: initial;
+    }
+  }
+
+  @include mobile {
+    padding-left: 0px;
+    overflow-y: scroll;
   }
 }
 </style>

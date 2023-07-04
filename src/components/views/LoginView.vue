@@ -1,13 +1,13 @@
 <template>
   <f-view class="login-view">
-    <svg-icon
-      class="login-view__info-icon"
-      :class="{ blink: isBlinking }"
-      @click="handleOpenInfoModal"
-      :src="icons.InfoIcon"
-    />
     <div class="login-view__container">
       <f-card class="login-view__card">
+        <svg-icon
+          class="login-view__info-icon"
+          :class="{ blink: isBlinking }"
+          @click="handleOpenInfoModal"
+          :src="icons.InfoIcon"
+        />
         <f-form class="login-view__form" ref="form" @submit="handleSubmit">
           <field
             name="username"
@@ -222,8 +222,16 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+@import "@/assets/styles/mixins.scss";
+
 .login-view {
   background-color: var(--beige-color);
+
+  &.f-view {
+    @include mobile {
+      height: 100dvh;
+    }
+  }
 
   &__container {
     width: 100%;
@@ -231,12 +239,25 @@ export default defineComponent({
     display: flex;
     align-items: center;
     justify-content: center;
+
+    @include mobile {
+      align-items: flex-start;
+      margin-top: 25%;
+    }
   }
 
   &__card.f-card {
     --card-padding: 40px 62px;
+
     width: 620px;
     background: var(--white-color);
+    position: relative;
+
+    @include mobile {
+      --card-padding: 20px 40px;
+
+      width: 90%;
+    }
   }
 
   &__form {
@@ -255,12 +276,13 @@ export default defineComponent({
 
   &__info-icon {
     --icon-color: var(--grey-color);
+    --icon-size: 50px;
 
     position: absolute;
-    top: 100px;
-    right: 100px;
-    width: 50px;
-    height: 50px;
+    top: -100px;
+    right: -100px;
+    width: var(--icon-size);
+    height: var(--icon-size);
     transition: all 0.2s;
     z-index: 9999;
 
@@ -275,6 +297,13 @@ export default defineComponent({
 
     &.blink {
       animation: blink 1.2s infinite;
+    }
+
+    @include mobile {
+      --icon-size: 35px;
+
+      top: 10px;
+      right: 10px;
     }
   }
 }

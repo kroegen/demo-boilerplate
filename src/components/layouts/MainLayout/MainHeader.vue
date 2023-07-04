@@ -94,7 +94,11 @@ function handleOpenMenu() {
 </script>
 
 <style lang="scss" scoped>
+@import "@/assets/styles/mixins.scss";
+
 .header {
+  --icon-size: 36px;
+
   height: var(--header-height);
   display: flex;
   flex-direction: row;
@@ -112,8 +116,8 @@ function handleOpenMenu() {
 
     display: inline-flex;
     flex-shrink: 0;
-    width: 36px;
-    height: 36px;
+    width: var(--icon-size);
+    height: var(--icon-size);
     position: relative;
 
     &:hover {
@@ -123,6 +127,10 @@ function handleOpenMenu() {
 
     &:active {
       transform: scale(1.1);
+    }
+
+    @include mobile {
+      --icon-size: 28px;
     }
   }
 
@@ -160,11 +168,19 @@ function handleOpenMenu() {
   &__actions-right {
     margin-left: auto;
     display: inline-flex;
+
+    @include mobile {
+      padding: 0px;
+    }
   }
 
   &__actions-left {
     margin-right: auto;
     display: none;
+
+    @include mobile {
+      display: inline-flex;
+    }
   }
 
   &__name {
@@ -176,31 +192,16 @@ function handleOpenMenu() {
       transform: scale(1.05);
       cursor: pointer;
     }
-  }
-}
 
-@media screen and (max-width: 992px) {
-  .header {
-    &__actions-left {
-      display: inline-flex;
-    }
-
-    &__name {
+    @include mobile {
       display: inline-flex;
       align-items: center;
     }
+  }
 
-    &__name h2 {
+  &__name h2 {
+    @include mobile {
       font-size: 1.25rem;
-    }
-
-    &__heart-icon,
-    &__login-icon,
-    &__github-icon,
-    &__cart-icon,
-    &__menu-icon {
-      width: 28px;
-      height: 28px;
     }
   }
 }

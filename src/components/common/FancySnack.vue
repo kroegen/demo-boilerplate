@@ -112,6 +112,8 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+@import "@/assets/styles/mixins.scss";
+
 .f-snack {
   $this: &;
 
@@ -187,6 +189,11 @@ export default defineComponent({
 
   &--warning {
     --main-color: var(--red-color);
+  }
+
+  @include mobile {
+    bottom: none;
+    top: 0px;
   }
 }
 </style>
