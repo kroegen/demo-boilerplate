@@ -33,13 +33,16 @@ export default defineComponent({
   position: relative;
   width: 100%;
   height: 100%;
+  flex-shrink: 0;
 
   &:deep(svg) {
     fill: var(--icon-color);
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+
     width: 100%;
     height: 100%;
   }

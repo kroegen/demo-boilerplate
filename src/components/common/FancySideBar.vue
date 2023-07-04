@@ -1,37 +1,41 @@
 <template>
   <nav class="f-sidebar">
-    <ul v-if="isItems" class="f-sidebar__menu">
-      <li
-        v-for="menuItem in props.menuItems"
-        :key="menuItem.label"
-        class="f-sidebar__menu-item"
-        :class="{
-          'f-sidebar__menu-item--active': activeName === menuItem.name,
-        }"
-      >
-        <svg-icon
-          v-if="menuItem.icon"
-          class="f-sidebar__menu-icon"
-          :src="menuItem.icon"
-        />
+    <div v-if="isItems" class="f-sidebar__menu">
+      <div v-for="menuItem in props.menuItems" :key="menuItem.label">
         <router-link
+          class="f-sidebar__menu-item"
+          :class="{
+            'f-sidebar__menu-item--active': activeName === menuItem.name,
+          }"
           v-if="!menuItem.link"
           :to="{ name: menuItem.name }"
-          class="f-sidebar__menu-label"
         >
-          {{ menuItem.label }}
+          <svg-icon
+            v-if="menuItem.icon"
+            class="f-sidebar__menu-icon"
+            :src="menuItem.icon"
+          />
+          <span class="f-sidebar__menu-label">{{ menuItem.label }}</span>
         </router-link>
         <a
           v-else
           :href="menuItem.link"
           target="_blank"
           rel="noopener noreferrer"
-          class="f-sidebar__menu-label"
+          class="f-sidebar__menu-item"
+          :class="{
+            'f-sidebar__menu-item--active': activeName === menuItem.name,
+          }"
         >
-          {{ menuItem.label }}
+          <svg-icon
+            v-if="menuItem.icon"
+            class="f-sidebar__menu-icon"
+            :src="menuItem.icon"
+          />
+          <span class="f-sidebar__menu-label">{{ menuItem.label }}</span>
         </a>
-      </li>
-    </ul>
+      </div>
+    </div>
   </nav>
 </template>
 
@@ -65,14 +69,12 @@ const activeName = computed(() => {
 </script>
 
 <style lang="scss" scoped>
-:where(a) {
-  color: inherit;
-  font-weight: 600;
-  font-size: 1rem;
-}
+@import "@/assets/styles/mixins.scss";
 
 .f-sidebar {
   $this: &;
+
+  --sidebar-width: 60px;
 
   height: 100%;
   display: flex;
@@ -80,10 +82,14 @@ const activeName = computed(() => {
   justify-content: center;
   cursor: pointer;
   transition: width 900ms;
-  width: 60px;
+  width: var(--sidebar-width);
 
   &:hover {
-    width: var(--sidebar-width);
+    --sidebar-width: 350px;
+
+    @include mobile {
+      --sidebar-width: 100dvw;
+    }
 
     #{$this}__menu-label {
       visibility: visible;
@@ -92,8 +98,14 @@ const activeName = computed(() => {
   }
 
   &__menu {
-    list-style: none;
     padding: 0;
+
+    @include mobile {
+      display: flex;
+      flex-direction: row;
+      height: 100%;
+      justify-content: space-between;
+    }
   }
 
   &__menu-item {
@@ -112,8 +124,19 @@ const activeName = computed(() => {
     padding: 0 1rem;
     border-radius: 0 5px 5px 0;
 
+    @include mobile {
+      border-radius: 5px 5px 0 0;
+      height: 100%;
+      justify-content: center;
+      padding: 0 0.5rem;
+    }
+
     &:not(:first-child) {
       margin-top: 10px;
+
+      @include mobile {
+        margin-top: 0px;
+      }
     }
 
     &:hover,
@@ -123,6 +146,16 @@ const activeName = computed(() => {
       fill: var(--beige-color);
       transform: scale(1.05);
       transform-origin: center left;
+
+      @include mobile {
+        transform: none;
+      }
+
+      #{$this}__menu-label {
+        @include mobile {
+          display: inline-flex;
+        }
+      }
     }
   }
 
@@ -139,6 +172,22 @@ const activeName = computed(() => {
     visibility: hidden;
     opacity: 0;
     transition: opacity, visibility 700ms;
+    color: inherit;
+    font-weight: 600;
+    font-size: 1rem;
+
+    @include mobile {
+      visibility: visible;
+      opacity: 1;
+      margin-left: 5px;
+      transition: none;
+      font-size: 0.825rem;
+    }
+  }
+
+  @include mobile {
+    --sidebar-width: 100dvw;
+    transition: none;
   }
 }
 </style>

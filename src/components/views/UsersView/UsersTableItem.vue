@@ -53,6 +53,8 @@ function handleRemoveUser() {
 </script>
 
 <style lang="scss" scoped>
+@import "@/assets/styles/mixins.scss";
+
 .table-item {
   --border-color: transparent;
 
@@ -86,6 +88,7 @@ function handleRemoveUser() {
 
   &__image {
     flex: 1;
+    min-width: 100px;
 
     img {
       width: 56px;
@@ -97,22 +100,27 @@ function handleRemoveUser() {
 
   &__name {
     flex: 3;
+    min-width: 300px;
   }
 
   &__email {
     flex: 2;
+    min-width: 200px;
   }
 
   &__phone {
     flex: 2;
+    min-width: 200px;
   }
 
   &__birthdate {
     flex: 2;
+    min-width: 200px;
   }
 
   &__actions {
     flex: 2;
+    min-width: 200px;
     display: flex;
     align-items: center;
     justify-content: center;

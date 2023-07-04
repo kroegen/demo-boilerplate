@@ -67,26 +67,27 @@ section {
   color: var(--blue-color)
 }
 
-@media screen and (max-width: 1650px) {
+
+@include mobile {
   :root {
-    --content-max-width: var(--content-large-width);
+    --content-max-width: var(--content-x-small-width);
   }
 }
 
-@media screen and (max-width: 1400px) {
-  :root {
-    --content-max-width: var(--content-medium-width);
-  }
-}
-
-@media screen and (max-width: 1200px) {
+@include tablet {
   :root {
     --content-max-width: var(--content-small-width);
   }
 }
 
-@media screen and (max-width: 992px) {
+@include wide {
   :root {
-    --content-max-width: var(--content-x-small-width);
+    --content-max-width: var(--content-medium-width);
+  }
+}
+
+@include ultra-wide {
+  :root {
+    --content-max-width: var(--content-large-width);
   }
 }

@@ -3,7 +3,7 @@
     <header>
       <MainHeader @click-menu="hanldeClickMenu" />
     </header>
-    <main class="layout">
+    <main :class="{ layout: true, 'no-scroll': openedSideBar }">
       <f-container>
         <aside :class="{ opened: openedSideBar }">
           <MainSidebar @click-sidebar="hanldeClickSidebar" />
@@ -45,12 +45,19 @@ function hanldeClickSidebar() {
 </script>
 
 <style lang="scss" scoped>
+@import "@/assets/styles/mixins.scss";
+
 main {
   display: flex;
   width: 100%;
   height: calc(100% - var(--header-height));
   flex-direction: row;
   justify-content: center;
+
+  &.no-scroll {
+    position: fixed;
+    margin-top: var(--header-height);
+  }
 }
 
 article {
@@ -59,16 +66,20 @@ article {
   width: 100%;
 }
 
-@media screen and (max-width: 992px) {
-  aside {
+aside {
+  @include mobile {
     position: absolute;
     z-index: 2;
     background: var(--white-color);
     height: 100%;
     display: none;
+  }
 
-    &.opened {
+  &.opened {
+    @include mobile {
       display: inline-flex;
+      width: 100%;
+      height: 100%;
     }
   }
 }
