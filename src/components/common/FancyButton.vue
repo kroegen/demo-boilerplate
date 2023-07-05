@@ -71,6 +71,7 @@ export default defineComponent({
   border: 1px solid var(--border-color);
   background-color: var(--main-color);
   color: var(--text-color);
+  opacity: 0.9;
 
   &__label {
     font-weight: inherit;
@@ -85,12 +86,12 @@ export default defineComponent({
 
   &:hover,
   &:active {
-    opacity: 0.9;
+    opacity: 1;
     box-shadow: var(--button-shadow);
   }
 
   &:active {
-    transform: scale(1.1);
+    transform: scale(0.95);
   }
 
   &--disabled:hover,

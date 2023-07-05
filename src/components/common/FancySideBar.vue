@@ -144,7 +144,7 @@ const activeName = computed(() => {
       background: var(--blue-color);
       color: var(--beige-color);
       fill: var(--beige-color);
-      transform: scale(1.05);
+      transform: scale(0.95);
       transform-origin: center left;
 
       @include mobile {

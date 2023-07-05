@@ -145,6 +145,7 @@ function handleDragstart(e: DragEvent) {
   position: relative;
   height: 349px;
   width: 240px;
+  cursor: pointer;
 
   &--active {
     --bg-color: var(--beige-color);
@@ -161,7 +162,7 @@ function handleDragstart(e: DragEvent) {
     }
 
     #{$this}__image-wrapper {
-      opacity: 0.8;
+      opacity: 1;
     }
 
     #{$this}__actions {
@@ -197,6 +198,7 @@ function handleDragstart(e: DragEvent) {
   &__image-wrapper {
     position: relative;
     width: 100%;
+    opacity: 0.85;
   }
 
   &__favorite {
