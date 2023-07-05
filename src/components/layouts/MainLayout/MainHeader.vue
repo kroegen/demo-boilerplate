@@ -126,7 +126,7 @@ function handleOpenMenu() {
     }
 
     &:active {
-      transform: scale(1.1);
+      transform: scale(0.95);
     }
 
     @include mobile {
@@ -189,7 +189,7 @@ function handleOpenMenu() {
 
     &:hover {
       color: var(--white-color);
-      transform: scale(1.05);
+      transform: scale(0.95);
       cursor: pointer;
     }
 

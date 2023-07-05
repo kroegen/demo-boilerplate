@@ -133,7 +133,7 @@ export default defineComponent({
     }
 
     &:active {
-      transform: scale(1.1);
+      transform: scale(0.95);
     }
   }
 
