@@ -1,13 +1,15 @@
 import { createRouter, createWebHistory } from "vue-router";
-import Landing from "@/components/views/LandingView.vue";
-import Products from "@/components/views/ProductsView.vue";
-import Users from "@/components/views/UsersView.vue";
-import Login from "@/components/views/LoginView.vue";
-import NotFound from "@/components/views/NotFoundView.vue";
+
+const Landing = () => import("@/components/views/LandingView.vue");
+const Products = () => import("@/components/views/ProductsView.vue");
+const Users = () => import("@/components/views/UsersView.vue");
+const Login = () => import("@/components/views/LoginView.vue");
+// const Favorites = () => import("@/components/views/FavoritesView.vue");
+const NotFound = () => import("@/components/views/NotFoundView.vue");
 
 import { authStore } from "@/stores/auth";
-import AdminLayout from "@/components/layouts/AdminLayout.vue";
-import MainLayout from "@/components/layouts/MainLayout.vue";
+const AdminLayout = () => import("@/components/layouts/AdminLayout.vue");
+const MainLayout = () => import("@/components/layouts/MainLayout.vue");
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -27,6 +29,11 @@ const router = createRouter({
           name: "landing",
           component: Landing,
         },
+        // {
+        //   path: "/favorites",
+        //   name: "favorites",
+        //   component: Favorites,
+        // },
         {
           path: "/category/:category",
           name: "category",

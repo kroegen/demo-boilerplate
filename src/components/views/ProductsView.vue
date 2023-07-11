@@ -30,7 +30,7 @@ onMounted(async () => {
   loading.value = true;
 
   try {
-    const data = await api.products.fetchProducts();
+    const data = await api.products.fetchProducts(1, 100);
 
     if (data.products) {
       products.value = [...data.products];
