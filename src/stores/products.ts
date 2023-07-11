@@ -2,10 +2,13 @@ import { defineStore } from "pinia";
 import type { Product, ProductsResponse } from "@/api/services/interfaces";
 import api from "@/api";
 
+const PAGE_LIMIT = 30;
+
 interface ProductsState {
   products: Product[];
   categories: string[];
   categoryProducts: Product[];
+  pages: number;
 }
 
 export const ProductsStore = defineStore("ProductsStore", {
@@ -13,14 +16,19 @@ export const ProductsStore = defineStore("ProductsStore", {
     products: [],
     categories: [],
     categoryProducts: [],
+    pages: 0,
   }),
   actions: {
-    async fetchProducts() {
+    async fetchProducts(page = 1) {
       const productsResponse: ProductsResponse =
-        await api.products.fetchProducts();
+        await api.products.fetchProducts(page, PAGE_LIMIT);
 
       if (productsResponse.products) {
         this.products = [...productsResponse.products];
+
+        if (!this.pages) {
+          this.pages = Math.floor(productsResponse.total / PAGE_LIMIT) + 1;
+        }
 
         return this.products;
       }

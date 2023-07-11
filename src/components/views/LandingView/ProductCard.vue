@@ -1,5 +1,5 @@
 <template>
-  <li draggable="true" class="product" @dragstart="handleDragstart">
+  <li draggable="true" class="product" @dragstart="handleDragstart" ref="image">
     <div class="product__wrapper" :title="product.description">
       <div class="product__image-wrapper">
         <span class="product__discount">
@@ -7,7 +7,7 @@
         </span>
         <img
           class="product__image"
-          :src="productThumbnail.toString()"
+          :src="(imageSrc as string)"
           alt="thumbnail"
         />
         <FavoriteButton
@@ -42,7 +42,7 @@
 </template>
 
 <script lang="ts" setup>
-import { computed } from "vue";
+import { computed, onMounted, onUnmounted, reactive, ref, type Ref } from "vue";
 import { useI18n } from "vue-i18n";
 
 import type { Product } from "@/api/services/interfaces";
@@ -58,6 +58,11 @@ import RatingStars from "./RatingStars.vue";
 import SvgIcon from "@/components/common/SvgIcon.vue";
 import CartIcon from "@/assets/icons/cart-fill.svg";
 
+interface State {
+  observer: IntersectionObserver | null;
+  intersected: boolean;
+}
+
 const icons = {
   cart: CartIcon,
 };
@@ -68,6 +73,8 @@ const props = defineProps<{
   product: Product;
   transferData: DataTransfer;
 }>();
+
+const image: Ref<HTMLDivElement | null> = ref(null);
 
 const product = computed(() => {
   return props.product;
@@ -83,6 +90,35 @@ const price = computed(() => {
 });
 const productThumbnail = computed(() => {
   return product.value.thumbnail;
+});
+const imageSrc = computed(() =>
+  state.intersected ? productThumbnail.value : ""
+);
+
+const state: State = reactive({
+  observer: null,
+  intersected: false,
+});
+
+onMounted(() => {
+  state.observer = new IntersectionObserver(
+    (entries: IntersectionObserverEntry[]) => {
+      const image = entries[0];
+
+      if (image.isIntersecting && state.observer) {
+        state.intersected = true;
+        state.observer.disconnect();
+      }
+    }
+  );
+
+  if (image.value) {
+    state.observer.observe(image.value);
+  }
+});
+
+onUnmounted(() => {
+  state.observer?.disconnect();
 });
 
 function handleAddToCart(product: Product) {
@@ -190,7 +226,9 @@ function handleDragstart(e: DragEvent) {
   }
 
   &__image {
+    min-width: 100%;
     width: 100%;
+    min-height: 200px;
     height: 200px;
     object-fit: contain;
   }
