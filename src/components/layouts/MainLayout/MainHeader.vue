@@ -20,18 +20,36 @@
         >
           <svg-icon :src="icons.github" />
         </a>
-        <div class="header__heart-icon" @click="handleOpenFavorites">
-          <span class="header__heart-icon-counter">{{
-            favoritesStore.counter
-          }}</span>
-          <svg-icon :src="icons.filled" />
-        </div>
-        <div class="header__cart-icon" @click="handleOpenCart">
-          <span class="header__cart-icon-counter">{{
-            cartsStore.counter
-          }}</span>
-          <svg-icon :src="icons.cart" />
-        </div>
+        <IconCounter
+          class="header__heart-icon"
+          :counter="favoritesStore.counter"
+          :icon="icons.filled"
+          @click="handleOpenFavorites"
+        >
+          <f-popper
+            :visible="isFavoritesOpen"
+            placement="bottom-start"
+            :offset="[0, 15]"
+          >
+            <f-dropdown class="header__icon-dropdown">
+              <transition-group name="fade">
+                <ProductListItem
+                  v-for="favorite in favoritesStore.favorites"
+                  :key="favorite.id"
+                  :product="favorite"
+                  style="margin-bottom: 10px"
+                  @remove="handleRemoveProductFromFavorites(favorite.id)"
+                />
+              </transition-group>
+            </f-dropdown>
+          </f-popper>
+        </IconCounter>
+        <IconCounter
+          class="header__cart-icon"
+          :counter="cartsStore.counter"
+          :icon="icons.cart"
+          @click="handleOpenCart"
+        />
         <svg-icon
           class="header__login-icon"
           :src="icons.login"
@@ -45,6 +63,8 @@
 <script lang="ts" setup>
 import { useRoute, useRouter } from "vue-router";
 import SvgIcon from "@/components/common/SvgIcon.vue";
+import IconCounter from "@/components/common/IconCounter.vue";
+import ProductListItem from "@/components/views/LandingView/ProductListItem.vue";
 
 import LoginIcon from "@/assets/icons/login-line.svg";
 import GithubIcon from "@/assets/icons/github-fill.svg";
@@ -54,7 +74,7 @@ import MenuIcon from "@/assets/icons/menu-line.svg";
 
 import { CartsStore } from "@/stores/cart";
 import { FavoritesStore } from "@/stores/favorites";
-import { computed } from "vue";
+import { computed, ref } from "vue";
 
 const icons = {
   login: LoginIcon,
@@ -66,6 +86,7 @@ const icons = {
 const route = useRoute();
 const emit = defineEmits(["click-menu"]);
 
+const isFavoritesOpen = ref(false);
 const routeName = computed(() => {
   return route?.name ? route.name : "";
 });
@@ -86,7 +107,13 @@ function handleHome() {
 
 function handleOpenCart() {}
 
-function handleOpenFavorites() {}
+function handleOpenFavorites() {
+  isFavoritesOpen.value = !isFavoritesOpen.value;
+}
+
+function handleRemoveProductFromFavorites(productId: number) {
+  favoritesStore.removeProductIdFromFavoritesIds(productId);
+}
 
 function handleOpenMenu() {
   emit("click-menu");
@@ -106,6 +133,8 @@ function handleOpenMenu() {
   align-items: center;
   width: 100%;
   background: var(--black-color);
+  position: fixed;
+  z-index: 3;
 
   &__heart-icon,
   &__login-icon,
@@ -141,24 +170,6 @@ function handleOpenMenu() {
     margin-left: 20px;
   }
 
-  &__cart-icon-counter,
-  &__heart-icon-counter {
-    position: absolute;
-    padding: 5px;
-    color: var(--white-color);
-    background: var(--blue-color);
-    border-radius: 50%;
-    z-index: 2;
-    height: 20px;
-    width: 20px;
-    font-size: 0.75rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    top: -5px;
-    right: -10px;
-  }
-
   &__actions-right,
   &__actions-left {
     padding: 0 20px;
@@ -168,10 +179,17 @@ function handleOpenMenu() {
   &__actions-right {
     margin-left: auto;
     display: inline-flex;
+    position: relative;
 
     @include mobile {
       padding: 0px;
     }
+  }
+
+  &__icon-dropdown {
+    --dropdown-max-height: 400px;
+    --dropdown-width: 400px;
+    --dropdown-padding: 10px;
   }
 
   &__actions-left {

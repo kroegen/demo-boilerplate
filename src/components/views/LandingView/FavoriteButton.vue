@@ -24,6 +24,11 @@ import EmptyIcon from "@/assets/icons/heart-line.svg";
 import AddIcon from "@/assets/icons/heart-add.svg";
 
 import { FavoritesStore } from "@/stores/favorites";
+import type { Product } from "@/api/services/interfaces";
+
+interface Props {
+  product: Product;
+}
 
 const icons = {
   filled: FilledIcon,
@@ -32,21 +37,19 @@ const icons = {
 };
 
 const emit = defineEmits(["add", "remove"]);
-const props = defineProps<{
-  productId: number;
-}>();
+const props = defineProps<Props>();
 const store = FavoritesStore();
 
 const isSelected = computed(() => {
-  return store.getFavoritesIds.includes(props.productId);
+  return store.getFavoritesIds.includes(props.product.id);
 });
 
 function toggleSelection() {
   if (!isSelected.value) {
-    store.addProductIdToFavoritesIds(props.productId);
+    store.addProductIdToFavoritesIds(props.product);
     emit("add");
   } else {
-    store.removeProductIdFromFavoritesIds(props.productId);
+    store.removeProductIdFromFavoritesIds(props.product.id);
     emit("remove");
   }
 }

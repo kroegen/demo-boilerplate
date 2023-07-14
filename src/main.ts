@@ -16,6 +16,8 @@ import FancyModal from "@/components/common/FancyModal.vue";
 import FancyDialog from "@/components/common/FancyDialog.vue";
 import FancyButton from "@/components/common/FancyButton.vue";
 import FancyContainer from "@/components/common/FancyContainer.vue";
+import FancyPopper from "@/components/common/FancyPopper.vue";
+import FancyDropdown from "@/components/common/FancyDropdown.vue";
 
 const i18n = createI18n({
   locale: "en",
@@ -37,5 +39,7 @@ app.component("f-modal", FancyModal);
 app.component("f-dialog", FancyDialog);
 app.component("f-button", FancyButton);
 app.component("f-container", FancyContainer);
+app.component("f-popper", FancyPopper);
+app.component("f-dropdown", FancyDropdown);
 
 app.mount("body");

@@ -51,6 +51,7 @@ main {
   display: flex;
   width: 100%;
   height: calc(100% - var(--header-height));
+  margin-top: var(--header-height);
   flex-direction: row;
   justify-content: center;
 
