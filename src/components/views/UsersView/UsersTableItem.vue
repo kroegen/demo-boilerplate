@@ -34,12 +34,15 @@ import DeleteIcon from "@/assets/icons/delete-bin-line.svg";
 
 import { computed } from "vue";
 
-const emit = defineEmits(["remove"]);
-
-const props = defineProps<{
+interface Props {
   user: User;
   active: Boolean;
-}>();
+}
+
+const emit = defineEmits(["remove"]);
+
+const props = defineProps<Props>();
+
 const user = computed(() => {
   return props.user;
 });

@@ -64,6 +64,9 @@ pm2 start pm2.json
 - [x] Auto-minimization of sidebar
 - [x] Github actions to automate the deploy
 - [x] Not found route and page(404)
+- [x] Initial pagination on landing page
+- [x] Initial popper component
+- [x] Initial mobile and tablet support (responsive styles)
 - [ ] Product page
 - [ ] Breadcrumbs for product categories
 - [ ] Image slider on product page
@@ -74,7 +77,6 @@ pm2 start pm2.json
 - [ ] Comments, posts
 - [ ] Listing search, pagination
 - [ ] Login with google account?
-- [ ] Initial mobile and tablet support (responsive styles)
 - [ ] Storybook for common components
 - [ ] Initial unit tests setup
 - [ ] Initial E2E tests setup

@@ -35,9 +35,11 @@ interface Star {
   type: StarType;
 }
 
-const props = defineProps<{
+interface Props {
   rating: number;
-}>();
+}
+
+const props = defineProps<Props>();
 
 const starsArray: ComputedRef<Star[]> = computed(() => {
   const stars: Star[] = [];

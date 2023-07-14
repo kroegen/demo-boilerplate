@@ -23,10 +23,12 @@
 import type { Product } from "@/api/services/interfaces";
 import { computed } from "vue";
 
-const props = defineProps<{
+interface Props {
   product: Product;
   active: Boolean;
-}>();
+}
+
+const props = defineProps<Props>();
 
 const product = computed(() => {
   return props.product;

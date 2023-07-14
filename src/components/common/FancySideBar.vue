@@ -52,14 +52,13 @@ export interface MenuItem {
   link?: string;
 }
 
-const props = withDefaults(
-  defineProps<{
-    menuItems: MenuItem[];
-  }>(),
-  {
-    menuItems: () => [],
-  }
-);
+interface Props {
+  menuItems: MenuItem[];
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  menuItems: () => [],
+});
 const isItems = computed(() => {
   return props.menuItems.length > 0;
 });

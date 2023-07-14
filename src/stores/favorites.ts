@@ -1,25 +1,31 @@
+import type { Product } from "@/api/services/interfaces";
 import { defineStore } from "pinia";
 
 interface FavoritesState {
-  favoritesIds: number[];
+  favorites: Product[];
 }
 
 export const FavoritesStore = defineStore("FavoritesStore", {
   state: (): FavoritesState => ({
-    favoritesIds: [],
+    favorites: [],
   }),
   getters: {
-    getFavoritesIds: (state): number[] => state.favoritesIds,
-    counter: (state): number => state.favoritesIds.length,
+    getFavoritesIds: (state): number[] =>
+      state.favorites.map((product) => product.id),
+    counter: (state): number => state.favorites.length,
   },
   actions: {
-    addProductIdToFavoritesIds(productId: number) {
-      this.favoritesIds.push(productId);
+    addProductIdToFavoritesIds(product: Product) {
+      this.favorites.push(product);
     },
     removeProductIdFromFavoritesIds(productId: number) {
-      this.favoritesIds = this.favoritesIds.filter(
-        (id: number) => id !== productId
+      const index = this.favorites.findIndex(
+        (product) => product.id === productId
       );
+
+      if (index >= 0) {
+        this.favorites.splice(index, 1);
+      }
     },
   },
 });

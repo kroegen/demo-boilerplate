@@ -2,7 +2,7 @@
   <div
     class="svg-icon"
     :class="{ 'svg-icon--disabled': disabled }"
-    @click.stop="$emit('click', $event)"
+    @click="$emit('click', $event)"
     v-html="src"
   />
 </template>

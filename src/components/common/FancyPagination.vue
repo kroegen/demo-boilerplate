@@ -13,10 +13,12 @@
 </template>
 
 <script lang="ts" setup>
-const props = defineProps<{
+interface Props {
   pages: number;
   currentPage: number;
-}>();
+}
+
+const props = defineProps<Props>();
 </script>
 
 <style lang="scss" scoped>

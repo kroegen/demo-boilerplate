@@ -11,7 +11,7 @@
           alt="thumbnail"
         />
         <FavoriteButton
-          :productId="product.id"
+          :product="product"
           class="product__favorite"
           @remove="handleRemoveFavorite"
           @add="handleAddFavorite"
@@ -63,18 +63,23 @@ interface State {
   intersected: boolean;
 }
 
+interface Props {
+  product: Product;
+  transferData: DataTransfer;
+}
+
 const icons = {
   cart: CartIcon,
 };
 const store = CartsStore();
 const { t } = useI18n();
 
-const props = defineProps<{
-  product: Product;
-  transferData: DataTransfer;
-}>();
-
 const image: Ref<HTMLDivElement | null> = ref(null);
+const props = defineProps<Props>();
+const state: State = reactive({
+  observer: null,
+  intersected: false,
+});
 
 const product = computed(() => {
   return props.product;
@@ -94,11 +99,6 @@ const productThumbnail = computed(() => {
 const imageSrc = computed(() =>
   state.intersected ? productThumbnail.value : ""
 );
-
-const state: State = reactive({
-  observer: null,
-  intersected: false,
-});
 
 onMounted(() => {
   state.observer = new IntersectionObserver(
