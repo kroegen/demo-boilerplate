@@ -67,6 +67,7 @@ pm2 start pm2.json
 - [x] Initial pagination on landing page
 - [x] Initial popper component
 - [x] Initial mobile and tablet support (responsive styles)
+- [x] Initial Vite PWA plugin setup + caching fetch requests for offline
 - [ ] Product page
 - [ ] Breadcrumbs for product categories
 - [ ] Image slider on product page
