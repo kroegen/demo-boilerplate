@@ -61,7 +61,6 @@ export default defineConfig({
         runtimeCaching: [
           {
             urlPattern: ({ url }) => {
-              console.log(url);
               // const ALLOWED_HOSTNAMES = ["localhost", "dummyjson.com"];
               return (
                 url.hostname.includes("localhost") ||
