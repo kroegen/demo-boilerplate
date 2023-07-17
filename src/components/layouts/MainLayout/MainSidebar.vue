@@ -11,6 +11,7 @@
         {{ category }}
       </li>
     </ul>
+    <SelectLocale class="sidebar__select-locale" />
   </div>
 </template>
 
@@ -18,6 +19,8 @@
 import { ProductsStore } from "@/stores/products";
 import { onMounted, ref, watch, type Ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
+
+import SelectLocale from "./SelectLocale.vue";
 
 const emit = defineEmits(["click-sidebar"]);
 const categories: Ref<string[]> = ref([]);
@@ -107,6 +110,16 @@ function moveToCategory(category: string) {
     @include mobile {
       font-size: 1.5rem;
       border-right: 3px solid var(--border-color);
+    }
+  }
+
+  &__select-locale {
+    display: none;
+
+    @include mobile {
+      display: flex;
+      margin-top: 20px;
+      margin-left: 20px;
     }
   }
 

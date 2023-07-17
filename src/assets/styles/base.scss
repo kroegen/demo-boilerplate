@@ -60,6 +60,12 @@ section {
   font-weight: bold;
 }
 
+:where(h2, h3, h4) {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
 :where(a) {
   text-decoration: none;
   color: inherit;

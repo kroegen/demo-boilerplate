@@ -12,6 +12,7 @@
         <h2>{{ routeCategory || routeName }}</h2>
       </div>
       <div class="header__actions-right">
+        <SelectLocale class="header__select-locale" inverted />
         <a
           href="https://github.com/kroegen/demo-boilerplate"
           target="_blank"
@@ -65,6 +66,7 @@ import { useRoute, useRouter } from "vue-router";
 import SvgIcon from "@/components/common/SvgIcon.vue";
 import IconCounter from "@/components/common/IconCounter.vue";
 import ProductListItem from "@/components/views/LandingView/ProductListItem.vue";
+import SelectLocale from "./SelectLocale.vue";
 
 import LoginIcon from "@/assets/icons/login-line.svg";
 import GithubIcon from "@/assets/icons/github-fill.svg";
@@ -198,6 +200,12 @@ function handleOpenMenu() {
 
     @include mobile {
       display: inline-flex;
+    }
+  }
+
+  &__select-locale {
+    @include mobile {
+      display: none;
     }
   }
 
