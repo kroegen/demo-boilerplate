@@ -1,6 +1,7 @@
 <template>
   <router-view v-slot="{ Component }">
     <main class="layout">
+      <SelectLocale class="layout__select-locale" />
       <aside v-if="showSidebar">
         <slot name="sidebar"></slot>
         <FancySideBar :menu-items="menuItems" />
@@ -25,6 +26,7 @@ import { useI18n } from "vue-i18n";
 import { useRoute, RouterView } from "vue-router";
 
 import FancySideBar from "@/components/common/FancySideBar.vue";
+import SelectLocale from "@/components/layouts/MainLayout/SelectLocale.vue";
 
 import DashboardIcon from "@/assets/icons/dashboard-line.svg";
 import ProductsIcon from "@/assets/icons/store-line.svg";
@@ -125,4 +127,12 @@ main {
   }
 }
 
+.layout {
+  &__select-locale {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 100;
+  }
+}
 </style>

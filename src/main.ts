@@ -7,6 +7,7 @@ import router from "./router";
 
 import "./utils/rules.ts";
 import en from "./locales/en.json";
+import ua from "./locales/ua.json";
 
 import "./assets/styles/main.scss";
 
@@ -23,6 +24,7 @@ const i18n = createI18n({
   locale: "en",
   messages: {
     en,
+    ua,
   },
 });
 const pinia = createPinia();

@@ -118,6 +118,7 @@ export default defineComponent({
     padding: 25px 40px;
     align-items: center;
     height: var(--dialog-header-height);
+    max-width: var(--dialog-min-conent-width);
   }
 
   &__close-icon {

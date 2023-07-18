@@ -68,6 +68,9 @@ pm2 start pm2.json
 - [x] Initial popper component
 - [x] Initial mobile and tablet support (responsive styles)
 - [x] Initial Vite PWA plugin setup + caching fetch requests for offline
+- [x] Iniital localization
+- [ ] Add some other language support, add dropdown with options
+- [ ] Dropdowns + Select component (might be with popper.js)
 - [ ] Product page
 - [ ] Breadcrumbs for product categories
 - [ ] Image slider on product page
@@ -82,9 +85,7 @@ pm2 start pm2.json
 - [ ] Initial unit tests setup
 - [ ] Initial E2E tests setup
 - [ ] Detailed user page
-- [ ] Dropdowns + Select component (might be with popper.js)
-- [ ] Add some other language support, add dropdown with options
 - [ ] Edit user info on user's page
 - [ ] Cover all buiseness logic on all pages with E2E tests
 - [ ] 80% code coverege
-- [ ] Localization, currency converter
+- [ ] Currency converter

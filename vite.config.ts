@@ -67,7 +67,7 @@ export default defineConfig({
                 url.hostname.includes("dummyjson.com")
               );
             },
-            handler: "CacheFirst" as const,
+            handler: "NetworkFirst" as const,
             options: {
               cacheName: "api-cache",
               cacheableResponse: {
