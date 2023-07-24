@@ -284,7 +284,7 @@ export default defineComponent({
     width: var(--icon-size);
     height: var(--icon-size);
     transition: all 0.2s;
-    z-index: 9999;
+    z-index: 5;
 
     &:hover {
       --icon-color: var(--blue-color);

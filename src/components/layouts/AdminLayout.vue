@@ -132,7 +132,7 @@ main {
     position: fixed;
     top: 20px;
     right: 20px;
-    z-index: 100;
+    z-index: 49;
   }
 }
 </style>

@@ -74,13 +74,12 @@ aside {
     background: var(--white-color);
     height: 100%;
     display: none;
+    left: 0px;
   }
 
   &.opened {
     @include mobile {
       display: inline-flex;
-      width: 100%;
-      height: 100%;
     }
   }
 }

@@ -139,7 +139,7 @@ export default defineComponent({
   right: 0px;
   border-radius: 15px;
   box-shadow: var(--shadow-large);
-  z-index: 4;
+  z-index: 53;
 
   background-color: var(--main-color);
   border: 1px solid;
@@ -194,6 +194,7 @@ export default defineComponent({
   @include mobile {
     bottom: none;
     top: 0px;
+    border-radius: 0px;
   }
 }
 </style>
