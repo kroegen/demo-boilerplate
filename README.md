@@ -69,6 +69,7 @@ pm2 start pm2.json
 - [x] Initial mobile and tablet support (responsive styles)
 - [x] Initial Vite PWA plugin setup + caching fetch requests for offline
 - [x] Iniital localization
+- [x] Initial storybook setup
 - [ ] Add some other language support, add dropdown with options
 - [ ] Dropdowns + Select component (might be with popper.js)
 - [ ] Product page
