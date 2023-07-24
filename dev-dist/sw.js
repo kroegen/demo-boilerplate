@@ -82,7 +82,7 @@ define(['./workbox-5b010381'], (function (workbox) { 'use strict';
     "revision": "3ca0b8505b4bec776b69afdba2768812"
   }, {
     "url": "index.html",
-    "revision": "0.jv671mnnhoo"
+    "revision": "0.nceigpb9ds"
   }], {});
   workbox.cleanupOutdatedCaches();
   workbox.registerRoute(new workbox.NavigationRoute(workbox.createHandlerBoundToURL("index.html"), {
@@ -91,7 +91,6 @@ define(['./workbox-5b010381'], (function (workbox) { 'use strict';
   workbox.registerRoute(({
     url
   }) => {
-    console.log(url);
     return url.hostname.includes("localhost") || url.hostname.includes("dummyjson.com");
   }, new workbox.NetworkFirst({
     "cacheName": "api-cache",

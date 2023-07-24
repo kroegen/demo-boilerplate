@@ -126,6 +126,8 @@ function moveToCategory(category: string) {
   @include mobile {
     width: 100%;
     padding-top: 20px;
+    overflow-y: scroll;
+    padding-bottom: 50px;
   }
 }
 </style>

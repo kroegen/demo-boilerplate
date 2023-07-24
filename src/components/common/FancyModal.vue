@@ -56,7 +56,7 @@ export default defineComponent({
   justify-content: center;
   align-items: center;
   position: absolute;
-  z-index: 3;
+  z-index: 52;
   width: 100%;
   height: 100%;
   background: var(--black-dialog);
@@ -103,10 +103,9 @@ export default defineComponent({
   }
 
   @include mobile {
-    --modal-width: auto;
+    --modal-width: 100%;
     --modal-height: 100dvh;
     --modal-border-radious: 0px;
-
     justify-content: flex-start;
   }
 }

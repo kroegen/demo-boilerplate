@@ -89,7 +89,7 @@ export default defineComponent({
   justify-content: center;
   align-items: center;
   position: absolute;
-  z-index: 9999;
+  z-index: 51;
   width: 100%;
   height: 100%;
   background: var(--black-dialog);
