@@ -4,30 +4,33 @@ on:
   push:
     branches:
     - master
-    
+
   pull_request:
     branches:
     - master
-    
+
   workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-        
+
       - name: Setup Node.js environment
         uses: actions/setup-node@v2.5.2
-        
+
       - name: Setup Dependencies
         run: npm install
-        
-      - name: Build 
+
+      - name: Build
         run: npm run build
-        
+
+      - name: Unit Tests
+        run: npm run test:unit
+
       - name: S3 Sync
         uses: jakejarvis/s3-sync-action@v0.5.1
         with:
@@ -38,7 +41,7 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_REGION: 'us-east-1'
           SOURCE_DIR: 'dist'
-      
+
       - name: Invalidate AWS CloudFront
         uses: chetan/invalidate-cloudfront-action@v2
         env:
