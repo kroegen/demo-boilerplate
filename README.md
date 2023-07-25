@@ -69,6 +69,8 @@ pm2 start pm2.json
 - [x] Initial mobile and tablet support (responsive styles)
 - [x] Initial Vite PWA plugin setup + caching fetch requests for offline
 - [x] Iniital localization
+- [x] Initial unit tests setup
+- [ ] Initial E2E tests setup
 - [ ] Add some other language support, add dropdown with options
 - [ ] Dropdowns + Select component (might be with popper.js)
 - [ ] Product page
@@ -81,11 +83,9 @@ pm2 start pm2.json
 - [ ] Comments, posts
 - [ ] Listing search, pagination
 - [ ] Login with google account?
-- [ ] Storybook for common components
-- [ ] Initial unit tests setup
-- [ ] Initial E2E tests setup
 - [ ] Detailed user page
 - [ ] Edit user info on user's page
 - [ ] Cover all buiseness logic on all pages with E2E tests
 - [ ] 80% code coverege
+- [ ] Storybook for common components
 - [ ] Currency converter
