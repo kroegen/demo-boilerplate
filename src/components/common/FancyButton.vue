@@ -53,7 +53,7 @@ export default defineComponent({
   --border-color: var(--blue-color);
 
   --button-padding: 10px 16px;
-  --button-icon-width: 16px;
+  --button-icon-size: 22px;
   --button-text-size: 1rem;
   --button-shadow: var(--shadow-medium), var(--shadow-large);
 
@@ -78,8 +78,8 @@ export default defineComponent({
   }
 
   &__icon {
-    width: var(--button-icon-width);
-    height: var(--button-icon-width);
+    width: var(--button-icon-size);
+    height: var(--button-icon-size);
     fill: var(--text-color);
     margin: 0 10px;
   }
@@ -142,12 +142,17 @@ export default defineComponent({
     --button-text-size: 1.5rem;
 
     #{$this}__icon {
-      --button-icon-width: 20px;
+      --button-icon-size: 26px;
     }
   }
 
   &--small {
+    --button-padding: 9px 14px;
     --button-text-size: 1rem;
+
+    #{$this}__icon {
+      --button-icon-size: 18px;
+    }
   }
 
   &--tiny {
@@ -155,7 +160,7 @@ export default defineComponent({
     --button-text-size: 0.75rem;
 
     #{$this}__icon {
-      --button-icon-width: 14px;
+      --button-icon-size: 14px;
     }
   }
 }
