@@ -9,7 +9,7 @@
         />
       </div>
       <div class="header__name" @click="handleHome">
-        <h2>{{ routeCategory || routeName }}</h2>
+        <h2>{{ routeCategory }}</h2>
       </div>
       <div class="header__actions-right">
         <SelectLocale class="header__select-locale" inverted />
@@ -93,7 +93,7 @@ const routeName = computed(() => {
   return route?.name ? route.name : "";
 });
 const routeCategory = computed(() => {
-  return route.params.category;
+  return route.params.category ? `< ${route.params.category}` : routeName.value;
 });
 const router = useRouter();
 const cartsStore = CartsStore();

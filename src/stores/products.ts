@@ -1,12 +1,16 @@
 import { defineStore } from "pinia";
-import type { Product, ProductsResponse } from "@/api/services/interfaces";
+import type {
+  Category,
+  Product,
+  ProductsResponse,
+} from "@/api/services/interfaces";
 import api from "@/api";
 
 const PAGE_LIMIT = 30;
 
-interface ProductsState {
+export interface ProductsState {
   products: Product[];
-  categories: string[];
+  categories: Category[];
   categoryProducts: Product[];
   pages: number;
 }
@@ -33,6 +37,7 @@ export const ProductsStore = defineStore("ProductsStore", {
         return this.products;
       }
     },
+
     async fetchProductsCategories() {
       const response = await api.products.fetchProductsCategories();
 
@@ -42,6 +47,7 @@ export const ProductsStore = defineStore("ProductsStore", {
 
       return this.categories;
     },
+
     async fetchProductsByCategory(category: string) {
       const productsResponse: ProductsResponse =
         await api.products.fetchProductsByCategory(category);

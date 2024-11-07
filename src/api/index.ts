@@ -4,22 +4,33 @@ import ProductsService from "./services/products";
 import UsersService from "./services/users";
 import AuthService from "./services/auth";
 
-const JSON_API_URL = "https://dummyjson.com";
-// const WEATHER_API_URL = "https://api.open-meteo.com/v1/";
-// const AIR_API_URL = "https://air-quality-api.open-meteo.com/v1/";
+class API {
+  private jsonApi: clientAPI;
+  // Optionally: add more APIs for other services
+  // private weatherApi: clientAPI;
+  // private airApi: clientAPI;
 
-function api() {
-  const jsonApi = new clientAPI(JSON_API_URL);
-  // const weatherApi = new clientAPI(WEATHER_API_URL);
-  // const airApi = new clientAPI(AIR_API_URL);
+  public auth: AuthService;
+  public posts: PostsService;
+  public products: ProductsService;
+  public users: UsersService;
 
-  return {
-    auth: new AuthService(jsonApi),
-    posts: new PostsService(jsonApi),
-    products: new ProductsService(jsonApi),
-    users: new UsersService(jsonApi),
-    // you can add as much services form as many urls you like
-  };
+  constructor() {
+    const JSON_API_URL = "https://dummyjson.com";
+    this.jsonApi = new clientAPI(JSON_API_URL);
+
+    // Initialize services
+    this.auth = new AuthService(this.jsonApi);
+    this.posts = new PostsService(this.jsonApi);
+    this.products = new ProductsService(this.jsonApi);
+    this.users = new UsersService(this.jsonApi);
+  }
+
+  // Optionally, you could add a method to refresh tokens for all services
+  public setAuthorizationToken(token: string) {
+    this.auth.setAuthorization(token);
+    // If you had other APIs (like weatherApi), you could set their tokens too
+  }
 }
 
-export default api();
+export default new API();
