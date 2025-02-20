@@ -3,12 +3,14 @@
     <ul v-if="categories.length" class="sidebar__list">
       <li
         v-for="category in categories"
-        :key="category"
+        :key="category.slug"
         class="sidebar__list-item"
-        :class="{ 'sidebar__list-item--active': currentCategory === category }"
-        @click="moveToCategory(category)"
+        :class="{
+          'sidebar__list-item--active': currentCategory === category.slug,
+        }"
+        @click="moveToCategory(category.slug)"
       >
-        {{ category }}
+        {{ category.name }}
       </li>
     </ul>
     <SelectLocale class="sidebar__select-locale" />
@@ -21,9 +23,10 @@ import { onMounted, ref, watch, type Ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 
 import SelectLocale from "./SelectLocale.vue";
+import type { Category } from "@/api/services/interfaces";
 
 const emit = defineEmits(["click-sidebar"]);
-const categories: Ref<string[]> = ref([]);
+const categories: Ref<Category[]> = ref([]);
 const loading = ref(true);
 const router = useRouter();
 const route = useRoute();
@@ -60,14 +63,14 @@ onMounted(async () => {
   }
 });
 
-function moveToCategory(category: string) {
-  router.push({ name: "category", params: { category } });
+function moveToCategory(slug: string) {
+  router.push({ name: "category", params: { category: slug } });
   emit("click-sidebar");
 }
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/styles/mixins.scss";
+@use "@/assets/styles/mixins" as mixins;
 
 .sidebar {
   width: 200px;
@@ -78,7 +81,7 @@ function moveToCategory(category: string) {
     padding: 0px;
     height: auto;
 
-    @include mobile {
+    @include mixins.mobile {
       width: 100%;
     }
   }
@@ -107,7 +110,7 @@ function moveToCategory(category: string) {
       color: var(--blue-color);
     }
 
-    @include mobile {
+    @include mixins.mobile {
       font-size: 1.5rem;
       border-right: 3px solid var(--border-color);
     }
@@ -116,14 +119,14 @@ function moveToCategory(category: string) {
   &__select-locale {
     display: none;
 
-    @include mobile {
+    @include mixins.mobile {
       display: flex;
       margin-top: 20px;
       margin-left: 20px;
     }
   }
 
-  @include mobile {
+  @include mixins.mobile {
     width: 100%;
     padding-top: 20px;
     overflow-y: scroll;

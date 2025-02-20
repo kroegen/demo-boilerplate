@@ -45,7 +45,7 @@ function hanldeClickSidebar() {
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/styles/mixins.scss";
+@use "@/assets/styles/mixins" as mixins;
 
 main {
   display: flex;
@@ -68,7 +68,7 @@ article {
 }
 
 aside {
-  @include mobile {
+  @include mixins.mobile {
     position: absolute;
     z-index: 2;
     background: var(--white-color);
@@ -78,7 +78,7 @@ aside {
   }
 
   &.opened {
-    @include mobile {
+    @include mixins.mobile {
       display: inline-flex;
     }
   }

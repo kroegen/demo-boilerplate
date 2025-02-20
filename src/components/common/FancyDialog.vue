@@ -76,7 +76,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/styles/mixins.scss";
+@use "@/assets/styles/mixins" as mixins;
 
 .f-dialog {
   --dialog-header-height: 100px;
@@ -167,7 +167,7 @@ export default defineComponent({
     padding: 5px 40px 40px 40px;
   }
 
-  @include mobile {
+  @include mixins.mobile {
     --dialog-min-conent-width: auto;
     --dialog-min-conent-height: 100svh;
     --dialog-border-radius: 0px;

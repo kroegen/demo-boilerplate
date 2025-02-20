@@ -44,7 +44,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/styles/mixins.scss";
+@use "@/assets/styles/mixins" as mixins;
 
 .f-modal {
   --modal-height: auto;
@@ -102,7 +102,7 @@ export default defineComponent({
     padding: 0 40px 40px 40px;
   }
 
-  @include mobile {
+  @include mixins.mobile {
     --modal-width: 100%;
     --modal-height: 100dvh;
     --modal-border-radious: 0px;

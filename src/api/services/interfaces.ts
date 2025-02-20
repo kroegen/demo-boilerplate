@@ -50,6 +50,12 @@ export interface Cart {
   totalQuantity: number;
 }
 
+export interface Category {
+  name: string;
+  slug: string;
+  url: URL;
+}
+
 export interface Response {
   limit: number;
   skip: number;

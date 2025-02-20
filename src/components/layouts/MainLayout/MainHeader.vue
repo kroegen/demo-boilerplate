@@ -9,7 +9,7 @@
         />
       </div>
       <div class="header__name" @click="handleHome">
-        <h2>{{ routeCategory || routeName }}</h2>
+        <h2>{{ routeCategory }}</h2>
       </div>
       <div class="header__actions-right">
         <SelectLocale class="header__select-locale" inverted />
@@ -93,7 +93,7 @@ const routeName = computed(() => {
   return route?.name ? route.name : "";
 });
 const routeCategory = computed(() => {
-  return route.params.category;
+  return route.params.category ? `< ${route.params.category}` : routeName.value;
 });
 const router = useRouter();
 const cartsStore = CartsStore();
@@ -123,7 +123,7 @@ function handleOpenMenu() {
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/styles/mixins.scss";
+@use "@/assets/styles/mixins" as mixins;
 
 .header {
   --icon-size: 36px;
@@ -160,7 +160,7 @@ function handleOpenMenu() {
       transform: scale(0.95);
     }
 
-    @include mobile {
+    @include mixins.mobile {
       --icon-size: 28px;
     }
   }
@@ -183,7 +183,7 @@ function handleOpenMenu() {
     display: inline-flex;
     position: relative;
 
-    @include mobile {
+    @include mixins.mobile {
       padding: 0px;
     }
   }
@@ -198,13 +198,13 @@ function handleOpenMenu() {
     margin-right: auto;
     display: none;
 
-    @include mobile {
+    @include mixins.mobile {
       display: inline-flex;
     }
   }
 
   &__select-locale {
-    @include mobile {
+    @include mixins.mobile {
       display: none;
     }
   }
@@ -219,14 +219,14 @@ function handleOpenMenu() {
       cursor: pointer;
     }
 
-    @include mobile {
+    @include mixins.mobile {
       display: inline-flex;
       align-items: center;
     }
   }
 
   &__name h2 {
-    @include mobile {
+    @include mixins.mobile {
       font-size: 1.25rem;
     }
   }

@@ -87,7 +87,7 @@ function handleCopyValue(target: string) {
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/styles/mixins.scss";
+@use "@/assets/styles/mixins" as mixins;
 
 .info-modal {
   &__content {
@@ -102,7 +102,7 @@ function handleCopyValue(target: string) {
     margin-bottom: 10px;
     padding: 0 40px;
 
-    @include mobile {
+    @include mixins.mobile {
       padding: 0px;
     }
   }

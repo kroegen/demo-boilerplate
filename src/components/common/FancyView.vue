@@ -17,7 +17,7 @@
 import { computed, useSlots } from "vue";
 import { useRouteData } from "@/composables/useRouteData";
 
-const slots = useSlots();
+const slots: any = useSlots();
 const { meta } = useRouteData();
 const title = computed(() => {
   return meta?.value?.title ?? "";
@@ -25,7 +25,7 @@ const title = computed(() => {
 </script>
 
 <style lang="scss" scope>
-@import "@/assets/styles/mixins.scss";
+@use "@/assets/styles/mixins" as mixins;
 
 .f-view {
   --header-height: 110px;
@@ -40,7 +40,7 @@ const title = computed(() => {
     padding: 50px 50px 0 50px;
     height: var(--header-height);
 
-    @include mobile {
+    @include mixins.mobile {
       display: none;
     }
   }
@@ -55,7 +55,7 @@ const title = computed(() => {
     height: var(--spacer-height);
   }
 
-  @include mobile {
+  @include mixins.mobile {
     --header-height: 0px;
     --spacer-height: 10px;
   }
