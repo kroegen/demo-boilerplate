@@ -112,7 +112,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/styles/mixins.scss";
+@use "@/assets/styles/mixins" as mixins;
 
 .f-snack {
   $this: &;
@@ -191,7 +191,7 @@ export default defineComponent({
     --main-color: var(--red-color);
   }
 
-  @include mobile {
+  @include mixins.mobile {
     bottom: none;
     top: 0px;
     border-radius: 0px;

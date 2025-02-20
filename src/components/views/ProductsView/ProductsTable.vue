@@ -15,7 +15,7 @@
 </template>
 
 <style lang="scss" scoped>
-@import "@/assets/styles/mixins.scss";
+@use "@/assets/styles/mixins" as mixins;
 
 .table {
   --header-height: 60px;
@@ -90,12 +90,12 @@
     flex-direction: column;
     color: var(--black-color);
 
-    @include mobile {
+    @include mixins.mobile {
       overflow-y: initial;
     }
   }
 
-  @include mobile {
+  @include mixins.mobile {
     padding-left: 0px;
     overflow-y: scroll;
   }

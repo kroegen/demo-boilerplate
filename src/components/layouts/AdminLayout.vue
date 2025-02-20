@@ -85,7 +85,7 @@ const routeName = computed(() => {
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/styles/mixins.scss";
+@use "@/assets/styles/mixins" as mixins;
 
 main {
   --mobile-aside-height: 60px;
@@ -98,7 +98,7 @@ main {
   align-items: stretch;
   position: relative;
 
-  @include mobile {
+  @include mixins.mobile {
     flex-direction: column;
     justify-content: flex-start;
   }
@@ -107,7 +107,7 @@ main {
     background: var(--beige-color);
     z-index: 2;
 
-    @include mobile {
+    @include mixins.mobile {
       order: 2;
       position: fixed;
       bottom: 0px;
@@ -121,7 +121,7 @@ main {
     z-index: 1;
     width: 100%;
 
-    @include mobile {
+    @include mixins.mobile {
       height: calc(100dvh - var(--mobile-aside-height));
     }
   }

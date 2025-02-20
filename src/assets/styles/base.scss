@@ -1,3 +1,5 @@
+@use "mixins";
+
 :root {
   --header-height: 64px;
   --tablet-width: 1280px;
@@ -74,25 +76,25 @@ section {
 }
 
 
-@include mobile {
+@include mixins.mobile {
   :root {
     --content-max-width: var(--content-x-small-width);
   }
 }
 
-@include tablet {
+@include mixins.tablet {
   :root {
     --content-max-width: var(--content-small-width);
   }
 }
 
-@include wide {
+@include mixins.wide {
   :root {
     --content-max-width: var(--content-medium-width);
   }
 }
 
-@include ultra-wide {
+@include mixins.ultra-wide {
   :root {
     --content-max-width: var(--content-large-width);
   }

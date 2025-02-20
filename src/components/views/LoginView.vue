@@ -222,13 +222,13 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/styles/mixins.scss";
+@use "@/assets/styles/mixins" as mixins;
 
 .login-view {
   background-color: var(--beige-color);
 
   &.f-view {
-    @include mobile {
+    @include mixins.mobile {
       height: 100dvh;
     }
   }
@@ -240,7 +240,7 @@ export default defineComponent({
     align-items: center;
     justify-content: center;
 
-    @include mobile {
+    @include mixins.mobile {
       align-items: flex-start;
       margin-top: 25%;
     }
@@ -253,7 +253,7 @@ export default defineComponent({
     background: var(--white-color);
     position: relative;
 
-    @include mobile {
+    @include mixins.mobile {
       --card-padding: 20px 40px;
 
       width: 90%;
@@ -299,7 +299,7 @@ export default defineComponent({
       animation: blink 1.2s infinite;
     }
 
-    @include mobile {
+    @include mixins.mobile {
       --icon-size: 35px;
 
       top: 10px;

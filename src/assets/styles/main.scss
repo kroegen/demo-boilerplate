@@ -1,6 +1,7 @@
-@import "./mixins.scss";
-@import "./colors.css";
-@import "./fonts.css";
-@import "./base.scss";
-@import "./transitions.css";
-@import "./shadows.css";
+@use "sass:meta";
+@use "./mixins";
+@use "./colors";
+@use "./fonts";
+@use "./transitions";
+@use "./shadows";
+@use "./base";

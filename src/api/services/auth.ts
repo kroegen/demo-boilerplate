@@ -6,7 +6,13 @@ export default class AuthService extends Base {
     return this.api.post("auth/login", payload);
   }
 
-  setAuthorization(token: string) {
-    this.api.setAuthorization(token);
+  setAuthorization(token: string): void {
+    try {
+      this.api.setAuthorization(token);
+      console.debug("Authorization token set successfully");
+    } catch (error) {
+      console.error("Failed to set authorization token:", error);
+      throw new Error("Failed to set authorization token");
+    }
   }
 }
