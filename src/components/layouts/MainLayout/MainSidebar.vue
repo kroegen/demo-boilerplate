@@ -70,7 +70,7 @@ function moveToCategory(slug: string) {
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/styles/mixins.scss";
+@use "@/assets/styles/mixins" as mixins;
 
 .sidebar {
   width: 200px;
@@ -81,7 +81,7 @@ function moveToCategory(slug: string) {
     padding: 0px;
     height: auto;
 
-    @include mobile {
+    @include mixins.mobile {
       width: 100%;
     }
   }
@@ -110,7 +110,7 @@ function moveToCategory(slug: string) {
       color: var(--blue-color);
     }
 
-    @include mobile {
+    @include mixins.mobile {
       font-size: 1.5rem;
       border-right: 3px solid var(--border-color);
     }
@@ -119,14 +119,14 @@ function moveToCategory(slug: string) {
   &__select-locale {
     display: none;
 
-    @include mobile {
+    @include mixins.mobile {
       display: flex;
       margin-top: 20px;
       margin-left: 20px;
     }
   }
 
-  @include mobile {
+  @include mixins.mobile {
     width: 100%;
     padding-top: 20px;
     overflow-y: scroll;

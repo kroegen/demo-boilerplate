@@ -157,7 +157,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/styles/mixins.scss";
+@use "@/assets/styles/mixins" as mixins;
 
 .info {
   &.dialog {
@@ -176,7 +176,7 @@ export default defineComponent({
   }
 
   &__title {
-    @include mobile {
+    @include mixins.mobile {
       font-size: 1rem;
     }
   }

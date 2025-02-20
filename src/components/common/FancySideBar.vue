@@ -68,7 +68,7 @@ const activeName = computed(() => {
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/styles/mixins.scss";
+@use "@/assets/styles/mixins" as mixins;
 
 .f-sidebar {
   $this: &;
@@ -86,7 +86,7 @@ const activeName = computed(() => {
   &:hover {
     --sidebar-width: 350px;
 
-    @include mobile {
+    @include mixins.mobile {
       --sidebar-width: 100dvw;
     }
 
@@ -99,7 +99,7 @@ const activeName = computed(() => {
   &__menu {
     padding: 0;
 
-    @include mobile {
+    @include mixins.mobile {
       display: flex;
       flex-direction: row;
       height: 100%;
@@ -123,7 +123,7 @@ const activeName = computed(() => {
     padding: 0 1rem;
     border-radius: 0 5px 5px 0;
 
-    @include mobile {
+    @include mixins.mobile {
       border-radius: 5px 5px 0 0;
       height: 100%;
       justify-content: center;
@@ -133,7 +133,7 @@ const activeName = computed(() => {
     &:not(:first-child) {
       margin-top: 10px;
 
-      @include mobile {
+      @include mixins.mobile {
         margin-top: 0px;
       }
     }
@@ -146,12 +146,12 @@ const activeName = computed(() => {
       transform: scale(0.95);
       transform-origin: center left;
 
-      @include mobile {
+      @include mixins.mobile {
         transform: none;
       }
 
       #{$this}__menu-label {
-        @include mobile {
+        @include mixins.mobile {
           display: inline-flex;
         }
       }
@@ -175,7 +175,7 @@ const activeName = computed(() => {
     font-weight: 600;
     font-size: 1rem;
 
-    @include mobile {
+    @include mixins.mobile {
       visibility: visible;
       opacity: 1;
       margin-left: 5px;
@@ -184,7 +184,7 @@ const activeName = computed(() => {
     }
   }
 
-  @include mobile {
+  @include mixins.mobile {
     --sidebar-width: 100dvw;
     transition: none;
   }

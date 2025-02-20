@@ -24,6 +24,7 @@ export default defineConfig({
     VitePWA({
       manifest: {
         background_color: "#ffffff",
+        theme_color: "#4545C4",
         scope: "/",
         start_url: "/",
         name: "vue-demo-boilerplate",
@@ -79,6 +80,13 @@ export default defineConfig({
       },
     }),
   ],
+  css: {
+    preprocessorOptions: {
+      scss: {
+        api: 'modern-compiler' // or "modern"
+      }
+    }
+  },
   resolve: {
     alias: {
       "@": fileURLToPath(new URL("./src", import.meta.url)),

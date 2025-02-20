@@ -56,7 +56,7 @@ function handleRemoveUser() {
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/styles/mixins.scss";
+@use "@/assets/styles/mixins" as mixins;
 
 .table-item {
   --border-color: transparent;

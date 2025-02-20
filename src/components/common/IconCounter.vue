@@ -25,7 +25,7 @@ function handleClick() {
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/styles/mixins.scss";
+@use "@/assets/styles/mixins" as mixins;
 
 .icon-counter {
   --icon-size: 36px;
@@ -46,7 +46,7 @@ function handleClick() {
     transform: scale(0.95);
   }
 
-  @include mobile {
+  @include mixins.mobile {
     --icon-size: 28px;
   }
 
