@@ -1,9 +1,14 @@
-import type { Meta, StoryObj } from '@storybook/vue3';
+import type { Meta, StoryObj, StoryFn } from '@storybook/vue3';
+import type { ButtonProps } from '@/components/common/FancyButton.vue';
 
 import FancyButton from '@/components/common/FancyButton.vue';
 import SvgIcon from '@/components/common/SvgIcon.vue';
 import StoreIcon from '@/assets/icons/store-line.svg';
 import MenuIcon from "@/assets/icons/menu-line.svg";
+
+interface StoryArgs extends ButtonProps {
+  label: string;
+}
 
 export default {
   title: 'FancyButton',
@@ -22,7 +27,7 @@ export default {
   },
 } as Meta<typeof FancyButton>
 
-export const Button = (args: any) => ({
+export const Button: StoryFn<StoryArgs> = (args) => ({
   components: { FancyButton, SvgIcon },
   setup() {
     return { args };

@@ -15,7 +15,7 @@
     </users-table>
     <teleport to="body">
       <ConfirmModal
-        v-show="openedModal"
+        :opened="openedModal"
         @close="handleDeclineRemove"
         @confirm="handleRemoveUser"
       />

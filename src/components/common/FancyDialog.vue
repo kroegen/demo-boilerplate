@@ -1,6 +1,6 @@
 <template>
   <transition name="fade">
-    <div class="f-dialog" @click.stop="handleClickOutside">
+    <div class="f-dialog" v-if="opened" @click.stop="handleClickOutside">
       <div class="f-dialog__wrapper" @click.stop>
         <div class="f-dialog__container">
           <div class="f-dialog__header">

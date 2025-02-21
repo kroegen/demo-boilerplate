@@ -79,4 +79,4 @@ export interface UsersResponse extends Response {
   users: User[];
 }
 
-export interface UserResponse extends User {}
+export type UserResponse = User;

@@ -6,25 +6,51 @@
 
 <script lang="ts">
 import { defineComponent, type PropType } from "vue";
-import * as Popper from "@popperjs/core";
+import {
+  createPopper,
+  type Instance,
+  type Placement,
+  type Options,
+  type VirtualElement,
+  type Modifier,
+  type ModifierArguments,
+  type State,
+  type Offsets
+} from "@popperjs/core";
+
+declare type OffsetData = {
+  [key in Placement]?: Offsets;
+};
+
+// Define types for our custom modifier
+type AutoWidthData = Record<string, never>;
+
+interface PopperStyles extends Partial<CSSStyleDeclaration> {
+  width?: string;
+}
+
+interface PopperState extends State {
+  styles: {
+    [key: string]: Partial<CSSStyleDeclaration>;
+    popper: PopperStyles;
+  };
+}
 
 export default defineComponent({
   name: "f-popper",
 
   props: {
     placement: {
-      type: String as PropType<Popper.Placement>,
-      default: () => "auto",
+      type: String as PropType<Placement>,
+      default: "auto",
     },
     visible: {
       type: Boolean,
       default: false,
     },
     offset: {
-      type: Array as PropType<number[]>,
-      default() {
-        return [0, 5];
-      },
+      type: Array as PropType<OffsetData>,
+      default: () => [0, 5],
     },
     appendToBody: {
       type: Boolean,
@@ -35,19 +61,21 @@ export default defineComponent({
       default: false,
     },
   },
+
   data() {
     return {
       showPopper: false,
-      currentPlacement: "",
-      popper: null as Popper.Instance | null,
+      currentPlacement: "" as Placement,
+      popper: null as Instance | null,
       element: null as HTMLElement | null,
-      reference: null as HTMLElement | null,
+      reference: null as (HTMLElement | VirtualElement) | null,
     };
   },
+
   watch: {
     placement: {
       immediate: true,
-      handler(value) {
+      handler(value: Placement) {
         if (this.element && this.popper) {
           this.updatePlacement(value);
         }
@@ -55,39 +83,40 @@ export default defineComponent({
     },
     visible: {
       immediate: true,
-      handler(value) {
+      handler(value: boolean) {
         this.showPopper = value;
       },
     },
-    showPopper(value) {
+    showPopper(value: boolean) {
       if (value) {
         this.createPopper();
       } else {
         this.destroyPopper();
       }
-
       this.$emit("change", value);
     },
   },
+
   created() {
     this.createPopper();
   },
+
   beforeUnmount() {
     this.destroyPopper();
   },
+
   methods: {
     createPopper() {
       this.currentPlacement = this.currentPlacement || this.placement;
       this.element = this.element || this.$el;
-      this.reference =
-        this.reference || (this.element?.parentNode as HTMLElement);
+      this.reference = this.reference || (this.element?.parentNode as HTMLElement);
 
       if (!this.element || !this.reference) return;
 
       if (this.appendToBody) document.body.appendChild(this.element);
 
-      const options = {
-        placement: this.currentPlacement as Popper.Placement,
+      const options: Partial<Options> = {
+        placement: this.currentPlacement,
         modifiers: [
           {
             name: "offset",
@@ -99,46 +128,42 @@ export default defineComponent({
       };
 
       if (this.autoWidth) {
-        const autoWidth = {
+        const autoWidth: Modifier<"autoWidth", AutoWidthData> = {
           name: "autoWidth",
           enabled: true,
           phase: "beforeWrite",
           requires: ["computeStyles"],
-          fn: ({ state }: { state: any }) => {
-            state.styles.popper.width = `${state.rects.reference.width}px`;
+          fn({ state }: ModifierArguments<AutoWidthData>) {
+            const popperState = state as PopperState;
+            const width = `${(popperState.elements.reference as HTMLElement).offsetWidth}px`;
+            popperState.styles.popper.width = width;
           },
-          effect: ({ state }: { state: any }) => {
-            state.elements.popper.style.width = `${state.elements.reference.offsetWidth}px`;
+          effect({ state }: ModifierArguments<AutoWidthData>) {
+            const popperState = state as PopperState;
+            const width = `${(popperState.elements.reference as HTMLElement).offsetWidth}px`;
+            (popperState.elements.popper as HTMLElement).style.width = width;
           },
         };
 
         options.placement = "bottom-start";
-        // @ts-ignore
-        options.modifiers.push(autoWidth);
+        options.modifiers?.push(autoWidth);
       }
 
-      this.popper = Popper.createPopper(this.reference, this.element, options);
+      this.popper = createPopper(this.reference, this.element, options);
     },
 
     destroyPopper() {
       if (!this.popper) return;
-      if (
-        this.element &&
-        (this.element as HTMLElement).parentNode === document.body
-      ) {
+      if (this.element?.parentNode === document.body) {
         document.body.removeChild(this.element);
       }
-
       this.popper.destroy();
       this.popper = null;
     },
 
-    async updatePlacement(value: Popper.Placement) {
+    async updatePlacement(value: Placement) {
       this.currentPlacement = value;
-
-      if (this.popper) {
-        await this.popper.setOptions({ placement: value });
-      }
+      await this.popper?.setOptions({ placement: value });
     },
   },
 });
@@ -146,8 +171,6 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .f-popper {
-  $this: &;
-
   z-index: 50;
 }
 </style>

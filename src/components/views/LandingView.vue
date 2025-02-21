@@ -27,6 +27,13 @@ import { ref, watch, type Ref, computed } from "vue";
 
 import type { Product } from "@/api/services/interfaces";
 
+interface DragHandler {
+  (e: DragEvent): void;
+}
+interface LeaveHandler {
+  (): void;
+}
+
 import Loader from "@/components/common/SpinnerLoader.vue";
 import ProductCard from "./LandingView/ProductCard.vue";
 import FancyPagination from "@/components/common/FancyPagination.vue";
@@ -99,20 +106,22 @@ function handleChangePage(page: number) {
 }
 
 function handleDragover(e: DragEvent) {
-  debounce(onDragover(e) as unknown as Function, 600);
+  const debouncedDragover = debounce<DragHandler>(onDragover, 600);
+  debouncedDragover(e);
 }
 
 function handleDragleave() {
-  debounce(onDragleave() as unknown as Function, 200);
+  const debouncedDragleave = debounce<LeaveHandler>(onDragleave, 200);
+  debouncedDragleave();
 }
 
-function onDragover(e: DragEvent) {
+function onDragover(e: DragEvent): void {
   const target = findParentElementByClassName(e.target as Element, "product");
 
   target?.classList.add("product--active");
 }
 
-function onDragleave() {
+function onDragleave(): void {
   const activeNodes = document.querySelectorAll("li.product--active");
 
   for (const activeNode of activeNodes) {

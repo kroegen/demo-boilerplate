@@ -26,6 +26,12 @@ import { defineComponent, type PropType } from "vue";
 export type ButtonVariant = "filled" | "outlined" | "text";
 export type ButtonSize = "large" | "medium" | "small" | "tiny";
 
+export interface ButtonProps {
+  variant: ButtonVariant;
+  size: ButtonSize;
+  disabled: boolean;
+}
+
 export default defineComponent({
   name: "f-button",
   props: {

@@ -25,7 +25,7 @@ import { computed } from "vue";
 
 interface Props {
   product: Product;
-  active: Boolean;
+  active: boolean;
 }
 
 const props = defineProps<Props>();
