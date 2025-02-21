@@ -79,7 +79,7 @@
         @change="handleCloseDialog"
       />
       <InfoModal
-        v-show="openedModal"
+        :opened="openedModal"
         @close="openedModal = false"
         @copy="handleShowInfoMessage"
       />
@@ -107,6 +107,11 @@ import KeyIcon from "@/assets/icons/key-fill.svg";
 import { emitter } from "@/utils/emitter";
 import { type SnackConfig, SnackType } from "../common/FancySnack.vue";
 
+interface LoginForm {
+  username: string;
+  password: string;
+}
+
 export default defineComponent({
   components: {
     Field,
@@ -129,7 +134,7 @@ export default defineComponent({
       form: {
         username: "",
         password: "",
-      },
+      } as LoginForm,
       isBlinking: false,
     };
   },
@@ -152,10 +157,10 @@ export default defineComponent({
   methods: {
     ...mapActions(authStore, ["login"]),
     async handleSubmit() {
-      const result = await (this.$refs.form as any).validate();
+      const form = this.$refs.form as InstanceType<typeof FForm>;
+      const result = await form.validate();
 
       if (!result) {
-        // this.handleShowErrorMessage();
         return;
       } else {
         try {
@@ -165,9 +170,10 @@ export default defineComponent({
 
           this.handleShowSuccessMessage();
           this.$router.push({ name: "products" });
-        } catch (error: any) {
-          this.handleSetErrors(error);
-          this.handleShowErrorMessage(error);
+        } catch (error) {
+          const customError = error as CustomError;
+          this.handleSetErrors(customError);
+          this.handleShowErrorMessage(customError);
         }
       }
     },

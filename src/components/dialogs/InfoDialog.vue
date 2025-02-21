@@ -13,7 +13,7 @@
       </h3>
     </template>
     <transition name="slide-fade">
-      <div class="info__content">
+      <div class="info__content" v-if="currentStep">
         <div
           class="info__content-wrapper"
           v-for="step in steps"
@@ -51,7 +51,7 @@ import type { ButtonVariant } from "@/components/common/FancyButton.vue";
 
 interface Action {
   label: string;
-  action: Function;
+  action: () => void;
   variant?: ButtonVariant;
 }
 

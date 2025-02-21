@@ -52,12 +52,14 @@ export function findParentElementByClassName(
   return null;
 }
 
-export function debounce(fn: Function, ms = 300) {
+export function debounce<T extends (...args: Parameters<T>) => void>(
+  fn: T,
+  ms: number = 300
+): T {
   let timeoutId: ReturnType<typeof setTimeout>;
 
-  return function (this: any, ...args: any[]) {
+  return function(this: unknown, ...args: Parameters<T>) {
     clearTimeout(timeoutId);
-
     timeoutId = setTimeout(() => fn.apply(this, args), ms);
-  };
+  } as T;
 }

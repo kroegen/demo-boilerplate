@@ -1,6 +1,6 @@
 <template>
   <transition name="fade">
-    <div class="f-modal" @click.stop="handleClickOutside">
+    <div class="f-modal" v-if="opened" @click.stop="handleClickOutside">
       <div class="f-modal__wrapper" @click.stop>
         <div class="f-modal__container">
           <div class="f-modal__header">
@@ -30,6 +30,11 @@ export default defineComponent({
   name: "f-modal",
   emits: ["close"],
   props: {
+    opened: {
+      type: Boolean,
+      required: true,
+      default: () => false,
+    },
     closeByClickOutside: {
       type: Boolean,
       default: () => false,

@@ -15,9 +15,10 @@
 
 <script lang="ts" setup>
 import { computed, useSlots } from "vue";
+import type { Slots } from 'vue';
 import { useRouteData } from "@/composables/useRouteData";
 
-const slots: any = useSlots();
+const slots: Slots = useSlots();
 const { meta } = useRouteData();
 const title = computed(() => {
   return meta?.value?.title ?? "";

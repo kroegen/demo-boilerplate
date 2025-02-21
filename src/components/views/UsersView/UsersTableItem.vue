@@ -36,7 +36,7 @@ import { computed } from "vue";
 
 interface Props {
   user: User;
-  active: Boolean;
+  active: boolean;
 }
 
 const emit = defineEmits(["remove"]);
