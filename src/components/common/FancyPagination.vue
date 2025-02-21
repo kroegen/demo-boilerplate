@@ -1,6 +1,6 @@
 <template>
   <div class="pagination">
-    <f-button
+    <FancyButton
       v-for="page in props.pages"
       :key="page"
       size="tiny"
@@ -8,11 +8,13 @@
       @click="$emit('select', page)"
     >
       {{ page }}
-    </f-button>
+    </FancyButton>
   </div>
 </template>
 
 <script lang="ts" setup>
+import FancyButton from '@/components/common/FancyButton.vue';
+
 interface Props {
   pages: number;
   currentPage: number;
