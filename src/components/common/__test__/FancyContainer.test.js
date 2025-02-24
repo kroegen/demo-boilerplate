@@ -1,8 +1,5 @@
 import { test, expect, describe } from "vitest";
-//import mount
 import { mount } from "@vue/test-utils";
-
-//import your component
 import FancyContainer from "../FancyContainer.vue";
 
 describe("FancyContainer component", () => {
