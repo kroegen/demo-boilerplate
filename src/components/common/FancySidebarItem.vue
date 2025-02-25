@@ -14,12 +14,12 @@ import SvgIcon from "@/components/common/SvgIcon.vue";
 import type { RouteRecordName } from "vue-router";
 
 export interface MenuItem {
-  icon?: string;
+  icon: string;
   label: string;
-  name?: RouteRecordName;
+  name: RouteRecordName;
   link?: string;
-  active: boolean;
-  expended: boolean;
+  active?: boolean;
+  expended?: boolean;
 }
 
 const props = defineProps<MenuItem>();

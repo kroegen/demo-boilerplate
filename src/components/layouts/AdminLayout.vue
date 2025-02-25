@@ -33,6 +33,7 @@ import ProductsIcon from "@/assets/icons/store-line.svg";
 import UsersIcon from "@/assets/icons/group-line.svg";
 import LogoutIcon from "@/assets/icons/logout-line.svg";
 import GithubIcon from "@/assets/icons/github-fill.svg";
+import type { MenuItem } from "../common/FancySidebarItem.vue";
 
 const icons = {
   dashboard: DashboardIcon,
@@ -44,7 +45,7 @@ const icons = {
 
 const { t } = useI18n();
 const route = useRoute();
-const menuItems = [
+const menuItems: MenuItem[] = [
   {
     icon: icons.logout,
     label: t("sidebar.logout"),
