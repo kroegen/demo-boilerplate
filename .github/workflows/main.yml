@@ -23,10 +23,15 @@ jobs:
           node-version: '20'
           cache: 'npm'
 
-      - name: Clean install dependencies
+      - name: Clear npm cache
         run: |
+          npm cache clean --force
           rm -rf node_modules package-lock.json
-          npm install
+          rm -rf .vite
+          rm -rf dist
+
+      - name: Install dependencies
+        run: npm install
 
       - name: Build
         run: npm run build-only
