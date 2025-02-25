@@ -32,7 +32,7 @@ jobs:
         run: npm run build-only
 
       - name: Unit Tests
-        run: npm run test:unit
+        run: npm run test:cov
 
       - name: S3 Sync
         uses: jakejarvis/s3-sync-action@v0.5.1
