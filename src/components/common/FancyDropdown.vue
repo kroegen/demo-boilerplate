@@ -12,7 +12,7 @@
   --bg-color: var(--white-color);
   --dropdown-height: auto;
   --dropdown-max-height: 200px;
-  --dropdown-min-height: 100px;
+  --dropdown-min-height: 40px;
   --dropdown-width: 200px;
   --dropdown-padding: 0px;
 
