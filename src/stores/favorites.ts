@@ -1,4 +1,5 @@
 import type { Product } from "@/api/services/interfaces";
+import type { ProductId } from "@/types/store";
 import { defineStore } from "pinia";
 
 interface FavoritesState {
@@ -10,15 +11,15 @@ export const FavoritesStore = defineStore("FavoritesStore", {
     favorites: [],
   }),
   getters: {
-    getFavoritesIds: (state): number[] =>
+    getFavoritesIds: (state): ProductId[] =>
       state.favorites.map((product) => product.id),
     counter: (state): number => state.favorites.length,
   },
   actions: {
-    addProductIdToFavoritesIds(product: Product) {
+    addProductToFavorites(product: Product) {
       this.favorites.push(product);
     },
-    removeProductIdFromFavoritesIds(productId: number) {
+    removeProductFromFavorites(productId: ProductId) {
       const index = this.favorites.findIndex(
         (product) => product.id === productId
       );

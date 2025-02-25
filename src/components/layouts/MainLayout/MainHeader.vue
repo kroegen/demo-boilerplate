@@ -4,7 +4,7 @@
       <div class="header__actions-left">
         <svg-icon
           class="header__menu-icon"
-          :src="icons.menu"
+          :src="HEADER_ICONS.menu"
           @click="handleOpenMenu"
         />
       </div>
@@ -19,13 +19,13 @@
           rel="noopener noreferrer"
           class="header__github-icon"
         >
-          <svg-icon :src="icons.github" />
+          <svg-icon :src="HEADER_ICONS.github" />
         </a>
         <IconCounter
           class="header__heart-icon"
           :counter="favoritesStore.counter"
-          :icon="icons.filled"
-          @click="handleOpenFavorites"
+          :icon="HEADER_ICONS.filled"
+          @click="handleOpenDropdown('favorites')"
         >
           <f-popper
             :visible="isFavoritesOpen"
@@ -38,8 +38,8 @@
                   v-for="favorite in favoritesStore.favorites"
                   :key="favorite.id"
                   :product="favorite"
-                  style="margin-bottom: 10px"
-                  @remove="handleRemoveProductFromFavorites(favorite.id)"
+                  :style="{ 'margin-bottom: 10px': favoritesStore.counter > 1 }"
+                  @remove="handleRemoveProduct(favorite.id, 'favorites')"
                 />
               </transition-group>
             </f-dropdown>
@@ -48,12 +48,30 @@
         <IconCounter
           class="header__cart-icon"
           :counter="cartsStore.counter"
-          :icon="icons.cart"
-          @click="handleOpenCart"
-        />
+          :icon="HEADER_ICONS.cart"
+          @click="handleOpenDropdown('cart')"
+        >
+          <f-popper
+            :visible="isCartOpen"
+            placement="bottom-start"
+            :offset="[0, 15]"
+          >
+            <f-dropdown class="header__icon-dropdown">
+              <transition-group name="fade">
+                <ProductListItem
+                  v-for="product in cartsStore.products"
+                  :key="product.id"
+                  :product="product"
+                  :style="{ 'margin-bottom: 10px': cartsStore.counter > 1 }"
+                  @remove="handleRemoveProduct(product.id, 'cart')"
+                />
+              </transition-group>
+            </f-dropdown>
+          </f-popper>
+        </IconCounter>
         <svg-icon
           class="header__login-icon"
-          :src="icons.login"
+          :src="HEADER_ICONS.login"
           @click="handleLogin"
         />
       </div>
@@ -63,63 +81,39 @@
 
 <script lang="ts" setup>
 import { useRoute, useRouter } from "vue-router";
+import { computed } from "vue";
 import SvgIcon from "@/components/common/SvgIcon.vue";
 import IconCounter from "@/components/common/IconCounter.vue";
 import ProductListItem from "@/components/views/LandingView/ProductListItem.vue";
 import SelectLocale from "./SelectLocale.vue";
+import { HEADER_ICONS } from "@/constants/icons";
+import { useMainHeader } from "@/composables/useMainHeader";
 
-import LoginIcon from "@/assets/icons/login-line.svg";
-import GithubIcon from "@/assets/icons/github-fill.svg";
-import CartIcon from "@/assets/icons/cart-fill.svg";
-import FilledIcon from "@/assets/icons/heart-fill.svg";
-import MenuIcon from "@/assets/icons/menu-line.svg";
-
-import { CartsStore } from "@/stores/cart";
-import { FavoritesStore } from "@/stores/favorites";
-import { computed, ref } from "vue";
-
-const icons = {
-  login: LoginIcon,
-  github: GithubIcon,
-  cart: CartIcon,
-  filled: FilledIcon,
-  menu: MenuIcon,
-};
 const route = useRoute();
+const router = useRouter();
 const emit = defineEmits(["click-menu"]);
 
-const isFavoritesOpen = ref(false);
-const routeName = computed(() => {
-  return route?.name ? route.name : "";
-});
-const routeCategory = computed(() => {
-  return route.params.category ? `< ${route.params.category}` : routeName.value;
-});
-const router = useRouter();
-const cartsStore = CartsStore();
-const favoritesStore = FavoritesStore();
+const {
+  isCartOpen,
+  isFavoritesOpen,
+  cartsStore,
+  favoritesStore,
+  handleRemoveProduct,
+  handleOpenDropdown,
+  handleCloseAll,
+} = useMainHeader();
 
-function handleLogin() {
-  router.push({ name: "login" });
-}
+const routeName = computed(() => route?.name ?? "");
+const routeCategory = computed(() =>
+  route.params.category ? `< ${route.params.category}` : routeName.value
+);
 
-function handleHome() {
-  router.push({ name: "landing" });
-}
-
-function handleOpenCart() {}
-
-function handleOpenFavorites() {
-  isFavoritesOpen.value = !isFavoritesOpen.value;
-}
-
-function handleRemoveProductFromFavorites(productId: number) {
-  favoritesStore.removeProductIdFromFavoritesIds(productId);
-}
-
-function handleOpenMenu() {
+const handleLogin = () => router.push({ name: "login" });
+const handleHome = () => router.push({ name: "landing" });
+const handleOpenMenu = () => {
+  handleCloseAll();
   emit("click-menu");
-}
+};
 </script>
 
 <style lang="scss" scoped>
@@ -192,6 +186,10 @@ function handleOpenMenu() {
     --dropdown-max-height: 400px;
     --dropdown-width: 400px;
     --dropdown-padding: 10px;
+
+    @include mixins.mobile {
+      --dropdown-width: 100vw;
+    }
   }
 
   &__actions-left {

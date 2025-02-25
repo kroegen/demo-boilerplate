@@ -81,20 +81,17 @@ const state: State = reactive({
   intersected: false,
 });
 
-const product = computed(() => {
-  return props.product;
-});
 const title = computed(() => {
   return props.product.title;
 });
 const price = computed(() => {
   const discount =
-    (product.value.price * product.value.discountPercentage) / 100;
+    (props.product.price * props.product.discountPercentage) / 100;
 
-  return (product.value.price - discount).toFixed(2);
+  return (props.product.price - discount).toFixed(2);
 });
 const productThumbnail = computed(() => {
-  return product.value.thumbnail;
+  return props.product.thumbnail;
 });
 const imageSrc = computed(() =>
   state.intersected ? productThumbnail.value : ""
@@ -121,12 +118,12 @@ onUnmounted(() => {
   state.observer?.disconnect();
 });
 
-function handleAddToCart(product: Product) {
-  store.addProductToCart(product);
+const handleAddToCart = () => {
+  store.addProductToCart(props.product);
   handleShowSuccessMessage();
 }
 
-function handleShowSuccessMessage() {
+const handleShowSuccessMessage = () => {
   const message = t("notifications.product.cartAdded", { item: title.value });
   const snackConfig: SnackConfig = {
     text: message,
@@ -138,7 +135,7 @@ function handleShowSuccessMessage() {
   emitter.emit("showSnack", snackConfig);
 }
 
-function handleAddFavorite() {
+const handleAddFavorite = () => {
   const message = t("notifications.product.favoritesAdded", {
     item: title.value,
   });
@@ -152,7 +149,7 @@ function handleAddFavorite() {
   emitter.emit("showSnack", snackConfig);
 }
 
-function handleRemoveFavorite() {
+const handleRemoveFavorite = () => {
   const message = t("notifications.product.favoritesRemoved", {
     item: title.value,
   });
@@ -166,7 +163,7 @@ function handleRemoveFavorite() {
   emitter.emit("showSnack", snackConfig);
 }
 
-function handleDragstart(e: DragEvent) {
+const handleDragstart = (e: DragEvent) => {
   if (e.dataTransfer) {
     e.dataTransfer.setData("value", JSON.stringify(props.transferData));
   }

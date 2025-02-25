@@ -46,10 +46,10 @@ const isSelected = computed(() => {
 
 function toggleSelection() {
   if (!isSelected.value) {
-    store.addProductIdToFavoritesIds(props.product);
+    store.addProductToFavorites(props.product);
     emit("add");
   } else {
-    store.removeProductIdFromFavoritesIds(props.product.id);
+    store.removeProductFromFavorites(props.product.id);
     emit("remove");
   }
 }
