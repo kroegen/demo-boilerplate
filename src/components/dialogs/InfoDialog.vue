@@ -13,7 +13,7 @@
       </h3>
     </template>
     <transition name="slide-fade">
-      <div class="info__content" v-if="currentStep">
+      <div class="info__content" v-if="currentStep !== null">
         <div
           class="info__content-wrapper"
           v-for="step in steps"
