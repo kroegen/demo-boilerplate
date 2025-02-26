@@ -29,6 +29,7 @@ jobs:
           rm -rf node_modules package-lock.json
           rm -rf .vite
           rm -rf dist
+          rm -rf storybook-static
 
       - name: Install dependencies
         run: npm install
@@ -36,25 +37,41 @@ jobs:
       - name: Build
         run: npm run build-only
 
+      - name: Build Storybook
+        run: npm run build-storybook
+
       - name: Unit Tests
         run: npm run test:cov
 
-      - name: S3 Sync
+      - name: S3 Sync App
         uses: jakejarvis/s3-sync-action@v0.5.1
         with:
-          args: --acl public-read --delete
+          args: --delete
         env:
           AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_REGION: 'us-east-1'
+          AWS_REGION: 'us-east-2'
           SOURCE_DIR: 'dist'
+          DEST_DIR: ''
 
-      - name: Invalidate AWS CloudFront
+      - name: S3 Sync Storybook
+        uses: jakejarvis/s3-sync-action@v0.5.1
+        with:
+          args: --delete
+        env:
+          AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_REGION: 'us-east-2'
+          SOURCE_DIR: 'storybook-static'
+          DEST_DIR: 'storybook'
+
+      - name: Invalidate CloudFront Cache
         uses: chetan/invalidate-cloudfront-action@v2
         env:
           DISTRIBUTION: ${{ secrets.DISTRIBUTION }}
-          PATHS: '/*'
+          PATHS: '/* /storybook/*'
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_REGION: 'us-east-1'
+          AWS_REGION: 'us-east-2'
