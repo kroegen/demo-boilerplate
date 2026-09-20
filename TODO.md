@@ -191,7 +191,7 @@ Each item below is its own reviewable step; do not combine them.
 - [x] Add an "Edit" action that switches a row into edit mode.
 - [x] Add a "Cancel" action that reverts a row to display mode without saving.
 - [x] Add an editable `title` field.
-- [ ] Add an editable `price` field.
+- [x] Add an editable `price` field.
 - [ ] Add an editable `stock` field.
 - [ ] Add category editing (select bound to existing categories data).
 - [ ] Add client-side validation for the editable fields (reuse `vee-validate`).

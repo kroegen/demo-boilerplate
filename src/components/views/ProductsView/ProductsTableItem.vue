@@ -4,7 +4,12 @@
       {{ product.title }}
     </span>
     <span v-else class="table-item__title">
-      <input v-model="draft.title" class="table-item__field" type="text" :aria-label="$t('labels.title')" />
+      <input
+        v-model="draft.title"
+        class="table-item__field"
+        type="text"
+        :aria-label="$t('labels.title')"
+      />
     </span>
     <span class="table-item__brand">
       {{ product.brand }}
@@ -15,14 +20,34 @@
     <span class="table-item__category">
       {{ product.category }}
     </span>
-    <span class="table-item__price">
+    <span v-if="!isEditing" class="table-item__price">
       {{ product.price }}
     </span>
+    <span v-else class="table-item__price">
+      <input
+        v-model.number="draft.price"
+        class="table-item__field"
+        type="number"
+        min="0"
+        step="0.01"
+        :aria-label="$t('labels.price')"
+      />
+    </span>
     <span class="table-item__actions">
-      <button v-if="!isEditing" type="button" class="table-item__action" @click="startEditing">
+      <button
+        v-if="!isEditing"
+        type="button"
+        class="table-item__action"
+        @click="startEditing"
+      >
         {{ $t("actions.edit") }}
       </button>
-      <button v-else type="button" class="table-item__action" @click="cancelEditing">
+      <button
+        v-else
+        type="button"
+        class="table-item__action"
+        @click="cancelEditing"
+      >
         {{ $t("actions.cancel") }}
       </button>
     </span>
