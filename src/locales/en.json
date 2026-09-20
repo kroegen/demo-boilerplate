@@ -66,6 +66,11 @@
     "username": "Enter your username",
     "password": "Enter the password"
   },
+  "validation": {
+    "required": "This field is required",
+    "nonnegative": "Enter a nonnegative number",
+    "wholeNonnegative": "Enter a nonnegative whole number"
+  },
   "notifications": {
     "login": {
       "copy": "Copied to clipboard",

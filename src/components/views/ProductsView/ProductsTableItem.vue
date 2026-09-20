@@ -1,15 +1,18 @@
 <template>
-  <div class="table-item">
+  <div class="table-item" :class="{ 'table-item--editing': isEditing }">
     <span v-if="!isEditing" class="table-item__title">
       {{ product.title }}
     </span>
     <span v-else class="table-item__title">
       <input
-        v-model="draft.title"
+        v-model="title"
         class="table-item__field"
         type="text"
         :aria-label="$t('labels.title')"
       />
+      <small v-if="titleError" class="table-item__error" role="alert">{{
+        titleError
+      }}</small>
     </span>
     <span class="table-item__brand">
       {{ product.brand }}
@@ -22,7 +25,7 @@
     </span>
     <span v-else class="table-item__category">
       <select
-        v-model="draft.category"
+        v-model="category"
         class="table-item__field"
         :aria-label="$t('labels.category')"
       >
@@ -34,30 +37,39 @@
           {{ category.name }}
         </option>
       </select>
+      <small v-if="categoryError" class="table-item__error" role="alert">{{
+        categoryError
+      }}</small>
     </span>
     <span v-if="!isEditing" class="table-item__price">
       {{ product.price }}
     </span>
     <span v-else class="table-item__price">
       <input
-        v-model.number="draft.price"
+        v-model.number="price"
         class="table-item__field"
         type="number"
         min="0"
         step="0.01"
         :aria-label="$t('labels.price')"
       />
+      <small v-if="priceError" class="table-item__error" role="alert">{{
+        priceError
+      }}</small>
     </span>
     <span v-if="!isEditing" class="table-item__stock">{{ product.stock }}</span>
     <span v-else class="table-item__stock">
       <input
-        v-model.number="draft.stock"
+        v-model.number="stock"
         class="table-item__field"
         type="number"
         min="0"
         step="1"
         :aria-label="$t('labels.stock')"
       />
+      <small v-if="stockError" class="table-item__error" role="alert">{{
+        stockError
+      }}</small>
     </span>
     <span class="table-item__actions">
       <button
@@ -82,7 +94,9 @@
 
 <script lang="ts" setup>
 import type { Category, Product } from "@/api/services/interfaces";
-import { computed, reactive, ref } from "vue";
+import { computed, ref } from "vue";
+import { useField } from "vee-validate";
+import { useI18n } from "vue-i18n";
 
 interface Props {
   product: Product;
@@ -92,12 +106,47 @@ interface Props {
 
 const props = defineProps<Props>();
 const isEditing = ref(false);
-const draft = reactive({
-  title: props.product.title,
-  price: props.product.price,
-  stock: props.product.stock,
-  category: props.product.category,
-});
+const { t } = useI18n();
+const {
+  value: title,
+  errorMessage: titleError,
+  resetField: resetTitle,
+} = useField<string>(
+  "title",
+  (value) => value.trim().length > 0 || t("validation.required"),
+  { initialValue: props.product.title },
+);
+const {
+  value: category,
+  errorMessage: categoryError,
+  resetField: resetCategory,
+} = useField<string>(
+  "category",
+  (value) => value.length > 0 || t("validation.required"),
+  { initialValue: props.product.category },
+);
+const {
+  value: price,
+  errorMessage: priceError,
+  resetField: resetPrice,
+} = useField<number | string>(
+  "price",
+  (value) =>
+    (typeof value === "number" && Number.isFinite(value) && value >= 0) ||
+    t("validation.nonnegative"),
+  { initialValue: props.product.price },
+);
+const {
+  value: stock,
+  errorMessage: stockError,
+  resetField: resetStock,
+} = useField<number | string>(
+  "stock",
+  (value) =>
+    (typeof value === "number" && Number.isInteger(value) && value >= 0) ||
+    t("validation.wholeNonnegative"),
+  { initialValue: props.product.stock },
+);
 
 const product = computed(() => {
   return props.product;
@@ -114,10 +163,10 @@ function cancelEditing() {
 }
 
 function resetDraft() {
-  draft.title = props.product.title;
-  draft.price = props.product.price;
-  draft.stock = props.product.stock;
-  draft.category = props.product.category;
+  resetTitle({ value: props.product.title });
+  resetPrice({ value: props.product.price });
+  resetStock({ value: props.product.stock });
+  resetCategory({ value: props.product.category });
 }
 </script>
 
@@ -130,6 +179,7 @@ function resetDraft() {
   display: flex;
   flex-direction: row;
   height: 60px;
+  min-height: 60px;
   width: 100%;
   align-items: center;
   justify-content: space-between;
@@ -137,6 +187,11 @@ function resetDraft() {
   border-right: 3px solid var(--border-color);
   transition: all 300ms;
   flex-shrink: 0;
+
+  &--editing {
+    height: auto;
+    padding: 8px 0;
+  }
 
   &:hover {
     --border-color: var(--blue-color);
@@ -203,6 +258,11 @@ function resetDraft() {
     padding: 6px;
     border: 1px solid var(--blue-color);
     border-radius: 4px;
+  }
+
+  &__error {
+    color: var(--red-color);
+    font-size: 0.7rem;
   }
 }
 </style>

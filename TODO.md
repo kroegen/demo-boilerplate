@@ -194,7 +194,7 @@ Each item below is its own reviewable step; do not combine them.
 - [x] Add an editable `price` field.
 - [x] Add an editable `stock` field.
 - [x] Add category editing (select bound to existing categories data).
-- [ ] Add client-side validation for the editable fields (reuse `vee-validate`).
+- [x] Add client-side validation for the editable fields (reuse `vee-validate`).
 - [ ] Wire the row's "Save" action to `ProductsService.updateProduct` (DummyJSON
       target for now).
 - [ ] Add a save loading state on the row.
