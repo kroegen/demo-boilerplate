@@ -222,7 +222,7 @@ Design constraint: switching `this.products = new ProductsService(dummyJsonApi)`
 - [x] Category filtering.
 - [x] Product list loading state.
 - [x] Product list empty state.
-- [ ] Product list API error state.
+- [x] Product list API error state.
 - [ ] Product detail screen.
 
 ## Phase 10 — Temporary local product persistence

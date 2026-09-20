@@ -51,6 +51,12 @@
         <Loader />
         <span>{{ $t("views.products.loading") }}</span>
       </div>
+      <div v-else-if="listError" class="products-state" role="alert">
+        <span>{{ listErrorMessage }}</span>
+        <button type="button" @click="loadProducts">
+          {{ $t("actions.retry") }}
+        </button>
+      </div>
       <div
         v-else-if="products.length === 0"
         class="products-state"
@@ -74,7 +80,7 @@
       </transition-group>
     </products-table>
     <FancyPagination
-      v-if="pages > 1 && !loading"
+      v-if="pages > 1 && !loading && !listError"
       :pages="pages"
       :current-page="page"
       @select="handlePageChange"
@@ -102,6 +108,7 @@
 import { computed, onMounted, ref, type Ref } from "vue";
 import Loader from "@/components/common/SpinnerLoader.vue";
 import api from "@/api";
+import { ClientAPIError } from "@/api/main";
 import ProductsTable from "./ProductsView/ProductsTable.vue";
 import ProductsTableItem from "./ProductsView/ProductsTableItem.vue";
 import ProductsCreateModal from "./ProductsView/ProductsCreateModal.vue";
@@ -117,6 +124,7 @@ import {
 } from "@/components/common/FancySnack.vue";
 
 const loading = ref(true);
+const listError = ref<unknown>(null);
 const products: Ref<Product[]> = ref([]);
 const categories: Ref<Category[]> = ref([]);
 const currentTableItem = ref(0);
@@ -132,6 +140,11 @@ const pages = computed(() => Math.ceil(total.value / limit));
 const removeId = ref<number | null>(null);
 const deleting = ref(false);
 const { t } = useI18n();
+const listErrorMessage = computed(() =>
+  listError.value instanceof ClientAPIError
+    ? listError.value.message
+    : t("views.products.error"),
+);
 let latestRequest = 0;
 
 onMounted(async () => {
@@ -141,6 +154,7 @@ onMounted(async () => {
 async function loadProducts() {
   const request = ++latestRequest;
   loading.value = true;
+  listError.value = null;
 
   try {
     const data = await api.products.fetchProducts(page.value, limit, {
@@ -167,7 +181,7 @@ async function loadProducts() {
       if (request === latestRequest) categories.value = response;
     }
   } catch (error) {
-    console.error(error);
+    if (request === latestRequest) listError.value = error;
   } finally {
     if (request === latestRequest) loading.value = false;
   }

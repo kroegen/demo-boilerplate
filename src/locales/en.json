@@ -2,7 +2,8 @@
   "views": {
     "products": {
       "loading": "Loading products...",
-      "empty": "No products found"
+      "empty": "No products found",
+      "error": "Could not load products"
     },
     "favorites": {
       "empty": "No favorites yet. Add products with the heart button."
@@ -65,6 +66,7 @@
     "createProduct": "Create product",
     "delete": "Delete",
     "clearFilter": "Clear filter",
+    "retry": "Retry",
     "goToMain": "Go to main page"
   },
   "labels": {
