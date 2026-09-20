@@ -54,4 +54,19 @@ describe("ClientAPI", () => {
     await expect(client.post("products", { title: "Test" })).resolves.toEqual({ id: 1 });
     await expect(client.delete("products/1")).resolves.toEqual({});
   });
+
+  it("sends PATCH requests with a JSON body", async () => {
+    const fetchMock = vi.fn().mockResolvedValue(new Response("{}", { status: 200 }));
+    vi.stubGlobal("fetch", fetchMock);
+
+    await new ClientAPI("https://dummyjson.com").patch("products/1", { title: "Updated" });
+
+    expect(fetchMock).toHaveBeenCalledWith(
+      "https://dummyjson.com/products/1",
+      expect.objectContaining({
+        method: "PATCH",
+        body: '{"title":"Updated"}',
+      })
+    );
+  });
 });

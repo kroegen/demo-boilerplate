@@ -33,6 +33,11 @@ export default class ClientAPI {
     return data;
   }
 
+  public async patch<T>(url: string, payload: T) {
+    const data = await this.request(url, "PATCH", payload);
+    return data;
+  }
+
   public async delete(url: string) {
     const data = await this.request(url, "DELETE");
     return data;

@@ -58,7 +58,7 @@ Legend: each task lists its expected result and a suggested verification command
 - [x] Treat every HTTP 2xx response as success (not only `200`).
       Expected result: `201`/`204`/etc. responses are returned normally instead of
       throwing. Verify: `ClientAPI` unit test with a mocked `204` response.
-- [ ] Add a `patch` method to `ClientAPI` (needed for Phase 6 product editing).
+- [x] Add a `patch` method to `ClientAPI` (needed for Phase 6 product editing).
       Expected result: `client.patch(url, payload)` sends a `PATCH` request with a
       JSON body. Verify: `ClientAPI` unit test.
 - [ ] Fix `Content-Type` header handling so it is omitted (or set correctly) for
