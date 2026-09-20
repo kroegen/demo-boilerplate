@@ -83,8 +83,9 @@ Problems found:
 - Base URL `"https://dummyjson.com"` is hardcoded as a string literal, not read from
   environment configuration.
 - `src/components/modals/InfoModal.vue` declares `const USERS_URL =
-  "https://dummyjson.com/users"` — an unused, dead constant that also bypasses the
-  service layer entirely. Should be removed.
+  "https://dummyjson.com/users"` used only as an informational hyperlink shown to
+  the user (not an API call, so it does not bypass the service layer). Correction
+  to the initial audit: this is not dead code and is left as-is.
 - Services currently only cover read operations (and `removeUser`); no
   create/update endpoints exist yet (needed for the products table editing feature).
 

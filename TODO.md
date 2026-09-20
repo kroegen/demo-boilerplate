@@ -20,10 +20,10 @@ Legend: each task lists its expected result and a suggested verification command
       Expected result: no other references to the old name remain.
       Verify: `grep -r "test-project" .` (excluding lockfile) returns nothing
       relevant.
-- [ ] Remove unused `USERS_URL` constant and hardcoded DummyJSON URL from
-      `src/components/modals/InfoModal.vue`.
-      Expected result: dead code removed; component behavior unchanged (it already
-      uses `usersStore` for data). Verify: `npm run lint`, `npx vitest run`.
+- [x] ~~Remove unused `USERS_URL` constant~~ — audit correction: `USERS_URL` in
+      `src/components/modals/InfoModal.vue` is actually used as an informational
+      hyperlink in the template (not dead code, not an API-layer bypass). No
+      change made; initial audit note was inaccurate.
 
 ## Phase 1 — Environment configuration
 
