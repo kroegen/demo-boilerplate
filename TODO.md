@@ -237,7 +237,7 @@ and `FancyPopper` rather than adding another native product select.
       selected, active, and disabled states.
 - [x] Build `FancySelect` with a `FancyInput` trigger and an option list inside
       `FancyDropdown` positioned by `FancyPopper`.
-- [ ] Handle opening, selection, outside click, and closing; support arrow
+- [x] Handle opening, selection, outside click, and closing; support arrow
       keys, Enter, Escape, and Tab with combobox/listbox semantics and focus
       management.
 - [ ] Replace the native category, sort, and order selects in the admin

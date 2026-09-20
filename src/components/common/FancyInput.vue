@@ -15,6 +15,12 @@
         :value="modelValue"
         :placeholder="placeholder"
         :aria-label="ariaLabel"
+        :role="inputRole"
+        :aria-expanded="inputRole ? ariaExpanded : undefined"
+        :aria-controls="ariaControls"
+        :aria-activedescendant="ariaActiveDescendant"
+        :aria-haspopup="ariaHasPopup"
+        :aria-autocomplete="ariaAutocomplete"
         :aria-invalid="!!error"
         :aria-describedby="error && name ? `${name}-error` : undefined"
         :disabled="disabled"
@@ -79,6 +85,24 @@ export default defineComponent({
     },
     ariaLabel: {
       type: String,
+    },
+    inputRole: {
+      type: String,
+    },
+    ariaExpanded: {
+      type: Boolean,
+    },
+    ariaControls: {
+      type: String,
+    },
+    ariaActiveDescendant: {
+      type: String,
+    },
+    ariaHasPopup: {
+      type: String as PropType<"dialog" | "menu" | "listbox" | "tree" | "grid">,
+    },
+    ariaAutocomplete: {
+      type: String as PropType<"list" | "none" | "inline" | "both">,
     },
     disabled: {
       type: Boolean,
