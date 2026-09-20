@@ -254,7 +254,7 @@ The products table is the left column. The right editor column is closed by
 default and opens for one selected product. On narrow screens the editor fills
 the content area.
 
-- [ ] Restructure the admin products view into table and editor columns, with
+- [x] Restructure the admin products view into table and editor columns, with
       the editor closed by default and one selected product at a time.
 - [ ] Make product table rows display-only and remove inline edit fields and
       row-level save/cancel controls.

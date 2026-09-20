@@ -1,80 +1,90 @@
 <template>
   <f-view>
-    <div class="products-toolbar">
-      <FancySelect
-        name="products-category"
-        :label="$t('labels.category')"
-        :model-value="category"
-        :options="categoryOptions"
-        :disabled="loading"
-        @update:model-value="handleCategorySelect"
-      />
-      <FancySelect
-        name="products-sort"
-        :label="$t('labels.sortBy')"
-        :model-value="sortBy"
-        :options="sortOptions"
-        :disabled="loading"
-        @update:model-value="handleSortSelect"
-      />
-      <FancySelect
-        name="products-order"
-        :label="$t('labels.sortDirection')"
-        :model-value="order"
-        :options="orderOptions"
-        :disabled="loading || !sortBy"
-        @update:model-value="handleOrderSelect"
-      />
-      <button
-        type="button"
-        :disabled="loading || !categories.length"
-        @click="createOpened = true"
-      >
-        {{ $t("actions.createProduct") }}
-      </button>
-    </div>
-    <products-table :aria-busy="loading">
-      <div v-if="loading" class="products-state" role="status">
-        <Loader />
-        <span>{{ $t("views.products.loading") }}</span>
-      </div>
-      <div v-else-if="listError" class="products-state" role="alert">
-        <span>{{ listErrorMessage }}</span>
-        <button type="button" @click="loadProducts">
-          {{ $t("actions.retry") }}
-        </button>
-      </div>
-      <div
-        v-else-if="products.length === 0"
-        class="products-state"
-        role="status"
-      >
-        <span>{{ $t("views.products.empty") }}</span>
-        <button v-if="category" type="button" @click="clearCategory">
-          {{ $t("actions.clearFilter") }}
-        </button>
-      </div>
-      <transition-group name="list" v-else>
-        <ProductsTableItem
-          v-for="product in products"
-          :key="product.id"
-          :product="product"
-          :categories="categories"
-          :locally-created="
-            adminProducts.created.some((item) => item.id === product.id)
-          "
-          :active="currentTableItem === product.id"
-          @saved="handleSavedProduct"
-          @remove="handleConfirmRemove"
+    <div
+      class="products-workspace"
+      :class="{ 'products-workspace--editing': selectedProduct }"
+    >
+      <div class="products-workspace__list">
+        <div class="products-toolbar">
+          <FancySelect
+            name="products-category"
+            :label="$t('labels.category')"
+            :model-value="category"
+            :options="categoryOptions"
+            :disabled="loading"
+            @update:model-value="handleCategorySelect"
+          />
+          <FancySelect
+            name="products-sort"
+            :label="$t('labels.sortBy')"
+            :model-value="sortBy"
+            :options="sortOptions"
+            :disabled="loading"
+            @update:model-value="handleSortSelect"
+          />
+          <FancySelect
+            name="products-order"
+            :label="$t('labels.sortDirection')"
+            :model-value="order"
+            :options="orderOptions"
+            :disabled="loading || !sortBy"
+            @update:model-value="handleOrderSelect"
+          />
+          <button
+            type="button"
+            :disabled="loading || !categories.length"
+            @click="createOpened = true"
+          >
+            {{ $t("actions.createProduct") }}
+          </button>
+        </div>
+        <products-table :aria-busy="loading">
+          <div v-if="loading" class="products-state" role="status">
+            <Loader />
+            <span>{{ $t("views.products.loading") }}</span>
+          </div>
+          <div v-else-if="listError" class="products-state" role="alert">
+            <span>{{ listErrorMessage }}</span>
+            <button type="button" @click="loadProducts">
+              {{ $t("actions.retry") }}
+            </button>
+          </div>
+          <div
+            v-else-if="products.length === 0"
+            class="products-state"
+            role="status"
+          >
+            <span>{{ $t("views.products.empty") }}</span>
+            <button v-if="category" type="button" @click="clearCategory">
+              {{ $t("actions.clearFilter") }}
+            </button>
+          </div>
+          <transition-group name="list" v-else>
+            <ProductsTableItem
+              v-for="product in products"
+              :key="product.id"
+              :product="product"
+              :categories="categories"
+              :locally-created="
+                adminProducts.created.some((item) => item.id === product.id)
+              "
+              :active="selectedProduct?.id === product.id"
+              @saved="handleSavedProduct"
+              @remove="handleConfirmRemove"
+            />
+          </transition-group>
+        </products-table>
+        <FancyPagination
+          v-if="pages > 1 && !loading && !listError"
+          :pages="pages"
+          :current-page="page"
+          @select="handlePageChange"
         />
-      </transition-group>
-    </products-table>
-    <FancyPagination
-      v-if="pages > 1 && !loading && !listError"
-      :pages="pages"
-      :current-page="page"
-      @select="handlePageChange"
-    />
+      </div>
+      <aside v-if="selectedProduct" class="products-workspace__editor">
+        <h2>{{ selectedProduct.title }}</h2>
+      </aside>
+    </div>
     <teleport to="body">
       <ProductsCreateModal
         :opened="createOpened"
@@ -122,7 +132,7 @@ const loading = ref(true);
 const listError = ref<unknown>(null);
 const products: Ref<Product[]> = ref([]);
 const categories: Ref<Category[]> = ref([]);
-const currentTableItem = ref(0);
+const selectedProduct = ref<Product | null>(null);
 const createOpened = ref(false);
 const adminProducts = useAdminProductsStore();
 const page = ref(1);
@@ -288,6 +298,31 @@ async function handleRemoveProduct() {
 </script>
 
 <style scoped>
+.products-workspace {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  height: 100%;
+  min-width: 0;
+
+  &--editing {
+    grid-template-columns: minmax(0, 1fr) minmax(300px, 360px);
+  }
+
+  &__list {
+    min-width: 0;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__editor {
+    min-width: 0;
+    overflow-y: auto;
+    border-left: 1px solid var(--beige-color);
+    padding: 24px;
+  }
+}
+
 .products-toolbar {
   display: flex;
   justify-content: flex-end;
