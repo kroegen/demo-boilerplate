@@ -145,7 +145,7 @@ extracting the shared display structure.
       and page-specific controls. Record the contract in `SPEC.md`.
       Verify: the plan leaves landing pagination and category routing in
       `LandingView`, and the header's compact `ProductListItem` dropdown separate.
-- [ ] Move `ProductCard`, `FavoriteButton`, and `RatingStars` out of the
+- [x] Move `ProductCard`, `FavoriteButton`, and `RatingStars` out of the
       `LandingView` directory into a shared product-component location; update
       imports without changing their behavior. Verify: `npm run type-check` and
       `npx vitest run`.

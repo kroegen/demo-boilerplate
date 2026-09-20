@@ -35,7 +35,7 @@ interface LeaveHandler {
 }
 
 import Loader from "@/components/common/SpinnerLoader.vue";
-import ProductCard from "./LandingView/ProductCard.vue";
+import ProductCard from "@/components/products/ProductCard.vue";
 import FancyPagination from "@/components/common/FancyPagination.vue";
 
 import { ProductsStore } from "@/stores/products";
