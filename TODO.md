@@ -114,8 +114,8 @@ Legend: each task lists its expected result and a suggested verification command
       document the constraint).
       Expected result: `npm install` no longer warns about this conflict, or the
       constraint is explicitly documented if unresolved.
-- [ ] Align declared Storybook package versions in `package.json` with the
-      installed `8.5.x` versions actually resolved (or intentionally re-pin), to
+- [x] Align declared Storybook package versions in `package.json` with the
+      installed `8.6.x` versions actually resolved (or intentionally re-pin), to
       remove the version-range drift noted in the audit.
       Expected result: `npm install` produces no changes; declared ranges match
       reality.
