@@ -212,13 +212,12 @@ Design constraint: switching `this.products = new ProductsService(dummyJsonApi)`
 `new ProductsService(backendApi)` later must not require any change to
 `ProductsTable`/`ProductsTableItem`.
 
-## Phase 9 — Later product features (separate phases, not started yet)
+## Phase 9 — Admin product flows
 
 - [ ] Create product flow.
 - [ ] Delete product flow with confirmation modal (reuse `ConfirmModal.vue`).
 - [ ] Pagination backed by real `page`/`limit` params via the fixed `ClientAPI`
       query serialization.
-- [ ] Server-side search.
 - [ ] Sorting.
 - [ ] Category filtering.
 - [ ] Product list loading state.
@@ -226,7 +225,24 @@ Design constraint: switching `this.products = new ProductsService(dummyJsonApi)`
 - [ ] Product list API error state.
 - [ ] Product detail screen.
 
-## Phase 10 — Users (deferred, DummyJSON-first)
+## Phase 10 — Temporary local product persistence
+
+- [ ] Keep a versioned local record of created products, saved edits, and deleted
+      product IDs while ProductsService uses DummyJSON.
+- [ ] Merge local changes with fresh API pages, including category and sort
+      results, without caching whole API responses.
+- [ ] Reconcile local records when real backend persistence replaces DummyJSON;
+      clear the temporary layer after migration.
+- [ ] Test reload, deleted-item filtering, updated-item merging, malformed
+      storage, and storage quota failures.
+
+## Phase 11 — Product search
+
+- [ ] Reuse the existing input control for a product search UI.
+- [ ] Add server-side search through ProductsService, keeping search state and
+      pagination together.
+
+## Phase 12 — Users (deferred, DummyJSON-first)
 
 - [ ] User list backend-readiness review (no change yet).
 - [ ] User detail view.
@@ -235,7 +251,7 @@ Design constraint: switching `this.products = new ProductsService(dummyJsonApi)`
 - [ ] Disable/delete user.
 - [ ] Roles support.
 
-## Phase 11 — Backend integration (deferred, not implemented in this repo)
+## Phase 13 — Backend integration (deferred, not implemented in this repo)
 
 - [ ] Point `ProductsService` at `backendApi` once `be-boileplate` exposes the
       documented `/api/products` contract (first domain to migrate).

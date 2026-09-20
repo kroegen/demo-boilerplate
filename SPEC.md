@@ -307,10 +307,14 @@ introduced for the frontend.
 ### Future feature roadmap (illustrative order, not committed all at once)
 1. Editable product rows (admin table) — see TODO.md.
 2. Product create / delete with confirmation flow.
-3. Pagination, server-side search, sorting, category filtering for products.
-4. Product loading/empty/error states, product detail screen.
-5. Gradual Users backend migration (list/detail/create/edit/disable/roles).
-6. Auth migration to `be-boileplate` once its auth contract exists.
+3. Admin product pagination, sorting, and category filtering.
+4. Product loading/empty/error states and admin product detail screen.
+5. Temporary local product changes while DummyJSON simulates writes; persist
+   only created products, edits, and deleted IDs, then remove this layer when
+   the real backend stores them.
+6. Product search using a shared input control.
+7. Gradual Users backend migration (list/detail/create/edit/disable/roles).
+8. Auth migration to `be-boileplate` once its auth contract exists.
 
 ---
 
