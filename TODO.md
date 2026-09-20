@@ -221,7 +221,7 @@ Design constraint: switching `this.products = new ProductsService(dummyJsonApi)`
 - [x] Sorting.
 - [x] Category filtering.
 - [x] Product list loading state.
-- [ ] Product list empty state.
+- [x] Product list empty state.
 - [ ] Product list API error state.
 - [ ] Product detail screen.
 

@@ -51,6 +51,16 @@
         <Loader />
         <span>{{ $t("views.products.loading") }}</span>
       </div>
+      <div
+        v-else-if="products.length === 0"
+        class="products-state"
+        role="status"
+      >
+        <span>{{ $t("views.products.empty") }}</span>
+        <button v-if="category" type="button" @click="clearCategory">
+          {{ $t("actions.clearFilter") }}
+        </button>
+      </div>
       <transition-group name="list" v-else>
         <ProductsTableItem
           v-for="product in products"
@@ -175,6 +185,12 @@ async function handleSortChange() {
 }
 
 async function handleCategoryChange() {
+  page.value = 1;
+  await loadProducts();
+}
+
+async function clearCategory() {
+  category.value = "";
   page.value = 1;
   await loadProducts();
 }

@@ -43,6 +43,7 @@ describe("ProductsView", () => {
     resolveProducts({ products: [], total: 0, limit: 25, skip: 0 });
     await flushPromises();
 
-    expect(wrapper.find('[role="status"]').exists()).toBe(false);
+    expect(wrapper.find('[role="status"]').text()).toBe("No products found");
+    expect(wrapper.find(".loader").exists()).toBe(false);
   });
 });
