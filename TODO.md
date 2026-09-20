@@ -204,7 +204,7 @@ Each item below is its own reviewable step; do not combine them.
       successful update.
 - [x] Add a success notification (reuse `FancySnack`).
 - [x] Add a failure notification (reuse `FancySnack`).
-- [ ] Add component tests for edit/cancel interactions.
+- [x] Add component tests for edit/cancel interactions.
 - [ ] Add component tests for a successful update.
 - [ ] Add component tests for a failed update.
 
