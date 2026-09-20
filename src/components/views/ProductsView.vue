@@ -7,6 +7,7 @@
           v-for="product in products"
           :key="product.id"
           :product="product"
+          :categories="categories"
           :active="currentTableItem === product.id"
         />
       </transition-group>
@@ -20,10 +21,11 @@ import Loader from "@/components/common/SpinnerLoader.vue";
 import api from "@/api";
 import ProductsTable from "./ProductsView/ProductsTable.vue";
 import ProductsTableItem from "./ProductsView/ProductsTableItem.vue";
-import type { Product } from "@/api/services/interfaces";
+import type { Category, Product } from "@/api/services/interfaces";
 
 const loading = ref(true);
 const products: Ref<Product[]> = ref([]);
+const categories: Ref<Category[]> = ref([]);
 const currentTableItem = ref(0);
 
 onMounted(async () => {
@@ -35,6 +37,7 @@ onMounted(async () => {
     if (data.products) {
       products.value = [...data.products];
     }
+    categories.value = await api.products.fetchProductsCategories();
   } catch (error) {
     console.error(error);
   } finally {

@@ -58,6 +58,7 @@
     "title": "Title",
     "price": "Price",
     "stock": "Stock",
+    "category": "Category",
     "username": "Username",
     "password": "Password"
   },

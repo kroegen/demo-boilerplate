@@ -17,8 +17,23 @@
     <span class="table-item__description">
       {{ product.description }}
     </span>
-    <span class="table-item__category">
+    <span v-if="!isEditing" class="table-item__category">
       {{ product.category }}
+    </span>
+    <span v-else class="table-item__category">
+      <select
+        v-model="draft.category"
+        class="table-item__field"
+        :aria-label="$t('labels.category')"
+      >
+        <option
+          v-for="category in categories"
+          :key="category.slug"
+          :value="category.slug"
+        >
+          {{ category.name }}
+        </option>
+      </select>
     </span>
     <span v-if="!isEditing" class="table-item__price">
       {{ product.price }}
@@ -66,11 +81,12 @@
 </template>
 
 <script lang="ts" setup>
-import type { Product } from "@/api/services/interfaces";
+import type { Category, Product } from "@/api/services/interfaces";
 import { computed, reactive, ref } from "vue";
 
 interface Props {
   product: Product;
+  categories: Category[];
   active: boolean;
 }
 
