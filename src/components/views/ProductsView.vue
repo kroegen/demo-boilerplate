@@ -7,6 +7,7 @@
       <div class="products-workspace__list">
         <div class="products-toolbar">
           <FancySelect
+            class="products-toolbar__category"
             name="products-category"
             :label="$t('labels.category')"
             :model-value="category"
@@ -15,6 +16,7 @@
             @update:model-value="handleCategorySelect"
           />
           <FancySelect
+            class="products-toolbar__sort"
             name="products-sort"
             :label="$t('labels.sortBy')"
             :model-value="sortBy"
@@ -23,6 +25,7 @@
             @update:model-value="handleSortSelect"
           />
           <FancySelect
+            class="products-toolbar__order"
             name="products-order"
             :label="$t('labels.sortDirection')"
             :model-value="order"
@@ -31,11 +34,13 @@
             @update:model-value="handleOrderSelect"
           />
           <FancyButton
+            class="products-toolbar__add"
             type="button"
             :disabled="loading || !categories.length"
             @click="createOpened = true"
           >
-            {{ $t("actions.createProduct") }}
+            <template #before><SvgIcon :src="AddIcon" /></template>
+            {{ $t("actions.addNew") }}
           </FancyButton>
         </div>
         <products-table :aria-busy="loading">
@@ -121,6 +126,8 @@ import ConfirmModal from "@/components/modals/ConfirmModal.vue";
 import FancyPagination from "@/components/common/FancyPagination.vue";
 import FancySelect from "@/components/common/FancySelect.vue";
 import FancyButton from "@/components/common/FancyButton.vue";
+import SvgIcon from "@/components/common/SvgIcon.vue";
+import AddIcon from "@/assets/icons/add-line.svg";
 import type {
   SelectOption,
   SelectValue,
@@ -303,7 +310,7 @@ async function handleRemoveProduct() {
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .products-workspace {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
@@ -333,11 +340,33 @@ async function handleRemoveProduct() {
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  gap: 16px;
+  flex-wrap: wrap;
+  gap: 12px;
   padding: 12px 20px;
 
-  :deep(.f-select) {
-    max-width: 200px;
+  &__category {
+    flex: 0 1 150px;
+  }
+
+  &__sort {
+    flex: 0 1 110px;
+  }
+
+  &__order {
+    flex: 0 1 125px;
+  }
+
+  &__add {
+    flex: 0 0 auto;
+    white-space: nowrap;
+
+    :deep(.f-button__icon) {
+      margin: 0 8px 0 0;
+    }
+
+    :deep(.svg-icon) {
+      --icon-color: currentColor;
+    }
   }
 }
 
