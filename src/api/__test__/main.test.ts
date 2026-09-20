@@ -1,5 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import ClientAPI from "../main";
+import ProductsService from "../services/products";
 
 describe("ClientAPI", () => {
   beforeEach(() => {
@@ -22,6 +23,24 @@ describe("ClientAPI", () => {
       expect.objectContaining({
         headers: expect.objectContaining({ Authorization: "Bearer saved-token" }),
       })
+    );
+  });
+
+  it("serializes GET params and product pagination as URL query parameters", async () => {
+    const fetchMock = vi.fn().mockImplementation(async () => new Response("{}", { status: 200 }));
+    vi.stubGlobal("fetch", fetchMock);
+    const client = new ClientAPI("https://dummyjson.com");
+
+    await client.get("products", { limit: 30, skip: 0 });
+    expect(fetchMock).toHaveBeenCalledWith(
+      "https://dummyjson.com/products?limit=30&skip=0",
+      expect.any(Object)
+    );
+
+    await new ProductsService(client).fetchProducts(2, 30);
+    expect(fetchMock).toHaveBeenLastCalledWith(
+      "https://dummyjson.com/products?limit=30&skip=30",
+      expect.any(Object)
     );
   });
 });

@@ -6,9 +6,9 @@ export default class ProductsService extends Base {
     page: number,
     limit: number
   ): Promise<ProductsResponse> {
-    const skip = `skip=${page === 1 ? 0 : (page - 1) * limit}`;
+    const skip = page === 1 ? 0 : (page - 1) * limit;
 
-    return this.api.get(`products?limit=${limit}&${skip}`);
+    return this.api.get("products", { limit, skip });
   }
 
   public async fetchProductById(productId: string) {

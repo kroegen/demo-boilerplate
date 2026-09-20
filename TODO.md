@@ -49,7 +49,7 @@ Legend: each task lists its expected result and a suggested verification command
       Expected result: after a hard reload with a valid `localStorage` token,
       authenticated requests include the restored bearer token.
       Verify: add a `ClientAPI` unit test covering this case.
-- [ ] Fix GET query serialization to use `URLSearchParams` instead of
+- [x] Fix GET query serialization to use `URLSearchParams` instead of
       `JSON.stringify(params)`.
       Expected result: `client.get(url, { limit: 30, skip: 0 })` produces
       `url?limit=30&skip=0`. Update `ProductsService.fetchProducts` to pass a

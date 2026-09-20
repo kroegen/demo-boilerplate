@@ -15,7 +15,10 @@ export default class ClientAPI {
   }
 
   public async get(url: string, params?: RequestParams) {
-    const query = params ? `?${JSON.stringify(params)}` : "";
+    const searchParams = new URLSearchParams(
+      Object.entries(params ?? {}).map(([key, value]) => [key, String(value)])
+    );
+    const query = searchParams.size ? `?${searchParams}` : "";
     const data = await this.request(url, "GET", query);
     return data;
   }
