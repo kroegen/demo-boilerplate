@@ -67,6 +67,7 @@
     "price": "Ціна",
     "stock": "Залишок",
     "category": "Категорія",
+    "allCategories": "Усі категорії",
     "sortBy": "Сортувати за",
     "sortDirection": "Порядок",
     "defaultOrder": "За замовчуванням",

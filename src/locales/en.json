@@ -67,6 +67,7 @@
     "price": "Price",
     "stock": "Stock",
     "category": "Category",
+    "allCategories": "All categories",
     "sortBy": "Sort by",
     "sortDirection": "Order",
     "defaultOrder": "Default",

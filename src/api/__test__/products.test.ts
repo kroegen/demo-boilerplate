@@ -28,6 +28,26 @@ describe("ProductsService mutations", () => {
     });
   });
 
+  it("requests a category page from the category endpoint", async () => {
+    const get = vi
+      .fn()
+      .mockResolvedValue({ products: [], total: 0, skip: 25, limit: 25 });
+    const service = new ProductsService({ get } as unknown as ClientAPI);
+
+    await service.fetchProducts(2, 25, {
+      category: "skin-care",
+      sortBy: "price",
+      order: "asc",
+    });
+
+    expect(get).toHaveBeenCalledWith("products/category/skin-care", {
+      limit: 25,
+      skip: 25,
+      sortBy: "price",
+      order: "asc",
+    });
+  });
+
   it("creates a product through the DummyJSON add endpoint", async () => {
     const post = vi.fn().mockResolvedValue({ id: 195, title: "Pencil" });
     const service = new ProductsService({ post } as unknown as ClientAPI);

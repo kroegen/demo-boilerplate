@@ -219,7 +219,7 @@ Design constraint: switching `this.products = new ProductsService(dummyJsonApi)`
 - [x] Pagination backed by real `page`/`limit` params via the fixed `ClientAPI`
       query serialization.
 - [x] Sorting.
-- [ ] Category filtering.
+- [x] Category filtering.
 - [ ] Product list loading state.
 - [ ] Product list empty state.
 - [ ] Product list API error state.
