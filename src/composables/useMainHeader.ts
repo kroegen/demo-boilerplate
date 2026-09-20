@@ -43,7 +43,7 @@ export function useMainHeader() {
 
   const handleOpenDropdown = (type: StoreType) => {
     const store = type === 'cart' ? cartsStore : favoritesStore;
-    if (store.counter > 0) {
+    if (store.counter > 0 || type === 'favorites') {
       toggleDropdown(type);
     }
   };

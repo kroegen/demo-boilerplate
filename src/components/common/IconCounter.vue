@@ -14,13 +14,14 @@ import SvgIcon from "@/components/common/SvgIcon.vue";
 interface Props {
   counter: number;
   icon: string;
+  allowEmptyClick?: boolean;
 }
 
 const props = defineProps<Props>();
 const emit = defineEmits(["click"]);
 
 function handleClick() {
-  if (props.counter > 0) emit("click");
+  if (props.counter > 0 || props.allowEmptyClick) emit("click");
 }
 </script>
 

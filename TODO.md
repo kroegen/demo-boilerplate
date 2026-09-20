@@ -171,7 +171,7 @@ extracting the shared display structure.
 - [x] Add an empty Favorites state and translations in both supported locales.
       Verify: the page is clear when the store has no favorites and updates when
       the first item is added.
-- [ ] Enable the `/favorites` route under `MainLayout` and provide a visible path
+- [x] Enable the `/favorites` route under `MainLayout` and provide a visible path
       to it while preserving the header's existing dropdown behavior. Verify:
       direct navigation, browser back/forward, and mobile layout.
 - [ ] Add focused component and route tests for shared card rendering, Favorites

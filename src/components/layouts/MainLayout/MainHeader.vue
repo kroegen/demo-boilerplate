@@ -25,6 +25,7 @@
           class="header__heart-icon"
           :counter="favoritesStore.counter"
           :icon="HEADER_ICONS.filled"
+          allow-empty-click
           @click="handleOpenDropdown('favorites')"
         >
           <f-popper
@@ -42,6 +43,13 @@
                   @remove="handleRemoveProduct(favorite.id, 'favorites')"
                 />
               </transition-group>
+              <RouterLink
+                class="header__favorites-link"
+                :to="{ name: 'favorites' }"
+                @click.stop="handleCloseAll"
+              >
+                {{ $t("actions.viewFavorites") }}
+              </RouterLink>
             </f-dropdown>
           </f-popper>
         </IconCounter>
@@ -190,6 +198,13 @@ const handleOpenMenu = () => {
     @include mixins.mobile {
       --dropdown-width: 100vw;
     }
+  }
+
+  &__favorites-link {
+    display: block;
+    padding: 10px;
+    color: var(--blue-color);
+    text-align: center;
   }
 
   &__actions-left {

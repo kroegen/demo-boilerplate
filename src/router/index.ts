@@ -4,7 +4,7 @@ const Landing = () => import("@/components/views/LandingView.vue");
 const Products = () => import("@/components/views/ProductsView.vue");
 const Users = () => import("@/components/views/UsersView.vue");
 const Login = () => import("@/components/views/LoginView.vue");
-// const Favorites = () => import("@/components/views/FavoritesView.vue");
+const Favorites = () => import("@/components/views/FavoritesView.vue");
 const NotFound = () => import("@/components/views/NotFoundView.vue");
 
 import { authStore } from "@/stores/auth";
@@ -35,11 +35,11 @@ const router = createRouter({
           name: "landing",
           component: Landing,
         },
-        // {
-        //   path: "/favorites",
-        //   name: "favorites",
-        //   component: Favorites,
-        // },
+        {
+          path: "/favorites",
+          name: "favorites",
+          component: Favorites,
+        },
         {
           path: "/category/:category",
           name: "category",
