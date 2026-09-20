@@ -35,7 +35,7 @@ Legend: each task lists its expected result and a suggested verification command
       to `import.meta.env.VITE_DUMMY_JSON_API_URL`.
       Expected result: app behavior unchanged when `.env` sets the same value.
       Verify: `npm run dev`, confirm products/users/posts/login still load.
-- [ ] Add a (currently unused) `backendApi: ClientAPI` instance to the `API`
+- [x] Add a (currently unused) `backendApi: ClientAPI` instance to the `API`
       container wired to `VITE_BACKEND_API_URL`, without assigning any service to
       it yet.
       Expected result: container compiles and app behavior is unchanged; no

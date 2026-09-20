@@ -6,6 +6,7 @@ import AuthService from "./services/auth";
 
 class API {
   private jsonApi: clientAPI;
+  private backendApi: clientAPI;
   // Optionally: add more APIs for other services
   // private weatherApi: clientAPI;
   // private airApi: clientAPI;
@@ -18,6 +19,7 @@ class API {
   constructor() {
     const JSON_API_URL = import.meta.env.VITE_DUMMY_JSON_API_URL;
     this.jsonApi = new clientAPI(JSON_API_URL);
+    this.backendApi = new clientAPI(import.meta.env.VITE_BACKEND_API_URL);
 
     // Initialize services
     this.auth = new AuthService(this.jsonApi);
