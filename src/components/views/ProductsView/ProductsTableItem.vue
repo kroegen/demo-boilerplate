@@ -72,40 +72,48 @@
       />
     </span>
     <span class="table-item__actions">
-      <button
+      <FancyButton
         v-if="!isEditing"
         type="button"
         class="table-item__action"
+        variant="text"
+        size="tiny"
         @click="startEditing"
       >
         {{ $t("actions.edit") }}
-      </button>
-      <button
+      </FancyButton>
+      <FancyButton
         v-else
         type="button"
         class="table-item__action"
+        variant="text"
+        size="tiny"
         :disabled="saving"
         @click="cancelEditing"
       >
         {{ $t("actions.cancel") }}
-      </button>
-      <button
+      </FancyButton>
+      <FancyButton
         v-if="isEditing"
         type="button"
         class="table-item__action"
+        variant="text"
+        size="tiny"
         :disabled="saving"
         @click="saveProduct"
       >
         {{ saving ? $t("actions.saving") : $t("actions.save") }}
-      </button>
-      <button
+      </FancyButton>
+      <FancyButton
         v-if="!isEditing"
         type="button"
         class="table-item__action"
+        variant="text"
+        size="tiny"
         @click="emit('remove', product.id)"
       >
         {{ $t("actions.delete") }}
-      </button>
+      </FancyButton>
       <small
         v-if="isEditing && saveErrorMessage"
         class="table-item__save-error"
@@ -124,6 +132,7 @@ import { useField } from "vee-validate";
 import { useI18n } from "vue-i18n";
 import api from "@/api";
 import FancyInput from "@/components/common/FancyInput.vue";
+import FancyButton from "@/components/common/FancyButton.vue";
 import FancySelect from "@/components/common/FancySelect.vue";
 import type {
   SelectOption,
@@ -359,13 +368,6 @@ function resetDraft() {
   &__actions {
     flex: 1;
     min-width: 100px;
-  }
-
-  &__action {
-    border: 0;
-    background: transparent;
-    color: var(--blue-color);
-    cursor: pointer;
   }
 
   &__field {

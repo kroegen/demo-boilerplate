@@ -7,9 +7,9 @@
       <div v-if="loading" role="status">{{ $t("views.products.loading") }}</div>
       <div v-else-if="error" role="alert">
         {{ errorMessage }}
-        <button type="button" @click="loadProduct">
+        <FancyButton type="button" variant="outlined" @click="loadProduct">
           {{ $t("actions.retry") }}
-        </button>
+        </FancyButton>
       </div>
       <div v-else-if="!product" role="status">
         {{ $t("views.products.notFound") }}
@@ -43,6 +43,7 @@ import { computed, ref, watch } from "vue";
 import { useRoute } from "vue-router";
 import { useI18n } from "vue-i18n";
 import api from "@/api";
+import FancyButton from "@/components/common/FancyButton.vue";
 import { ClientAPIError } from "@/api/main";
 import type { Product } from "@/api/services/interfaces";
 import { useAdminProductsStore } from "@/stores/adminProducts";

@@ -43,12 +43,17 @@
       />
       <small v-if="errorMessage" role="alert">{{ errorMessage }}</small>
       <div class="create-product__actions">
-        <button type="button" :disabled="saving" @click="$emit('close')">
+        <FancyButton
+          type="button"
+          variant="outlined"
+          :disabled="saving"
+          @click="$emit('close')"
+        >
           {{ $t("actions.cancel") }}
-        </button>
-        <button type="submit" :disabled="saving">
+        </FancyButton>
+        <FancyButton type="submit" :disabled="saving">
           {{ saving ? $t("actions.saving") : $t("actions.createProduct") }}
-        </button>
+        </FancyButton>
       </div>
     </form>
   </f-modal>
@@ -60,6 +65,7 @@ import { useField } from "vee-validate";
 import { useI18n } from "vue-i18n";
 import api from "@/api";
 import FancyInput from "@/components/common/FancyInput.vue";
+import FancyButton from "@/components/common/FancyButton.vue";
 import FancySelect from "@/components/common/FancySelect.vue";
 import type {
   SelectOption,

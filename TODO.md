@@ -247,6 +247,8 @@ and `FancyPopper` rather than adding another native product select.
 - [x] Test value/label mapping, keyboard and pointer selection, error display,
       disabled behavior, and the migrated product controls. Verify type check,
       lint, tests, and build.
+- [x] Replace native button markup in product screens with `FancyButton`,
+      preserving form submit types and disabled states.
 
 ## Phase 11 — Two-column admin product editor
 

@@ -30,13 +30,13 @@
             :disabled="loading || !sortBy"
             @update:model-value="handleOrderSelect"
           />
-          <button
+          <FancyButton
             type="button"
             :disabled="loading || !categories.length"
             @click="createOpened = true"
           >
             {{ $t("actions.createProduct") }}
-          </button>
+          </FancyButton>
         </div>
         <products-table :aria-busy="loading">
           <div v-if="loading" class="products-state" role="status">
@@ -45,9 +45,9 @@
           </div>
           <div v-else-if="listError" class="products-state" role="alert">
             <span>{{ listErrorMessage }}</span>
-            <button type="button" @click="loadProducts">
+            <FancyButton type="button" variant="outlined" @click="loadProducts">
               {{ $t("actions.retry") }}
-            </button>
+            </FancyButton>
           </div>
           <div
             v-else-if="products.length === 0"
@@ -55,9 +55,14 @@
             role="status"
           >
             <span>{{ $t("views.products.empty") }}</span>
-            <button v-if="category" type="button" @click="clearCategory">
+            <FancyButton
+              v-if="category"
+              type="button"
+              variant="outlined"
+              @click="clearCategory"
+            >
               {{ $t("actions.clearFilter") }}
-            </button>
+            </FancyButton>
           </div>
           <transition-group name="list" v-else>
             <ProductsTableItem
@@ -115,6 +120,7 @@ import ProductsCreateModal from "./ProductsView/ProductsCreateModal.vue";
 import ConfirmModal from "@/components/modals/ConfirmModal.vue";
 import FancyPagination from "@/components/common/FancyPagination.vue";
 import FancySelect from "@/components/common/FancySelect.vue";
+import FancyButton from "@/components/common/FancyButton.vue";
 import type {
   SelectOption,
   SelectValue,

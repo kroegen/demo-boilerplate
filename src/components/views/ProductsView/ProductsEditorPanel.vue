@@ -55,12 +55,17 @@
         >{{ saveErrorMessage }}</small
       >
       <div class="products-editor__actions">
-        <button type="button" :disabled="saving" @click="emit('cancel')">
+        <FancyButton
+          type="button"
+          variant="outlined"
+          :disabled="saving"
+          @click="emit('cancel')"
+        >
           {{ $t("actions.cancel") }}
-        </button>
-        <button type="submit" :disabled="saving">
+        </FancyButton>
+        <FancyButton type="submit" :disabled="saving">
           {{ saving ? $t("actions.saving") : $t("actions.save") }}
-        </button>
+        </FancyButton>
       </div>
     </form>
   </section>
@@ -74,6 +79,7 @@ import api from "@/api";
 import { ClientAPIError } from "@/api/main";
 import type { Category, Product } from "@/api/services/interfaces";
 import FancyInput from "@/components/common/FancyInput.vue";
+import FancyButton from "@/components/common/FancyButton.vue";
 import FancySelect from "@/components/common/FancySelect.vue";
 import type {
   SelectOption,
