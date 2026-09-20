@@ -230,7 +230,7 @@ Design constraint: switching `this.products = new ProductsService(dummyJsonApi)`
 Each item is a separate reviewable step. Reuse `FancyInput`, `FancyDropdown`,
 and `FancyPopper` rather than adding another native product select.
 
-- [ ] Define the `FancySelect` interface for `v-model`, labeled options,
+- [x] Define the `FancySelect` interface for `v-model`, labeled options,
       placeholder, disabled state, and the existing input error prop. Keep
       option values separate from visible labels.
 - [ ] Add reusable list and list-item components for dropdown options, with
