@@ -29,7 +29,10 @@ function mountRow() {
   const i18n = createI18n({ legacy: false, locale: "en", messages: { en } });
   return mount(ProductsTableItem, {
     props: { product, categories, active: false },
-    global: { plugins: [i18n] },
+    global: {
+      plugins: [i18n],
+      stubs: { RouterLink: { template: "<a><slot /></a>" } },
+    },
   });
 }
 
@@ -60,9 +63,9 @@ describe("ProductsTableItem", () => {
     expect(updateProduct).not.toHaveBeenCalled();
 
     await wrapper.find("button").trigger("click");
-    expect((wrapper.find('input[type="text"]').element as HTMLInputElement).value).toBe(
-      "Original product",
-    );
+    expect(
+      (wrapper.find('input[type="text"]').element as HTMLInputElement).value,
+    ).toBe("Original product");
   });
 
   it("saves a valid draft and emits the updated product", async () => {
@@ -88,7 +91,10 @@ describe("ProductsTableItem", () => {
     expect(wrapper.classes()).not.toContain("table-item--editing");
     expect(showSnack).toHaveBeenCalledWith(
       "showSnack",
-      expect.objectContaining({ text: "Product saved successfully", type: "success" }),
+      expect.objectContaining({
+        text: "Product saved successfully",
+        type: "success",
+      }),
     );
   });
 

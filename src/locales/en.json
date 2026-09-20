@@ -3,7 +3,9 @@
     "products": {
       "loading": "Loading products...",
       "empty": "No products found",
-      "error": "Could not load products"
+      "error": "Could not load products",
+      "notFound": "Product not found",
+      "detailError": "Could not load this product"
     },
     "favorites": {
       "empty": "No favorites yet. Add products with the heart button."
@@ -67,12 +69,15 @@
     "delete": "Delete",
     "clearFilter": "Clear filter",
     "retry": "Retry",
+    "backToProducts": "Back to products",
     "goToMain": "Go to main page"
   },
   "labels": {
     "title": "Title",
     "price": "Price",
     "stock": "Stock",
+    "brand": "Brand",
+    "description": "Description",
     "category": "Category",
     "allCategories": "All categories",
     "sortBy": "Sort by",

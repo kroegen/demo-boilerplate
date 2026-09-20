@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 
 const Landing = () => import("@/components/views/LandingView.vue");
 const Products = () => import("@/components/views/ProductsView.vue");
+const ProductDetail = () => import("@/components/views/ProductDetailView.vue");
 const Users = () => import("@/components/views/UsersView.vue");
 const Login = () => import("@/components/views/LoginView.vue");
 const Favorites = () => import("@/components/views/FavoritesView.vue");
@@ -70,6 +71,16 @@ const router = createRouter({
             requiresAuth: true,
           },
           component: Products,
+        },
+        {
+          path: "/admin/products/:id",
+          name: "product-detail",
+          meta: {
+            title: "Product detail",
+            showSidebar: true,
+            requiresAuth: true,
+          },
+          component: ProductDetail,
         },
         {
           path: "/admin/users",

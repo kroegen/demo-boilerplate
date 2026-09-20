@@ -5,7 +5,9 @@
     :aria-busy="saving"
   >
     <span v-if="!isEditing" class="table-item__title">
-      {{ product.title }}
+      <router-link :to="{ name: 'product-detail', params: { id: product.id } }">
+        {{ product.title }}
+      </router-link>
     </span>
     <span v-else class="table-item__title">
       <input
