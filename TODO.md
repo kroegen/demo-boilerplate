@@ -168,7 +168,7 @@ extracting the shared display structure.
 - [x] Disable drag reordering in `FavoritesView` through the grid's prop; keep
       the current `FavoritesStore` order. Verify: favorite cards cannot be dragged
       and removing one leaves the remaining order unchanged.
-- [ ] Add an empty Favorites state and translations in both supported locales.
+- [x] Add an empty Favorites state and translations in both supported locales.
       Verify: the page is clear when the store has no favorites and updates when
       the first item is added.
 - [ ] Enable the `/favorites` route under `MainLayout` and provide a visible path

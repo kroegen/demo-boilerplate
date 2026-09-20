@@ -1,6 +1,9 @@
 <template>
   <f-view>
-    <ProductGrid :products="favoritesStore.favorites" :reorderable="false" />
+    <p v-if="!favoritesStore.favorites.length" class="favorites-empty">
+      {{ $t("views.favorites.empty") }}
+    </p>
+    <ProductGrid v-else :products="favoritesStore.favorites" :reorderable="false" />
   </f-view>
 </template>
 
@@ -10,3 +13,11 @@ import { FavoritesStore } from "@/stores/favorites";
 
 const favoritesStore = FavoritesStore();
 </script>
+
+<style scoped>
+.favorites-empty {
+  padding: 50px 20px;
+  text-align: center;
+  color: var(--grey-color);
+}
+</style>
