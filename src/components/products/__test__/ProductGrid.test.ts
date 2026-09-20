@@ -43,4 +43,21 @@ describe("ProductGrid", () => {
     expect(reordered?.map((item) => item.id)).toEqual([2, 1]);
     expect(products.map((item) => item.id)).toEqual([1, 2]);
   });
+
+  it("disables card dragging and ignores drops when reordering is off", async () => {
+    const wrapper = mount(ProductGrid, {
+      props: { products: [product(1), product(2)], reorderable: false },
+      global: { stubs: { ProductCard: ProductCardStub } },
+    });
+
+    expect(
+      wrapper
+        .findAll("li.product")
+        .every((card) => card.attributes("draggable") === "false"),
+    ).toBe(true);
+    await wrapper.findAll("li.product")[1].trigger("drop", {
+      dataTransfer: { getData: () => "1" },
+    });
+    expect(wrapper.emitted("reorder")).toBeUndefined();
+  });
 });

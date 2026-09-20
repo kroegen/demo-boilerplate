@@ -1,6 +1,6 @@
 <template>
   <f-view>
-    <ProductGrid :products="favoritesStore.favorites" />
+    <ProductGrid :products="favoritesStore.favorites" :reorderable="false" />
   </f-view>
 </template>
 

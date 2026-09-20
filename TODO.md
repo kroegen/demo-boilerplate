@@ -165,7 +165,7 @@ extracting the shared display structure.
       grid backed by `FavoritesStore.favorites`; do not fetch products again.
       Verify: add/remove actions update both the page and header dropdown
       immediately, including after navigating between views.
-- [ ] Disable drag reordering in `FavoritesView` through the grid's prop; keep
+- [x] Disable drag reordering in `FavoritesView` through the grid's prop; keep
       the current `FavoritesStore` order. Verify: favorite cards cannot be dragged
       and removing one leaves the remaining order unchanged.
 - [ ] Add an empty Favorites state and translations in both supported locales.
