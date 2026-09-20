@@ -3,6 +3,7 @@ import { createI18n } from "vue-i18n";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import api from "@/api";
 import en from "@/locales/en.json";
+import FancySelect from "@/components/common/FancySelect.vue";
 import ProductsCreateModal from "../ProductsCreateModal.vue";
 
 afterEach(() => vi.restoreAllMocks());
@@ -44,10 +45,13 @@ describe("ProductsCreateModal", () => {
     expect(wrapper.find('input[type="text"]').attributes("aria-invalid")).toBe(
       "true",
     );
-    expect(wrapper.find("select").attributes("aria-invalid")).toBe("true");
+    expect(
+      wrapper.find('input[role="combobox"]').attributes("aria-invalid"),
+    ).toBe("true");
 
     await wrapper.find('input[type="text"]').setValue("New product");
-    await wrapper.find("select").setValue("test");
+    wrapper.findComponent(FancySelect).vm.$emit("update:modelValue", "test");
+    await wrapper.vm.$nextTick();
     await wrapper.findAll('input[type="number"]')[0].setValue("-1");
     await wrapper.findAll('input[type="number"]')[1].setValue("1.5");
     await wrapper.find("form").trigger("submit");

@@ -6,6 +6,7 @@ import api from "@/api";
 import { ClientAPIError } from "@/api/main";
 import { emitter } from "@/utils/emitter";
 import en from "@/locales/en.json";
+import FancySelect from "@/components/common/FancySelect.vue";
 import ProductsTableItem from "../ProductsTableItem.vue";
 
 const product: Product = {
@@ -45,15 +46,18 @@ describe("ProductsTableItem", () => {
 
     await wrapper.find("button").trigger("click");
     await wrapper.find('input[type="text"]').setValue("");
-    await wrapper.find("select").setValue("");
+    wrapper.findComponent(FancySelect).vm.$emit("update:modelValue", "");
+    await wrapper.vm.$nextTick();
     await wrapper.findAll('input[type="number"]')[0].setValue("-1");
     await wrapper.findAll('input[type="number"]')[1].setValue("1.5");
     await wrapper.findAll("button")[1].trigger("click");
     await flushPromises();
 
     expect(updateProduct).not.toHaveBeenCalled();
-    expect(wrapper.findAll('input[aria-invalid="true"]')).toHaveLength(3);
-    expect(wrapper.find('select[aria-invalid="true"]').exists()).toBe(true);
+    expect(wrapper.findAll('input[aria-invalid="true"]')).toHaveLength(4);
+    expect(
+      wrapper.find('input[role="combobox"][aria-invalid="true"]').exists(),
+    ).toBe(true);
     expect(wrapper.findAll('[role="alert"]')).toHaveLength(4);
   });
 

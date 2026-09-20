@@ -11,29 +11,14 @@
         :error="titleError"
         full-width
       />
-      <label>
-        {{ $t("labels.category") }}
-        <select
-          v-model="category"
-          :class="{ 'create-product__field--error': categoryError }"
-          :aria-invalid="!!categoryError"
-          :aria-describedby="
-            categoryError ? 'create-category-error' : undefined
-          "
-        >
-          <option value="">{{ $t("placeholders.selectCategory") }}</option>
-          <option
-            v-for="item in categories"
-            :key="item.slug"
-            :value="item.slug"
-          >
-            {{ item.name }}
-          </option>
-        </select>
-        <small v-if="categoryError" id="create-category-error" role="alert">{{
-          categoryError
-        }}</small>
-      </label>
+      <FancySelect
+        name="create-category"
+        :label="$t('labels.category')"
+        :model-value="category"
+        :options="categoryOptions"
+        :error="categoryError"
+        @update:model-value="setCategory"
+      />
       <FancyInput
         :model-value="price"
         name="create-price"
@@ -75,6 +60,11 @@ import { useField } from "vee-validate";
 import { useI18n } from "vue-i18n";
 import api from "@/api";
 import FancyInput from "@/components/common/FancyInput.vue";
+import FancySelect from "@/components/common/FancySelect.vue";
+import type {
+  SelectOption,
+  SelectValue,
+} from "@/components/common/select.types";
 import { ClientAPIError } from "@/api/main";
 import type { Category, Product } from "@/api/services/interfaces";
 import { emitter } from "@/utils/emitter";
@@ -83,7 +73,7 @@ import {
   type SnackConfig,
 } from "@/components/common/FancySnack.vue";
 
-defineProps<{ opened: boolean; categories: Category[] }>();
+const props = defineProps<{ opened: boolean; categories: Category[] }>();
 const emit = defineEmits<{ close: []; created: [product: Product] }>();
 const { t } = useI18n();
 const saving = ref(false);
@@ -95,6 +85,10 @@ const errorMessage = computed(() =>
       ? t("notifications.product.createError")
       : "",
 );
+const categoryOptions = computed<SelectOption[]>(() => [
+  { value: "", label: t("placeholders.selectCategory") },
+  ...props.categories.map((item) => ({ value: item.slug, label: item.name })),
+]);
 const {
   value: title,
   errorMessage: titleError,
@@ -142,6 +136,10 @@ const {
 
 function setPrice(value: string | number) {
   price.value = value === "" ? "" : Number(value);
+}
+
+function setCategory(value: SelectValue) {
+  category.value = String(value);
 }
 
 function setStock(value: string | number) {
@@ -211,22 +209,8 @@ async function createProduct() {
   gap: 12px;
   padding: 0 40px 30px;
 
-  label {
-    display: grid;
-    gap: 4px;
-  }
-
-  input,
-  select {
-    padding: 8px;
-  }
-
   small {
     color: var(--red-color);
-  }
-
-  &__field--error {
-    border-color: var(--red-color);
   }
 
   &__actions {

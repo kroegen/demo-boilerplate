@@ -242,7 +242,7 @@ and `FancyPopper` rather than adding another native product select.
       management.
 - [x] Replace the native category, sort, and order selects in the admin
       products toolbar without changing their query behavior.
-- [ ] Replace the category selects in the create product form and current edit
+- [x] Replace the category selects in the create product form and current edit
       UI; preserve validation errors and disabled states.
 - [ ] Test value/label mapping, keyboard and pointer selection, error display,
       disabled behavior, and the migrated product controls. Verify type check,

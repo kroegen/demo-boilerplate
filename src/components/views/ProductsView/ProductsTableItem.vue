@@ -29,32 +29,15 @@
       {{ product.category }}
     </span>
     <span v-else class="table-item__category">
-      <select
-        v-model="category"
+      <FancySelect
         class="table-item__field"
-        :class="{ 'table-item__field--error': categoryError }"
-        :aria-label="$t('labels.category')"
-        :aria-invalid="!!categoryError"
-        :aria-describedby="
-          categoryError ? `edit-category-${product.id}-error` : undefined
-        "
-      >
-        <option value="">{{ $t("placeholders.selectCategory") }}</option>
-        <option
-          v-for="category in categories"
-          :key="category.slug"
-          :value="category.slug"
-        >
-          {{ category.name }}
-        </option>
-      </select>
-      <small
-        v-if="categoryError"
-        :id="`edit-category-${product.id}-error`"
-        class="table-item__error"
-        role="alert"
-        >{{ categoryError }}</small
-      >
+        :name="`edit-category-${product.id}`"
+        :label="$t('labels.category')"
+        :model-value="category"
+        :options="categoryOptions"
+        :error="categoryError"
+        @update:model-value="setCategory"
+      />
     </span>
     <span v-if="!isEditing" class="table-item__price">
       {{ product.price }}
@@ -141,6 +124,11 @@ import { useField } from "vee-validate";
 import { useI18n } from "vue-i18n";
 import api from "@/api";
 import FancyInput from "@/components/common/FancyInput.vue";
+import FancySelect from "@/components/common/FancySelect.vue";
+import type {
+  SelectOption,
+  SelectValue,
+} from "@/components/common/select.types";
 import { ClientAPIError } from "@/api/main";
 import { emitter } from "@/utils/emitter";
 import {
@@ -209,6 +197,10 @@ const {
 const product = computed(() => {
   return props.product;
 });
+const categoryOptions = computed<SelectOption[]>(() => [
+  { value: "", label: t("placeholders.selectCategory") },
+  ...props.categories.map((item) => ({ value: item.slug, label: item.name })),
+]);
 const saveErrorMessage = computed(() =>
   saveError.value instanceof ClientAPIError
     ? saveError.value.message
@@ -219,6 +211,10 @@ const saveErrorMessage = computed(() =>
 
 function setPrice(value: string | number) {
   price.value = value === "" ? "" : Number(value);
+}
+
+function setCategory(value: SelectValue) {
+  category.value = String(value);
 }
 
 function setStock(value: string | number) {
@@ -375,16 +371,6 @@ function resetDraft() {
   &__field {
     width: 100%;
     min-width: 0;
-  }
-
-  select.table-item__field {
-    padding: 6px;
-    border: 1px solid var(--blue-color);
-    border-radius: 4px;
-  }
-
-  select.table-item__field--error {
-    border-color: var(--red-color);
   }
 
   &__error {
