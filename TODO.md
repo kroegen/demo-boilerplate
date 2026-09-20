@@ -174,7 +174,7 @@ extracting the shared display structure.
 - [x] Enable the `/favorites` route under `MainLayout` and provide a visible path
       to it while preserving the header's existing dropdown behavior. Verify:
       direct navigation, browser back/forward, and mobile layout.
-- [ ] Add focused component and route tests for shared card rendering, Favorites
+- [x] Add focused component and route tests for shared card rendering, Favorites
       add/remove synchronization, disabled dragging, empty state, and route
       access. Verify: `npx vitest run`, `npm run type-check`, `npm run build`,
       and `npm run lint`.

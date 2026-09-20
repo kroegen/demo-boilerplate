@@ -26,6 +26,18 @@ const ProductCardStub = {
 };
 
 describe("ProductGrid", () => {
+  it("renders one card for each supplied product", () => {
+    const wrapper = mount(ProductGrid, {
+      props: { products: [product(1), product(2)] },
+      global: { stubs: { ProductCard: ProductCardStub } },
+    });
+
+    expect(wrapper.findAll("li.product").map((card) => card.text())).toEqual([
+      "Product 1",
+      "Product 2",
+    ]);
+  });
+
   it("emits reordered products after a drop without mutating its input", async () => {
     const products = [product(1), product(2)];
     const wrapper = mount(ProductGrid, {
