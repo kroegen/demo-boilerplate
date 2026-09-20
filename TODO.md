@@ -71,7 +71,7 @@ Legend: each task lists its expected result and a suggested verification command
       `throw await apiError.response.text()` (dead branch) logic.
       Expected result: callers can rely on a single error shape.
       Verify: `ClientAPI` unit tests for HTTP error and network error cases.
-- [ ] Add optional `AbortSignal` support to all `ClientAPI` methods.
+- [x] Add optional `AbortSignal` support to all `ClientAPI` methods.
       Expected result: passing a signal aborts the in-flight `fetch`.
       Verify: `ClientAPI` unit test using an already-aborted `AbortController`.
 - [x] Remove direct `console.debug`/`console.error` calls from `ClientAPI` request

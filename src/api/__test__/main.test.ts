@@ -106,4 +106,23 @@ describe("ClientAPI", () => {
       errorSpy.mockRestore();
     }
   });
+
+  it("passes an aborted signal through to fetch", async () => {
+    const controller = new AbortController();
+    controller.abort();
+    const fetchMock = vi.fn().mockImplementation(async (_url: string, options: RequestInit) => {
+      if (options.signal?.aborted) {
+        throw new DOMException("The operation was aborted", "AbortError");
+      }
+      return new Response("{}", { status: 200 });
+    });
+    vi.stubGlobal("fetch", fetchMock);
+
+    await expect(new ClientAPI("https://dummyjson.com").get("products", undefined, controller.signal))
+      .rejects.toThrow("The operation was aborted");
+    expect(fetchMock).toHaveBeenCalledWith(
+      "https://dummyjson.com/products",
+      expect.objectContaining({ signal: controller.signal })
+    );
+  });
 });

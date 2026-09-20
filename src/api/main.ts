@@ -14,39 +14,40 @@ export default class ClientAPI {
     this.backendApiUrl = backendApiUrl;
   }
 
-  public async get(url: string, params?: RequestParams) {
+  public async get(url: string, params?: RequestParams, signal?: AbortSignal) {
     const searchParams = new URLSearchParams(
       Object.entries(params ?? {}).map(([key, value]) => [key, String(value)])
     );
     const query = searchParams.size ? `?${searchParams}` : "";
-    const data = await this.request(url, "GET", query);
+    const data = await this.request(url, "GET", query, signal);
     return data;
   }
 
-  public async post<T>(url: string, payload?: T) {
-    const data = await this.request(url, "POST", payload);
+  public async post<T>(url: string, payload?: T, signal?: AbortSignal) {
+    const data = await this.request(url, "POST", payload, signal);
     return data;
   }
 
-  public async put<T>(url: string, payload: T) {
-    const data = await this.request(url, "PUT", payload);
+  public async put<T>(url: string, payload: T, signal?: AbortSignal) {
+    const data = await this.request(url, "PUT", payload, signal);
     return data;
   }
 
-  public async patch<T>(url: string, payload: T) {
-    const data = await this.request(url, "PATCH", payload);
+  public async patch<T>(url: string, payload: T, signal?: AbortSignal) {
+    const data = await this.request(url, "PATCH", payload, signal);
     return data;
   }
 
-  public async delete(url: string) {
-    const data = await this.request(url, "DELETE");
+  public async delete(url: string, signal?: AbortSignal) {
+    const data = await this.request(url, "DELETE", undefined, signal);
     return data;
   }
 
   private async request<T>(
     url?: string,
     method?: string,
-    payload?: T | string | FormData
+    payload?: T | string | FormData,
+    signal?: AbortSignal
   ) {
     const authToken = this.authToken || localStorage.getItem("token");
     const headers: HeadersInit = {
@@ -68,6 +69,7 @@ export default class ClientAPI {
       method,
       headers,
       body,
+      signal,
     };
 
     try {
