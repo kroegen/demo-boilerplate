@@ -3,7 +3,11 @@
     <div class="products-toolbar">
       <label>
         {{ $t("labels.category") }}
-        <select v-model="category" @change="handleCategoryChange">
+        <select
+          v-model="category"
+          :disabled="loading"
+          @change="handleCategoryChange"
+        >
           <option value="">{{ $t("labels.allCategories") }}</option>
           <option
             v-for="item in categories"
@@ -16,7 +20,7 @@
       </label>
       <label>
         {{ $t("labels.sortBy") }}
-        <select v-model="sortBy" @change="handleSortChange">
+        <select v-model="sortBy" :disabled="loading" @change="handleSortChange">
           <option value="">{{ $t("labels.defaultOrder") }}</option>
           <option value="title">{{ $t("labels.title") }}</option>
           <option value="price">{{ $t("labels.price") }}</option>
@@ -25,21 +29,28 @@
       </label>
       <label>
         {{ $t("labels.sortDirection") }}
-        <select v-model="order" :disabled="!sortBy" @change="handleSortChange">
+        <select
+          v-model="order"
+          :disabled="loading || !sortBy"
+          @change="handleSortChange"
+        >
           <option value="asc">{{ $t("labels.ascending") }}</option>
           <option value="desc">{{ $t("labels.descending") }}</option>
         </select>
       </label>
       <button
         type="button"
-        :disabled="!categories.length"
+        :disabled="loading || !categories.length"
         @click="createOpened = true"
       >
         {{ $t("actions.createProduct") }}
       </button>
     </div>
-    <products-table>
-      <Loader v-if="loading" />
+    <products-table :aria-busy="loading">
+      <div v-if="loading" class="products-state" role="status">
+        <Loader />
+        <span>{{ $t("views.products.loading") }}</span>
+      </div>
       <transition-group name="list" v-else>
         <ProductsTableItem
           v-for="product in products"
@@ -53,7 +64,7 @@
       </transition-group>
     </products-table>
     <FancyPagination
-      v-if="pages > 1"
+      v-if="pages > 1 && !loading"
       :pages="pages"
       :current-page="page"
       @select="handlePageChange"
@@ -111,12 +122,14 @@ const pages = computed(() => Math.ceil(total.value / limit));
 const removeId = ref<number | null>(null);
 const deleting = ref(false);
 const { t } = useI18n();
+let latestRequest = 0;
 
 onMounted(async () => {
   await loadProducts();
 });
 
 async function loadProducts() {
+  const request = ++latestRequest;
   loading.value = true;
 
   try {
@@ -126,6 +139,7 @@ async function loadProducts() {
       order: order.value,
     });
 
+    if (request !== latestRequest) return;
     if (data.products) {
       products.value = adminProducts.mergePage(
         data.products,
@@ -139,12 +153,13 @@ async function loadProducts() {
         ).length;
     }
     if (!categories.value.length) {
-      categories.value = await api.products.fetchProductsCategories();
+      const response = await api.products.fetchProductsCategories();
+      if (request === latestRequest) categories.value = response;
     }
   } catch (error) {
     console.error(error);
   } finally {
-    loading.value = false;
+    if (request === latestRequest) loading.value = false;
   }
 }
 
@@ -229,5 +244,12 @@ async function handleRemoveProduct() {
   align-items: center;
   gap: 16px;
   padding: 12px 20px;
+}
+
+.products-state {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 24px;
 }
 </style>

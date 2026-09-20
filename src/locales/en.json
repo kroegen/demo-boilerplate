@@ -1,5 +1,8 @@
 {
   "views": {
+    "products": {
+      "loading": "Loading products..."
+    },
     "favorites": {
       "empty": "No favorites yet. Add products with the heart button."
     },

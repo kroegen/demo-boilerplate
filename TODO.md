@@ -220,7 +220,7 @@ Design constraint: switching `this.products = new ProductsService(dummyJsonApi)`
       query serialization.
 - [x] Sorting.
 - [x] Category filtering.
-- [ ] Product list loading state.
+- [x] Product list loading state.
 - [ ] Product list empty state.
 - [ ] Product list API error state.
 - [ ] Product detail screen.
