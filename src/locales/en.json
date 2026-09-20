@@ -1,6 +1,7 @@
 {
   "views": {
     "products": {
+      "editorTitle": "Edit product",
       "loading": "Loading products...",
       "empty": "No products found",
       "error": "Could not load products",

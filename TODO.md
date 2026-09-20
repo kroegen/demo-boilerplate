@@ -261,7 +261,7 @@ the content area.
 - [ ] Replace product Edit/Delete text actions with accessible icon buttons
       using the existing pencil and delete icons; retain the confirmation
       step for deletion.
-- [ ] Move title, category, price, and stock editing into a dedicated editor
+- [x] Move title, category, price, and stock editing into a dedicated editor
       panel with fields stacked row by row, using `FancyInput`, `FancySelect`,
       and the existing validation rules.
 - [ ] Open the panel for the selected row and show a clear selected state in
