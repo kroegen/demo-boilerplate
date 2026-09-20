@@ -225,7 +225,60 @@ Design constraint: switching `this.products = new ProductsService(dummyJsonApi)`
 - [x] Product list API error state.
 - [x] Product detail screen.
 
-## Phase 10 — Temporary local product persistence
+## Phase 10 — Reusable select and option list
+
+Each item is a separate reviewable step. Reuse `FancyInput`, `FancyDropdown`,
+and `FancyPopper` rather than adding another native product select.
+
+- [ ] Define the `FancySelect` interface for `v-model`, labeled options,
+      placeholder, disabled state, and the existing input error prop. Keep
+      option values separate from visible labels.
+- [ ] Add reusable list and list-item components for dropdown options, with
+      selected, active, and disabled states.
+- [ ] Build `FancySelect` with a `FancyInput` trigger and an option list inside
+      `FancyDropdown` positioned by `FancyPopper`.
+- [ ] Handle opening, selection, outside click, and closing; support arrow
+      keys, Enter, Escape, and Tab with combobox/listbox semantics and focus
+      management.
+- [ ] Replace the native category, sort, and order selects in the admin
+      products toolbar without changing their query behavior.
+- [ ] Replace the category selects in the create product form and current edit
+      UI; preserve validation errors and disabled states.
+- [ ] Test value/label mapping, keyboard and pointer selection, error display,
+      disabled behavior, and the migrated product controls. Verify type check,
+      lint, tests, and build.
+
+## Phase 11 — Two-column admin product editor
+
+The products table is the left column. The right editor column is closed by
+default and opens for one selected product. On narrow screens the editor fills
+the content area.
+
+- [ ] Restructure the admin products view into table and editor columns, with
+      the editor closed by default and one selected product at a time.
+- [ ] Make product table rows display-only and remove inline edit fields and
+      row-level save/cancel controls.
+- [ ] Replace product Edit/Delete text actions with accessible icon buttons
+      using the existing pencil and delete icons; retain the confirmation
+      step for deletion.
+- [ ] Move title, category, price, and stock editing into a dedicated editor
+      panel with fields stacked row by row, using `FancyInput`, `FancySelect`,
+      and the existing validation rules.
+- [ ] Open the panel for the selected row and show a clear selected state in
+      the table. Save updates the row and closes the panel; Cancel discards the
+      draft and closes it.
+- [ ] When a different product is selected with unsaved changes, confirm
+      discard through `ConfirmModal` before switching. Switch immediately
+      when the draft is clean.
+- [ ] Preserve save loading/error states, snack notifications, and the
+      session-created product behavior without changing the service boundary.
+- [ ] Make the editor fill the content area on narrow screens, with an
+      accessible close/back control and predictable focus return.
+- [ ] Add component tests for opening, saving, canceling, switching with a
+      dirty draft, icon actions, and narrow-screen behavior. Verify type check,
+      lint, tests, and build.
+
+## Phase 12 — Temporary local product persistence
 
 - [ ] Keep a versioned local record of created products, saved edits, and deleted
       product IDs while ProductsService uses DummyJSON.
@@ -236,13 +289,13 @@ Design constraint: switching `this.products = new ProductsService(dummyJsonApi)`
 - [ ] Test reload, deleted-item filtering, updated-item merging, malformed
       storage, and storage quota failures.
 
-## Phase 11 — Product search
+## Phase 13 — Product search
 
 - [ ] Reuse the existing input control for a product search UI.
 - [ ] Add server-side search through ProductsService, keeping search state and
       pagination together.
 
-## Phase 12 — Users (deferred, DummyJSON-first)
+## Phase 14 — Users (deferred, DummyJSON-first)
 
 - [ ] User list backend-readiness review (no change yet).
 - [ ] User detail view.
@@ -251,7 +304,7 @@ Design constraint: switching `this.products = new ProductsService(dummyJsonApi)`
 - [ ] Disable/delete user.
 - [ ] Roles support.
 
-## Phase 13 — Backend integration (deferred, not implemented in this repo)
+## Phase 15 — Backend integration (deferred, not implemented in this repo)
 
 - [ ] Point `ProductsService` at `backendApi` once `be-boileplate` exposes the
       documented `/api/products` contract (first domain to migrate).

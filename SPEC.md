@@ -309,12 +309,17 @@ introduced for the frontend.
 2. Product create / delete with confirmation flow.
 3. Admin product pagination, sorting, and category filtering.
 4. Product loading/empty/error states and admin product detail screen.
-5. Temporary local product changes while DummyJSON simulates writes; persist
+5. Reusable select composed from the existing input, dropdown, and popper,
+   with option list components for all product selects.
+6. Two-column admin products view: table on the left and one right-side editor
+   that is closed by default; icon actions match the user table. Confirm before
+   discarding unsaved edits, and use a full-width editor on narrow screens.
+7. Temporary local product changes while DummyJSON simulates writes; persist
    only created products, edits, and deleted IDs, then remove this layer when
    the real backend stores them.
-6. Product search using a shared input control.
-7. Gradual Users backend migration (list/detail/create/edit/disable/roles).
-8. Auth migration to `be-boileplate` once its auth contract exists.
+8. Product search using a shared input control.
+9. Gradual Users backend migration (list/detail/create/edit/disable/roles).
+10. Auth migration to `be-boileplate` once its auth contract exists.
 
 ---
 
