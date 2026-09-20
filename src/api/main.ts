@@ -50,9 +50,11 @@ export default class ClientAPI {
   ) {
     const authToken = this.authToken || localStorage.getItem("token");
     const headers: HeadersInit = {
-      "Content-Type": "application/json",
       Authorization: authToken && authToken.length ? `Bearer ${authToken}` : "",
     };
+    if (!(payload instanceof FormData)) {
+      headers["Content-Type"] = "application/json";
+    }
     const query = method === "GET" ? (payload as string) : null;
     const fetchUrl = method === "GET"
       ? `${this.backendApiUrl}/${url}${query ?? ""}`

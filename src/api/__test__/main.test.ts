@@ -69,4 +69,21 @@ describe("ClientAPI", () => {
       })
     );
   });
+
+  it("leaves FormData content type to the browser", async () => {
+    const fetchMock = vi.fn().mockResolvedValue(new Response("{}", { status: 200 }));
+    vi.stubGlobal("fetch", fetchMock);
+    const payload = new FormData();
+    payload.append("image", "example");
+
+    await new ClientAPI("https://dummyjson.com").post("products", payload);
+
+    expect(fetchMock).toHaveBeenCalledWith(
+      "https://dummyjson.com/products",
+      expect.objectContaining({
+        body: payload,
+        headers: expect.not.objectContaining({ "Content-Type": expect.anything() }),
+      })
+    );
+  });
 });

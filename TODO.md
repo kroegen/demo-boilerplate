@@ -61,7 +61,7 @@ Legend: each task lists its expected result and a suggested verification command
 - [x] Add a `patch` method to `ClientAPI` (needed for Phase 6 product editing).
       Expected result: `client.patch(url, payload)` sends a `PATCH` request with a
       JSON body. Verify: `ClientAPI` unit test.
-- [ ] Fix `Content-Type` header handling so it is omitted (or set correctly) for
+- [x] Fix `Content-Type` header handling so it is omitted (or set correctly) for
       `FormData` bodies instead of always sending `application/json`.
       Expected result: FormData uploads are not mislabeled. Verify: `ClientAPI`
       unit test asserting no `Content-Type` header is set for `FormData` payloads.
