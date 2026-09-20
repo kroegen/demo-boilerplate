@@ -12,6 +12,22 @@ describe("ProductsService mutations", () => {
     expect(get).toHaveBeenCalledWith("products", { limit: 25, skip: 25 });
   });
 
+  it("passes sorting to the server", async () => {
+    const get = vi
+      .fn()
+      .mockResolvedValue({ products: [], total: 0, skip: 0, limit: 25 });
+    const service = new ProductsService({ get } as unknown as ClientAPI);
+
+    await service.fetchProducts(1, 25, { sortBy: "price", order: "desc" });
+
+    expect(get).toHaveBeenCalledWith("products", {
+      limit: 25,
+      skip: 0,
+      sortBy: "price",
+      order: "desc",
+    });
+  });
+
   it("creates a product through the DummyJSON add endpoint", async () => {
     const post = vi.fn().mockResolvedValue({ id: 195, title: "Pencil" });
     const service = new ProductsService({ post } as unknown as ClientAPI);

@@ -67,6 +67,11 @@
     "price": "Ціна",
     "stock": "Залишок",
     "category": "Категорія",
+    "sortBy": "Сортувати за",
+    "sortDirection": "Порядок",
+    "defaultOrder": "За замовчуванням",
+    "ascending": "За зростанням",
+    "descending": "За спаданням",
     "username": "Ім'я користувача",
     "password": "Пароль"
   },

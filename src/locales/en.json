@@ -67,6 +67,11 @@
     "price": "Price",
     "stock": "Stock",
     "category": "Category",
+    "sortBy": "Sort by",
+    "sortDirection": "Order",
+    "defaultOrder": "Default",
+    "ascending": "Ascending",
+    "descending": "Descending",
     "username": "Username",
     "password": "Password"
   },

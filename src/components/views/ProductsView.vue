@@ -1,6 +1,22 @@
 <template>
   <f-view>
     <div class="products-toolbar">
+      <label>
+        {{ $t("labels.sortBy") }}
+        <select v-model="sortBy" @change="handleSortChange">
+          <option value="">{{ $t("labels.defaultOrder") }}</option>
+          <option value="title">{{ $t("labels.title") }}</option>
+          <option value="price">{{ $t("labels.price") }}</option>
+          <option value="stock">{{ $t("labels.stock") }}</option>
+        </select>
+      </label>
+      <label>
+        {{ $t("labels.sortDirection") }}
+        <select v-model="order" :disabled="!sortBy" @change="handleSortChange">
+          <option value="asc">{{ $t("labels.ascending") }}</option>
+          <option value="desc">{{ $t("labels.descending") }}</option>
+        </select>
+      </label>
       <button
         type="button"
         :disabled="!categories.length"
@@ -75,6 +91,8 @@ const adminProducts = useAdminProductsStore();
 const page = ref(1);
 const total = ref(0);
 const limit = 25;
+const sortBy = ref("");
+const order = ref<"asc" | "desc">("asc");
 const pages = computed(() => Math.ceil(total.value / limit));
 const removeId = ref<number | null>(null);
 const deleting = ref(false);
@@ -88,7 +106,10 @@ async function loadProducts() {
   loading.value = true;
 
   try {
-    const data = await api.products.fetchProducts(page.value, limit);
+    const data = await api.products.fetchProducts(page.value, limit, {
+      sortBy: sortBy.value || undefined,
+      order: order.value,
+    });
 
     if (data.products) {
       products.value = adminProducts.mergePage(data.products, page.value);
@@ -107,6 +128,11 @@ async function loadProducts() {
 async function handlePageChange(selectedPage: number) {
   if (selectedPage === page.value) return;
   page.value = selectedPage;
+  await loadProducts();
+}
+
+async function handleSortChange() {
+  page.value = 1;
   await loadProducts();
 }
 
@@ -170,6 +196,8 @@ async function handleRemoveProduct() {
 .products-toolbar {
   display: flex;
   justify-content: flex-end;
+  align-items: center;
+  gap: 16px;
   padding: 12px 20px;
 }
 </style>
