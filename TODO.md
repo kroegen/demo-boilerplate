@@ -153,7 +153,7 @@ extracting the shared display structure.
       into a shared product-grid component that accepts `Product[]`. Keep the
       existing card actions and list transition. Verify: the landing page renders
       the same cards and responsive layout.
-- [ ] Move landing drag/reorder handling behind the grid's explicit props and
+- [x] Move landing drag/reorder handling behind the grid's explicit props and
       event contract. Make card dragging conditional on that prop, let the owning
       view apply the reordered list, and remove the `DataTransfer` type cast used
       for the card's drag payload. Verify: dragging still reorders landing cards,

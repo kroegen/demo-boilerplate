@@ -1,15 +1,17 @@
 <template>
-  <li draggable="true" class="product" @dragstart="handleDragstart" ref="image">
+  <li
+    :draggable="draggable"
+    :data-product-id="product.id"
+    class="product"
+    @dragstart="handleDragstart"
+    ref="image"
+  >
     <div class="product__wrapper" :title="product.description">
       <div class="product__image-wrapper">
         <span class="product__discount">
           -{{ product.discountPercentage }}%
         </span>
-        <img
-          class="product__image"
-          :src="(imageSrc as string)"
-          alt="thumbnail"
-        />
+        <img class="product__image" :src="imageSrc as string" alt="thumbnail" />
         <FavoriteButton
           :product="product"
           class="product__favorite"
@@ -65,7 +67,7 @@ interface State {
 
 interface Props {
   product: Product;
-  transferData: DataTransfer;
+  draggable?: boolean;
 }
 
 const icons = {
@@ -94,7 +96,7 @@ const productThumbnail = computed(() => {
   return props.product.thumbnail;
 });
 const imageSrc = computed(() =>
-  state.intersected ? productThumbnail.value : ""
+  state.intersected ? productThumbnail.value : "",
 );
 
 onMounted(() => {
@@ -106,7 +108,7 @@ onMounted(() => {
         state.intersected = true;
         state.observer.disconnect();
       }
-    }
+    },
   );
 
   if (image.value) {
@@ -121,7 +123,7 @@ onUnmounted(() => {
 const handleAddToCart = () => {
   store.addProductToCart(props.product);
   handleShowSuccessMessage();
-}
+};
 
 const handleShowSuccessMessage = () => {
   const message = t("notifications.product.cartAdded", { item: title.value });
@@ -133,7 +135,7 @@ const handleShowSuccessMessage = () => {
   };
 
   emitter.emit("showSnack", snackConfig);
-}
+};
 
 const handleAddFavorite = () => {
   const message = t("notifications.product.favoritesAdded", {
@@ -147,7 +149,7 @@ const handleAddFavorite = () => {
   };
 
   emitter.emit("showSnack", snackConfig);
-}
+};
 
 const handleRemoveFavorite = () => {
   const message = t("notifications.product.favoritesRemoved", {
@@ -161,13 +163,13 @@ const handleRemoveFavorite = () => {
   };
 
   emitter.emit("showSnack", snackConfig);
-}
+};
 
 const handleDragstart = (e: DragEvent) => {
-  if (e.dataTransfer) {
-    e.dataTransfer.setData("value", JSON.stringify(props.transferData));
+  if (props.draggable && e.dataTransfer) {
+    e.dataTransfer.setData("text/plain", String(props.product.id));
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>

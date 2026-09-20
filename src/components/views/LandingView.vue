@@ -7,10 +7,10 @@
     <Loader v-if="loading" />
     <transition-group name="list" tag="ul" v-else>
       <ProductCard
-        v-for="(product, index) in products"
+        v-for="product in products"
         :key="product.id"
         :product="product"
-        :transferData="(({ ...product, index }) as unknown as DataTransfer)"
+        draggable
       />
     </transition-group>
     <FancyPagination
@@ -130,10 +130,9 @@ function onDragleave(): void {
 }
 
 function onDrop(e: DragEvent) {
-  const product = e.dataTransfer && JSON.parse(e.dataTransfer.getData("value"));
-
-  if (product) {
-    const sourceIndex = product.index;
+  if (e.dataTransfer) {
+    const sourceId = Number(e.dataTransfer.getData("text/plain"));
+    const sourceIndex = products.value.findIndex((item) => item.id === sourceId);
     const target = findParentElementByClassName(e.target as Element, "product");
     const targetIndex =
       target && target.parentNode
