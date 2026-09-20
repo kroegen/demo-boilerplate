@@ -140,6 +140,7 @@ interface Props {
   product: Product;
   categories: Category[];
   active: boolean;
+  locallyCreated?: boolean;
 }
 
 const props = defineProps<Props>();
@@ -229,12 +230,15 @@ async function saveProduct() {
 
   saving.value = true;
   try {
-    const saved = await api.products.updateProduct(props.product.id, {
+    const payload = {
       title: title.value.trim(),
       category: category.value,
       price: Number(price.value),
       stock: Number(stock.value),
-    });
+    };
+    const saved = props.locallyCreated
+      ? { ...props.product, ...payload }
+      : await api.products.updateProduct(props.product.id, payload);
     emit("saved", saved);
     const snackConfig: SnackConfig = {
       text: t("notifications.product.saveSuccess"),

@@ -6,6 +6,7 @@ export const useAdminProductsStore = defineStore("AdminProductsStore", {
     created: [] as Product[],
     edited: {} as Record<number, Product>,
     deletedIds: [] as number[],
+    nextTemporaryId: -1,
   }),
   actions: {
     mergePage(products: Product[], page: number, category = "") {
@@ -20,7 +21,7 @@ export const useAdminProductsStore = defineStore("AdminProductsStore", {
     },
     addCreated(product: Product) {
       const id = this.created.some((item) => item.id === product.id)
-        ? -Date.now()
+        ? this.nextTemporaryId--
         : product.id;
       const created = { ...product, id };
       this.created.unshift(created);
@@ -37,9 +38,11 @@ export const useAdminProductsStore = defineStore("AdminProductsStore", {
       }
     },
     removeProduct(id: number) {
+      const wasCreated = this.created.some((product) => product.id === id);
       this.created = this.created.filter((product) => product.id !== id);
       delete this.edited[id];
-      if (!this.deletedIds.includes(id)) this.deletedIds.push(id);
+      if (!wasCreated && !this.deletedIds.includes(id))
+        this.deletedIds.push(id);
     },
   },
 });

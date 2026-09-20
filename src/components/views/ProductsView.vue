@@ -73,6 +73,9 @@
           :key="product.id"
           :product="product"
           :categories="categories"
+          :locally-created="
+            adminProducts.created.some((item) => item.id === product.id)
+          "
           :active="currentTableItem === product.id"
           @saved="handleSavedProduct"
           @remove="handleConfirmRemove"

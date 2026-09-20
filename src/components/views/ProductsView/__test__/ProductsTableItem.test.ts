@@ -98,6 +98,23 @@ describe("ProductsTableItem", () => {
     );
   });
 
+  it("edits a product created in this session without PATCHing DummyJSON", async () => {
+    const updateProduct = vi.spyOn(api.products, "updateProduct");
+    const wrapper = mountRow();
+    await wrapper.setProps({ locallyCreated: true });
+
+    await wrapper.find("button").trigger("click");
+    await wrapper.find('input[type="text"]').setValue("Edited new product");
+    await wrapper.findAll("button")[1].trigger("click");
+    await flushPromises();
+
+    expect(updateProduct).not.toHaveBeenCalled();
+    expect(wrapper.emitted("saved")?.[0][0]).toMatchObject({
+      id: product.id,
+      title: "Edited new product",
+    });
+  });
+
   it("keeps the draft open and shows the API error after a failed update", async () => {
     const updateProduct = vi
       .spyOn(api.products, "updateProduct")
