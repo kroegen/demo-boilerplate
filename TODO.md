@@ -189,7 +189,7 @@ Each item below is its own reviewable step; do not combine them.
 - [x] Add explicit display/edit mode state to a product row (no editable fields
       yet, just the mode toggle and conditional rendering scaffold).
 - [x] Add an "Edit" action that switches a row into edit mode.
-- [ ] Add a "Cancel" action that reverts a row to display mode without saving.
+- [x] Add a "Cancel" action that reverts a row to display mode without saving.
 - [ ] Add an editable `title` field.
 - [ ] Add an editable `price` field.
 - [ ] Add an editable `stock` field.

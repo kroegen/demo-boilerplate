@@ -20,13 +20,16 @@
       <button v-if="!isEditing" type="button" class="table-item__action" @click="startEditing">
         {{ $t("actions.edit") }}
       </button>
+      <button v-else type="button" class="table-item__action" @click="cancelEditing">
+        {{ $t("actions.cancel") }}
+      </button>
     </span>
   </div>
 </template>
 
 <script lang="ts" setup>
 import type { Product } from "@/api/services/interfaces";
-import { computed, ref } from "vue";
+import { computed, reactive, ref } from "vue";
 
 interface Props {
   product: Product;
@@ -35,13 +38,32 @@ interface Props {
 
 const props = defineProps<Props>();
 const isEditing = ref(false);
+const draft = reactive({
+  title: props.product.title,
+  price: props.product.price,
+  stock: props.product.stock,
+  category: props.product.category,
+});
 
 const product = computed(() => {
   return props.product;
 });
 
 function startEditing() {
+  resetDraft();
   isEditing.value = true;
+}
+
+function cancelEditing() {
+  resetDraft();
+  isEditing.value = false;
+}
+
+function resetDraft() {
+  draft.title = props.product.title;
+  draft.price = props.product.price;
+  draft.stock = props.product.stock;
+  draft.category = props.product.category;
 }
 </script>
 
