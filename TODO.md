@@ -197,7 +197,7 @@ Each item below is its own reviewable step; do not combine them.
 - [x] Add client-side validation for the editable fields (reuse `vee-validate`).
 - [x] Wire the row's "Save" action to `ProductsService.updateProduct` (DummyJSON
       target for now).
-- [ ] Add a save loading state on the row.
+- [x] Add a save loading state on the row.
 - [ ] Add a save error state on the row (uses the structured `ClientAPI` error
       shape from Phase 2).
 - [ ] Update `ProductsStore`/local row state with the saved values after a

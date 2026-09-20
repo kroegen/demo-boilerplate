@@ -1,5 +1,9 @@
 <template>
-  <div class="table-item" :class="{ 'table-item--editing': isEditing }">
+  <div
+    class="table-item"
+    :class="{ 'table-item--editing': isEditing }"
+    :aria-busy="saving"
+  >
     <span v-if="!isEditing" class="table-item__title">
       {{ product.title }}
     </span>
@@ -84,6 +88,7 @@
         v-else
         type="button"
         class="table-item__action"
+        :disabled="saving"
         @click="cancelEditing"
       >
         {{ $t("actions.cancel") }}
@@ -92,9 +97,10 @@
         v-if="isEditing"
         type="button"
         class="table-item__action"
+        :disabled="saving"
         @click="saveProduct"
       >
-        {{ $t("actions.save") }}
+        {{ saving ? $t("actions.saving") : $t("actions.save") }}
       </button>
     </span>
   </div>
@@ -116,6 +122,7 @@ interface Props {
 const props = defineProps<Props>();
 const emit = defineEmits<{ saved: [product: Product] }>();
 const isEditing = ref(false);
+const saving = ref(false);
 const saveError = ref<unknown>(null);
 const { t } = useI18n();
 const {
@@ -180,6 +187,7 @@ function cancelEditing() {
 }
 
 async function saveProduct() {
+  if (saving.value) return;
   const results = await Promise.all([
     validateTitle(),
     validateCategory(),
@@ -188,6 +196,7 @@ async function saveProduct() {
   ]);
   if (results.some((result) => !result.valid)) return;
 
+  saving.value = true;
   try {
     const saved = await api.products.updateProduct(props.product.id, {
       title: title.value.trim(),
@@ -199,6 +208,8 @@ async function saveProduct() {
     isEditing.value = false;
   } catch (error) {
     saveError.value = error;
+  } finally {
+    saving.value = false;
   }
 }
 
