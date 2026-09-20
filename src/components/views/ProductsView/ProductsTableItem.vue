@@ -102,6 +102,14 @@
       >
         {{ saving ? $t("actions.saving") : $t("actions.save") }}
       </button>
+      <button
+        v-if="!isEditing"
+        type="button"
+        class="table-item__action"
+        @click="emit('remove', product.id)"
+      >
+        {{ $t("actions.delete") }}
+      </button>
       <small
         v-if="isEditing && saveErrorMessage"
         class="table-item__save-error"
@@ -121,7 +129,10 @@ import { useI18n } from "vue-i18n";
 import api from "@/api";
 import { ClientAPIError } from "@/api/main";
 import { emitter } from "@/utils/emitter";
-import { SnackType, type SnackConfig } from "@/components/common/FancySnack.vue";
+import {
+  SnackType,
+  type SnackConfig,
+} from "@/components/common/FancySnack.vue";
 
 interface Props {
   product: Product;
@@ -130,7 +141,7 @@ interface Props {
 }
 
 const props = defineProps<Props>();
-const emit = defineEmits<{ saved: [product: Product] }>();
+const emit = defineEmits<{ saved: [product: Product]; remove: [id: number] }>();
 const isEditing = ref(false);
 const saving = ref(false);
 const saveError = ref<unknown>(null);

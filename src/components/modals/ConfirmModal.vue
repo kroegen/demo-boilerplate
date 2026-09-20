@@ -1,16 +1,21 @@
 <template>
   <f-modal class="confirm-modal" @close="$emit('close')" close-by-click-outside>
     <template #header>
-      <h4>{{ $t("modals.confirm.action") }}</h4>
+      <h4>{{ title || $t("modals.confirm.action") }}</h4>
     </template>
     <div class="confirm-modal__content">
-      {{ $t("modals.confirm.text") }}
+      {{ message || $t("modals.confirm.text") }}
     </div>
     <template #actions-right>
-      <f-button variant="outlined" @click="$emit('close')">
+      <f-button variant="outlined" :disabled="busy" @click="$emit('close')">
         {{ $t("actions.decline") }}
       </f-button>
-      <f-button primary style="margin-left: 20px" @click="$emit('confirm')">
+      <f-button
+        primary
+        style="margin-left: 20px"
+        :disabled="busy"
+        @click="$emit('confirm')"
+      >
         {{ $t("actions.confirm") }}
       </f-button>
     </template>
@@ -18,6 +23,7 @@
 </template>
 
 <script lang="ts" setup>
+defineProps<{ title?: string; message?: string; busy?: boolean }>();
 defineEmits(["close", "confirm"]);
 </script>
 

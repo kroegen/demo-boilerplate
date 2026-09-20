@@ -36,6 +36,16 @@ function mountRow() {
 afterEach(() => vi.restoreAllMocks());
 
 describe("ProductsTableItem", () => {
+  it("requests deletion without calling the API before confirmation", async () => {
+    const removeProduct = vi.spyOn(api.products, "deleteProduct");
+    const wrapper = mountRow();
+
+    await wrapper.findAll("button")[1].trigger("click");
+
+    expect(wrapper.emitted("remove")?.[0]).toEqual([product.id]);
+    expect(removeProduct).not.toHaveBeenCalled();
+  });
+
   it("opens edit mode and cancels without saving the draft", async () => {
     const updateProduct = vi.spyOn(api.products, "updateProduct");
     const wrapper = mountRow();

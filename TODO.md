@@ -215,7 +215,7 @@ Design constraint: switching `this.products = new ProductsService(dummyJsonApi)`
 ## Phase 9 — Admin product flows
 
 - [x] Create product flow.
-- [ ] Delete product flow with confirmation modal (reuse `ConfirmModal.vue`).
+- [x] Delete product flow with confirmation modal (reuse `ConfirmModal.vue`).
 - [ ] Pagination backed by real `page`/`limit` params via the fixed `ClientAPI`
       query serialization.
 - [ ] Sorting.
