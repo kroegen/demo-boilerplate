@@ -6,11 +6,61 @@ import api from "@/api";
 import { ClientAPIError } from "@/api/main";
 import type { ProductsResponse } from "@/api/services/interfaces";
 import en from "@/locales/en.json";
+import FancySelect from "@/components/common/FancySelect.vue";
 import ProductsView from "../../ProductsView.vue";
 
 afterEach(() => vi.restoreAllMocks());
 
 describe("ProductsView", () => {
+  it("uses selected category and order in server requests", async () => {
+    const fetchProducts = vi
+      .spyOn(api.products, "fetchProducts")
+      .mockResolvedValue({
+        products: [],
+        total: 0,
+        limit: 25,
+        skip: 0,
+      });
+    vi.spyOn(api.products, "fetchProductsCategories").mockResolvedValue([
+      {
+        name: "Beauty",
+        slug: "beauty",
+        url: new URL("https://example.com/beauty"),
+      },
+    ]);
+    const i18n = createI18n({ legacy: false, locale: "en", messages: { en } });
+    const wrapper = mount(ProductsView, {
+      global: {
+        plugins: [createPinia(), i18n],
+        stubs: {
+          "f-view": { template: "<div><slot /></div>" },
+          ProductsTable: { template: "<div><slot /></div>" },
+          ProductsTableItem: true,
+          ProductsCreateModal: true,
+          ConfirmModal: true,
+          FancyPagination: true,
+          Loader: true,
+          teleport: true,
+        },
+      },
+    });
+    await flushPromises();
+
+    const controls = wrapper.findAllComponents(FancySelect);
+    controls[0].vm.$emit("update:modelValue", "beauty");
+    await flushPromises();
+    controls[1].vm.$emit("update:modelValue", "price");
+    await flushPromises();
+    controls[2].vm.$emit("update:modelValue", "desc");
+    await flushPromises();
+
+    expect(fetchProducts).toHaveBeenLastCalledWith(1, 25, {
+      category: "beauty",
+      sortBy: "price",
+      order: "desc",
+    });
+  });
+
   it("shows loading feedback until the product page resolves", async () => {
     let resolveProducts: (value: ProductsResponse) => void = () => undefined;
     const pending = new Promise<ProductsResponse>((resolve) => {

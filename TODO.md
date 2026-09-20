@@ -244,7 +244,7 @@ and `FancyPopper` rather than adding another native product select.
       products toolbar without changing their query behavior.
 - [x] Replace the category selects in the create product form and current edit
       UI; preserve validation errors and disabled states.
-- [ ] Test value/label mapping, keyboard and pointer selection, error display,
+- [x] Test value/label mapping, keyboard and pointer selection, error display,
       disabled behavior, and the migrated product controls. Verify type check,
       lint, tests, and build.
 

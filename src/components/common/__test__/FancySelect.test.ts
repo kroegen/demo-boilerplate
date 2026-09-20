@@ -83,4 +83,54 @@ describe("FancySelect", () => {
     await wrapper.vm.$nextTick();
     expect(input.attributes("aria-expanded")).toBe("false");
   });
+
+  it("renders the real dropdown and keeps disabled options unavailable", async () => {
+    const wrapper = mount(FancySelect, {
+      props: {
+        name: "category",
+        modelValue: "",
+        options: [
+          { value: "", label: "All categories" },
+          { value: "disabled", label: "Disabled", disabled: true },
+          { value: "beauty", label: "Beauty" },
+        ],
+        label: "Category",
+        error: "Choose a category",
+      },
+      attachTo: document.body,
+    });
+    const input = wrapper.find("input");
+    expect(input.attributes("aria-invalid")).toBe("true");
+    expect(wrapper.find('[role="alert"]').text()).toBe("Choose a category");
+
+    await input.trigger("click");
+    expect(wrapper.findAll('[role="option"]')).toHaveLength(3);
+    await input.trigger("keydown", { key: "ArrowDown" });
+    expect(input.attributes("aria-activedescendant")).toBe(
+      "category-options-option-2",
+    );
+    await wrapper.findAll('[role="option"]')[1].trigger("click");
+    expect(wrapper.emitted("update:modelValue")).toBeUndefined();
+    await wrapper.findAll('[role="option"]')[2].trigger("click");
+    expect(wrapper.emitted("update:modelValue")?.[0]).toEqual(["beauty"]);
+    wrapper.unmount();
+  });
+
+  it("does not open when disabled", async () => {
+    const wrapper = mount(FancySelect, {
+      props: { name: "category", modelValue: "", options, disabled: true },
+      global: {
+        stubs: {
+          FancyPopper: {
+            props: ["visible"],
+            template: '<div v-if="visible"><slot /></div>',
+          },
+        },
+      },
+    });
+
+    await wrapper.find("input").trigger("keydown", { key: "Enter" });
+    expect(wrapper.find("input").attributes("aria-expanded")).toBe("false");
+    expect(wrapper.find('[role="option"]').exists()).toBe(false);
+  });
 });
