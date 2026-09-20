@@ -55,7 +55,7 @@ Legend: each task lists its expected result and a suggested verification command
       `url?limit=30&skip=0`. Update `ProductsService.fetchProducts` to pass a
       params object instead of manually building the query string.
       Verify: new `ClientAPI` test + existing products list still loads in `npm run dev`.
-- [ ] Treat every HTTP 2xx response as success (not only `200`).
+- [x] Treat every HTTP 2xx response as success (not only `200`).
       Expected result: `201`/`204`/etc. responses are returned normally instead of
       throwing. Verify: `ClientAPI` unit test with a mocked `204` response.
 - [ ] Add a `patch` method to `ClientAPI` (needed for Phase 6 product editing).

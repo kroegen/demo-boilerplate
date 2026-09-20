@@ -67,7 +67,7 @@ export default class ClientAPI {
       const resp = await fetch(fetchUrl, options);
       const json = await this.parse(resp);
 
-      if (resp.status === 200) {
+      if (resp.ok) {
         console.debug(`${fetchUrl}: ${JSON.stringify(json)}`);
         return json;
       }

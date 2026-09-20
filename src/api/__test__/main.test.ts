@@ -43,4 +43,15 @@ describe("ClientAPI", () => {
       expect.any(Object)
     );
   });
+
+  it("returns successful 201 and 204 responses", async () => {
+    const fetchMock = vi.fn()
+      .mockResolvedValueOnce(new Response('{"id": 1}', { status: 201 }))
+      .mockResolvedValueOnce(new Response(null, { status: 204 }));
+    vi.stubGlobal("fetch", fetchMock);
+    const client = new ClientAPI("https://dummyjson.com");
+
+    await expect(client.post("products", { title: "Test" })).resolves.toEqual({ id: 1 });
+    await expect(client.delete("products/1")).resolves.toEqual({});
+  });
 });
