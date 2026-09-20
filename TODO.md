@@ -190,7 +190,7 @@ Each item below is its own reviewable step; do not combine them.
       yet, just the mode toggle and conditional rendering scaffold).
 - [x] Add an "Edit" action that switches a row into edit mode.
 - [x] Add a "Cancel" action that reverts a row to display mode without saving.
-- [ ] Add an editable `title` field.
+- [x] Add an editable `title` field.
 - [ ] Add an editable `price` field.
 - [ ] Add an editable `stock` field.
 - [ ] Add category editing (select bound to existing categories data).

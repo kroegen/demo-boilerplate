@@ -3,7 +3,9 @@
     <span v-if="!isEditing" class="table-item__title">
       {{ product.title }}
     </span>
-    <span v-else class="table-item__title">{{ product.title }}</span>
+    <span v-else class="table-item__title">
+      <input v-model="draft.title" class="table-item__field" type="text" :aria-label="$t('labels.title')" />
+    </span>
     <span class="table-item__brand">
       {{ product.brand }}
     </span>
@@ -136,6 +138,14 @@ function resetDraft() {
     background: transparent;
     color: var(--blue-color);
     cursor: pointer;
+  }
+
+  &__field {
+    width: 100%;
+    min-width: 0;
+    padding: 6px;
+    border: 1px solid var(--blue-color);
+    border-radius: 4px;
   }
 }
 </style>

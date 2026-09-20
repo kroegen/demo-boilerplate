@@ -55,6 +55,7 @@
     "goToMain": "Go to main page"
   },
   "labels": {
+    "title": "Title",
     "username": "Username",
     "password": "Password"
   },
