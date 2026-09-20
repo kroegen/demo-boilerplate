@@ -37,6 +37,9 @@ jobs:
 
       - name: Build
         run: npm run build
+        env:
+          VITE_DUMMY_JSON_API_URL: https://dummyjson.com
+          VITE_BACKEND_API_URL: /api
 
       - name: Unit Tests
         run: npm run test:cov

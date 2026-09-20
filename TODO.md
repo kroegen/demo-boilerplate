@@ -101,6 +101,9 @@ Legend: each task lists its expected result and a suggested verification command
       `npm run build-only` in CI, and add a separate `npm run lint` step.
       Expected result: CI fails on type errors or lint errors before deploying.
       Verify: push to a branch / open a PR and confirm the workflow runs both steps.
+- [x] Pass the public API base URLs from `.env.example` to the CI build.
+      Expected result: the deployed bundle uses the same DummyJSON URL as local
+      development even though CI has no local `.env` file.
 
 ## Phase 5 — Dependency hygiene
 
