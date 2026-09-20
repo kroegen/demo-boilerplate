@@ -256,6 +256,13 @@ followed correctly and is preserved.
 feature (editable product rows) is added within this structure without introducing
 new architectural layers.
 
+### Shared product grid and Favorites page
+The full product-card grid and its optional drag interaction belong in a shared
+component. `LandingView` owns fetching, category routing, loading, and pagination;
+`FavoritesView` reads the existing in-memory `FavoritesStore` and disables drag.
+The header keeps its compact `ProductListItem` dropdown. Both pages use the same
+full `ProductCard` controls, and neither duplicates product-card markup.
+
 ### Validation
 `vee-validate` is already used for form validation (`LoginView`); this remains the
 validation approach for new forms (e.g. product edit fields) rather than introducing

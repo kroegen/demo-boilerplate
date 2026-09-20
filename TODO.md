@@ -140,7 +140,7 @@ Legend: each task lists its expected result and a suggested verification command
 Each item below is its own reviewable step; keep existing landing behavior while
 extracting the shared display structure.
 
-- [ ] Define the shared component boundary: the grid owns the product-card layout
+- [x] Define the shared component boundary: the grid owns the product-card layout
       and optional drag interaction; each view owns its data source, loading state,
       and page-specific controls. Record the contract in `SPEC.md`.
       Verify: the plan leaves landing pagination and category routing in
