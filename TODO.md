@@ -97,7 +97,7 @@ Legend: each task lists its expected result and a suggested verification command
 - [x] Replace `rm -rf node_modules package-lock.json && npm install` with
       `npm ci` in `.github/workflows/main.yml`.
       Expected result: CI installs are reproducible from the committed lockfile.
-- [ ] Run the full `npm run build` (includes type-check) instead of
+- [x] Run the full `npm run build` (includes type-check) instead of
       `npm run build-only` in CI, and add a separate `npm run lint` step.
       Expected result: CI fails on type errors or lint errors before deploying.
       Verify: push to a branch / open a PR and confirm the workflow runs both steps.
