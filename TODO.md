@@ -27,7 +27,7 @@ Legend: each task lists its expected result and a suggested verification command
 
 ## Phase 1 — Environment configuration
 
-- [ ] Add `VITE_DUMMY_JSON_API_URL` and `VITE_BACKEND_API_URL` to a new
+- [x] Add `VITE_DUMMY_JSON_API_URL` and `VITE_BACKEND_API_URL` to a new
       `.env.example`; document them in `README.md`.
       Expected result: `.env.example` committed, `.env*` (except `.env.example`)
       git-ignored.

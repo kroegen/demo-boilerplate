@@ -7,6 +7,12 @@ This is a demo vue3 + ts boilerplate project made to cover the dummyJSON api wit
 ```sh
 npm install
 ```
+
+Copy `.env.example` to `.env` before running the app. Set
+`VITE_DUMMY_JSON_API_URL` to the DummyJSON API base URL and
+`VITE_BACKEND_API_URL` to the backend API base URL. The backend URL is reserved
+for future integration and is not used by any service yet. Vite exposes both
+`VITE_*` values in the client bundle, so do not put secrets in them.
 ### Compile and Hot-Reload for Development
 
 ```sh
