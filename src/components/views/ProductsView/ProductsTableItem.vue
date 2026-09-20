@@ -233,6 +233,13 @@ async function saveProduct() {
     isEditing.value = false;
   } catch (error) {
     saveError.value = error;
+    const snackConfig: SnackConfig = {
+      text: saveErrorMessage.value,
+      type: SnackType.warning,
+      icon: true,
+      closable: true,
+    };
+    emitter.emit("showSnack", snackConfig);
   } finally {
     saving.value = false;
   }
