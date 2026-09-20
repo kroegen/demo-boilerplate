@@ -54,6 +54,7 @@
     "cancel": "Cancel",
     "save": "Save",
     "saving": "Saving...",
+    "createProduct": "Create product",
     "goToMain": "Go to main page"
   },
   "labels": {
@@ -65,6 +66,7 @@
     "password": "Password"
   },
   "placeholders": {
+    "selectCategory": "Select a category",
     "username": "Enter your username",
     "password": "Enter the password"
   },
@@ -87,7 +89,9 @@
       "favoritesAdded": "The {item} has been added to the Favorites List",
       "favoritesRemoved": "The {item} has been removed from the Favorites List",
       "saveSuccess": "Product saved successfully",
-      "saveError": "Could not save the product"
+      "saveError": "Could not save the product",
+      "createSuccess": "Product created successfully",
+      "createError": "Could not create the product"
     }
   }
 }

@@ -1,5 +1,14 @@
 <template>
   <f-view>
+    <div class="products-toolbar">
+      <button
+        type="button"
+        :disabled="!categories.length"
+        @click="createOpened = true"
+      >
+        {{ $t("actions.createProduct") }}
+      </button>
+    </div>
     <products-table>
       <Loader v-if="loading" />
       <transition-group name="list" v-else>
@@ -13,6 +22,14 @@
         />
       </transition-group>
     </products-table>
+    <teleport to="body">
+      <ProductsCreateModal
+        :opened="createOpened"
+        :categories="categories"
+        @close="createOpened = false"
+        @created="handleCreatedProduct"
+      />
+    </teleport>
   </f-view>
 </template>
 
@@ -22,12 +39,16 @@ import Loader from "@/components/common/SpinnerLoader.vue";
 import api from "@/api";
 import ProductsTable from "./ProductsView/ProductsTable.vue";
 import ProductsTableItem from "./ProductsView/ProductsTableItem.vue";
+import ProductsCreateModal from "./ProductsView/ProductsCreateModal.vue";
 import type { Category, Product } from "@/api/services/interfaces";
+import { useAdminProductsStore } from "@/stores/adminProducts";
 
 const loading = ref(true);
 const products: Ref<Product[]> = ref([]);
 const categories: Ref<Category[]> = ref([]);
 const currentTableItem = ref(0);
+const createOpened = ref(false);
+const adminProducts = useAdminProductsStore();
 
 onMounted(async () => {
   loading.value = true;
@@ -47,8 +68,21 @@ onMounted(async () => {
 });
 
 function handleSavedProduct(saved: Product) {
+  adminProducts.saveEdited(saved);
   products.value = products.value.map((product) =>
     product.id === saved.id ? { ...product, ...saved } : product,
   );
 }
+
+function handleCreatedProduct(product: Product) {
+  products.value = [adminProducts.addCreated(product), ...products.value];
+}
 </script>
+
+<style scoped>
+.products-toolbar {
+  display: flex;
+  justify-content: flex-end;
+  padding: 12px 20px;
+}
+</style>
