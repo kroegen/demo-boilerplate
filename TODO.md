@@ -149,7 +149,7 @@ extracting the shared display structure.
       `LandingView` directory into a shared product-component location; update
       imports without changing their behavior. Verify: `npm run type-check` and
       `npx vitest run`.
-- [ ] Extract the full-card grid markup and styles from `LandingView`
+- [x] Extract the full-card grid markup and styles from `LandingView`
       into a shared product-grid component that accepts `Product[]`. Keep the
       existing card actions and list transition. Verify: the landing page renders
       the same cards and responsive layout.
