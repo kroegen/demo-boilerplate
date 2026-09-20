@@ -184,4 +184,67 @@ describe("ClientAPI", () => {
       message: "Failed to fetch",
     } satisfies Partial<ClientAPIError>);
   });
+
+  it("uses the in-memory token when one is set", async () => {
+    localStorage.setItem("token", "saved-token");
+    const fetchMock = vi
+      .fn()
+      .mockResolvedValue(new Response("{}", { status: 200 }));
+    vi.stubGlobal("fetch", fetchMock);
+    const client = new ClientAPI("https://dummyjson.com");
+    client.setAuthorization("current-token");
+
+    await client.get("users");
+
+    expect(fetchMock).toHaveBeenCalledWith(
+      "https://dummyjson.com/users",
+      expect.objectContaining({
+        headers: expect.objectContaining({
+          Authorization: "Bearer current-token",
+        }),
+      }),
+    );
+  });
+
+  it("passes a signal to every HTTP method", async () => {
+    const signal = new AbortController().signal;
+    const fetchMock = vi
+      .fn()
+      .mockImplementation(async () => new Response("{}", { status: 200 }));
+    vi.stubGlobal("fetch", fetchMock);
+    const client = new ClientAPI("https://dummyjson.com");
+
+    await client.get("products", undefined, signal);
+    await client.post("products", { title: "New" }, signal);
+    await client.put("products/1", { title: "Changed" }, signal);
+    await client.patch("products/1", { title: "Changed" }, signal);
+    await client.delete("products/1", signal);
+
+    for (const callNumber of [1, 2, 3, 4, 5]) {
+      expect(fetchMock).toHaveBeenNthCalledWith(
+        callNumber,
+        expect.any(String),
+        expect.objectContaining({ signal }),
+      );
+    }
+  });
+
+  it("keeps plain text HTTP failures in the structured error", async () => {
+    vi.stubGlobal(
+      "fetch",
+      vi
+        .fn()
+        .mockResolvedValue(
+          new Response("Service unavailable", { status: 503 }),
+        ),
+    );
+
+    await expect(
+      new ClientAPI("https://dummyjson.com").get("products"),
+    ).rejects.toMatchObject({
+      status: 503,
+      message: "Service unavailable",
+      details: "Service unavailable",
+    });
+  });
 });

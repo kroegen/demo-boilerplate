@@ -78,7 +78,7 @@ Legend: each task lists its expected result and a suggested verification command
       logic (leave logging to callers, or gate behind a debug flag).
       Expected result: no unconditional console output from the HTTP layer during
       normal operation. Verify: `npx vitest run`, manual `npm run dev` smoke check.
-- [ ] Add a dedicated `src/api/__test__/main.test.ts` covering the above `ClientAPI`
+- [x] Add a dedicated `src/api/__test__/main.test.ts` covering the above `ClientAPI`
       behaviors end-to-end (this may already be partially covered by the tasks
       above — consolidate into one test file).
       Expected result: `ClientAPI` has direct unit test coverage.
