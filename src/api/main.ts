@@ -75,7 +75,6 @@ export default class ClientAPI {
       const json = await this.parse(resp);
 
       if (resp.ok) {
-        console.debug(`${fetchUrl}: ${JSON.stringify(json)}`);
         return json;
       }
       // const error = {
@@ -85,9 +84,6 @@ export default class ClientAPI {
       // };
       throw new Error(json.message);
     } catch (error) {
-      console.debug(`${fetchUrl}: ${error}`);
-      console.error(error);
-
       const apiError = error as APIError;
       if (apiError.response) {
         throw await apiError.response.text();

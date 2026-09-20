@@ -86,4 +86,24 @@ describe("ClientAPI", () => {
       })
     );
   });
+
+  it("does not log requests or failures", async () => {
+    const debugSpy = vi.spyOn(console, "debug").mockImplementation(() => {});
+    const errorSpy = vi.spyOn(console, "error").mockImplementation(() => {});
+    const fetchMock = vi.fn()
+      .mockResolvedValueOnce(new Response("{}", { status: 200 }))
+      .mockRejectedValueOnce(new Error("offline"));
+    vi.stubGlobal("fetch", fetchMock);
+    const client = new ClientAPI("https://dummyjson.com");
+
+    try {
+      await client.get("products");
+      await expect(client.get("products")).rejects.toThrow("offline");
+      expect(debugSpy).not.toHaveBeenCalled();
+      expect(errorSpy).not.toHaveBeenCalled();
+    } finally {
+      debugSpy.mockRestore();
+      errorSpy.mockRestore();
+    }
+  });
 });

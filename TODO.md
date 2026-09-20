@@ -74,7 +74,7 @@ Legend: each task lists its expected result and a suggested verification command
 - [ ] Add optional `AbortSignal` support to all `ClientAPI` methods.
       Expected result: passing a signal aborts the in-flight `fetch`.
       Verify: `ClientAPI` unit test using an already-aborted `AbortController`.
-- [ ] Remove direct `console.debug`/`console.error` calls from `ClientAPI` request
+- [x] Remove direct `console.debug`/`console.error` calls from `ClientAPI` request
       logic (leave logging to callers, or gate behind a debug flag).
       Expected result: no unconditional console output from the HTTP layer during
       normal operation. Verify: `npx vitest run`, manual `npm run dev` smoke check.
