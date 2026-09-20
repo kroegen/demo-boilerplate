@@ -9,6 +9,7 @@
           :product="product"
           :categories="categories"
           :active="currentTableItem === product.id"
+          @saved="handleSavedProduct"
         />
       </transition-group>
     </products-table>
@@ -44,4 +45,10 @@ onMounted(async () => {
     loading.value = false;
   }
 });
+
+function handleSavedProduct(saved: Product) {
+  products.value = products.value.map((product) =>
+    product.id === saved.id ? { ...product, ...saved } : product,
+  );
+}
 </script>

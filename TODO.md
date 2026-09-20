@@ -200,7 +200,7 @@ Each item below is its own reviewable step; do not combine them.
 - [x] Add a save loading state on the row.
 - [x] Add a save error state on the row (uses the structured `ClientAPI` error
       shape from Phase 2).
-- [ ] Update `ProductsStore`/local row state with the saved values after a
+- [x] Update `ProductsStore`/local row state with the saved values after a
       successful update.
 - [ ] Add a success notification (reuse `FancySnack`).
 - [ ] Add a failure notification (reuse `FancySnack`).
