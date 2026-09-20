@@ -216,7 +216,7 @@ Design constraint: switching `this.products = new ProductsService(dummyJsonApi)`
 
 - [x] Create product flow.
 - [x] Delete product flow with confirmation modal (reuse `ConfirmModal.vue`).
-- [ ] Pagination backed by real `page`/`limit` params via the fixed `ClientAPI`
+- [x] Pagination backed by real `page`/`limit` params via the fixed `ClientAPI`
       query serialization.
 - [ ] Sorting.
 - [ ] Category filtering.

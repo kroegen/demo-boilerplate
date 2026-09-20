@@ -13,10 +13,24 @@ export default class ProductsService extends Base {
   public async fetchProducts(
     page: number,
     limit: number,
+    options: {
+      category?: string;
+      sortBy?: string;
+      order?: "asc" | "desc";
+    } = {},
   ): Promise<ProductsResponse> {
     const skip = page === 1 ? 0 : (page - 1) * limit;
-
-    return this.api.get<ProductsResponse>("products", { limit, skip });
+    const endpoint = options.category
+      ? `products/category/${encodeURIComponent(options.category)}`
+      : "products";
+    const params = {
+      limit,
+      skip,
+      ...(options.sortBy
+        ? { sortBy: options.sortBy, order: options.order ?? "asc" }
+        : {}),
+    };
+    return this.api.get<ProductsResponse>(endpoint, params);
   }
 
   public async fetchProductById(productId: string) {

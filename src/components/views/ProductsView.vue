@@ -23,6 +23,12 @@
         />
       </transition-group>
     </products-table>
+    <FancyPagination
+      v-if="pages > 1"
+      :pages="pages"
+      :current-page="page"
+      @select="handlePageChange"
+    />
     <teleport to="body">
       <ProductsCreateModal
         :opened="createOpened"
@@ -43,13 +49,14 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, ref, type Ref } from "vue";
+import { computed, onMounted, ref, type Ref } from "vue";
 import Loader from "@/components/common/SpinnerLoader.vue";
 import api from "@/api";
 import ProductsTable from "./ProductsView/ProductsTable.vue";
 import ProductsTableItem from "./ProductsView/ProductsTableItem.vue";
 import ProductsCreateModal from "./ProductsView/ProductsCreateModal.vue";
 import ConfirmModal from "@/components/modals/ConfirmModal.vue";
+import FancyPagination from "@/components/common/FancyPagination.vue";
 import type { Category, Product } from "@/api/services/interfaces";
 import { useAdminProductsStore } from "@/stores/adminProducts";
 import { useI18n } from "vue-i18n";
@@ -65,26 +72,43 @@ const categories: Ref<Category[]> = ref([]);
 const currentTableItem = ref(0);
 const createOpened = ref(false);
 const adminProducts = useAdminProductsStore();
+const page = ref(1);
+const total = ref(0);
+const limit = 25;
+const pages = computed(() => Math.ceil(total.value / limit));
 const removeId = ref<number | null>(null);
 const deleting = ref(false);
 const { t } = useI18n();
 
 onMounted(async () => {
+  await loadProducts();
+});
+
+async function loadProducts() {
   loading.value = true;
 
   try {
-    const data = await api.products.fetchProducts(1, 100);
+    const data = await api.products.fetchProducts(page.value, limit);
 
     if (data.products) {
-      products.value = [...data.products];
+      products.value = adminProducts.mergePage(data.products, page.value);
+      total.value = data.total + adminProducts.created.length;
     }
-    categories.value = await api.products.fetchProductsCategories();
+    if (!categories.value.length) {
+      categories.value = await api.products.fetchProductsCategories();
+    }
   } catch (error) {
     console.error(error);
   } finally {
     loading.value = false;
   }
-});
+}
+
+async function handlePageChange(selectedPage: number) {
+  if (selectedPage === page.value) return;
+  page.value = selectedPage;
+  await loadProducts();
+}
 
 function handleSavedProduct(saved: Product) {
   adminProducts.saveEdited(saved);
@@ -94,7 +118,9 @@ function handleSavedProduct(saved: Product) {
 }
 
 function handleCreatedProduct(product: Product) {
-  products.value = [adminProducts.addCreated(product), ...products.value];
+  const created = adminProducts.addCreated(product);
+  total.value += 1;
+  if (page.value === 1) products.value = [created, ...products.value];
 }
 
 function handleConfirmRemove(id: number) {

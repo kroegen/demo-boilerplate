@@ -8,6 +8,16 @@ export const useAdminProductsStore = defineStore("AdminProductsStore", {
     deletedIds: [] as number[],
   }),
   actions: {
+    mergePage(products: Product[], page: number, category = "") {
+      const visible = products
+        .filter((product) => !this.deletedIds.includes(product.id))
+        .map((product) => this.edited[product.id] ?? product);
+      if (page !== 1) return visible;
+      const created = this.created.filter(
+        (product) => !category || product.category === category,
+      );
+      return [...created, ...visible];
+    },
     addCreated(product: Product) {
       const id = this.created.some((item) => item.id === product.id)
         ? -Date.now()

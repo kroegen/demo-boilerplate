@@ -3,6 +3,15 @@ import type ClientAPI from "../main";
 import ProductsService from "../services/products";
 
 describe("ProductsService mutations", () => {
+  it("requests a 25 item product page with the correct skip", async () => {
+    const response = { products: [], total: 100, limit: 25, skip: 25 };
+    const get = vi.fn().mockResolvedValue(response);
+    const service = new ProductsService({ get } as unknown as ClientAPI);
+
+    await expect(service.fetchProducts(2, 25)).resolves.toEqual(response);
+    expect(get).toHaveBeenCalledWith("products", { limit: 25, skip: 25 });
+  });
+
   it("creates a product through the DummyJSON add endpoint", async () => {
     const post = vi.fn().mockResolvedValue({ id: 195, title: "Pencil" });
     const service = new ProductsService({ post } as unknown as ClientAPI);
