@@ -13,7 +13,7 @@ Legend: each task lists its expected result and a suggested verification command
 - [x] Remove empty legacy `.eslintrc.cjs`.
       Expected result: file deleted; `eslint.config.ts` remains the only ESLint
       config. Verify: `npm run lint`.
-- [ ] Add `dev-dist/` to `.gitignore` and remove it from git tracking.
+- [x] Add `dev-dist/` to `.gitignore` and remove it from git tracking.
       Expected result: `dev-dist/` no longer committed; still generated locally by
       `vite dev`/PWA dev options. Verify: `git status` clean after `npm run dev`.
 - [ ] Rename `package.json` `name` from `"test-project"` to the real project name.
