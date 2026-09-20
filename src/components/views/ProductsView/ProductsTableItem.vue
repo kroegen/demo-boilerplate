@@ -88,6 +88,14 @@
       >
         {{ $t("actions.cancel") }}
       </button>
+      <button
+        v-if="isEditing"
+        type="button"
+        class="table-item__action"
+        @click="saveProduct"
+      >
+        {{ $t("actions.save") }}
+      </button>
     </span>
   </div>
 </template>
@@ -97,6 +105,7 @@ import type { Category, Product } from "@/api/services/interfaces";
 import { computed, ref } from "vue";
 import { useField } from "vee-validate";
 import { useI18n } from "vue-i18n";
+import api from "@/api";
 
 interface Props {
   product: Product;
@@ -105,12 +114,15 @@ interface Props {
 }
 
 const props = defineProps<Props>();
+const emit = defineEmits<{ saved: [product: Product] }>();
 const isEditing = ref(false);
+const saveError = ref<unknown>(null);
 const { t } = useI18n();
 const {
   value: title,
   errorMessage: titleError,
   resetField: resetTitle,
+  validate: validateTitle,
 } = useField<string>(
   "title",
   (value) => value.trim().length > 0 || t("validation.required"),
@@ -120,6 +132,7 @@ const {
   value: category,
   errorMessage: categoryError,
   resetField: resetCategory,
+  validate: validateCategory,
 } = useField<string>(
   "category",
   (value) => value.length > 0 || t("validation.required"),
@@ -129,6 +142,7 @@ const {
   value: price,
   errorMessage: priceError,
   resetField: resetPrice,
+  validate: validatePrice,
 } = useField<number | string>(
   "price",
   (value) =>
@@ -140,6 +154,7 @@ const {
   value: stock,
   errorMessage: stockError,
   resetField: resetStock,
+  validate: validateStock,
 } = useField<number | string>(
   "stock",
   (value) =>
@@ -154,12 +169,37 @@ const product = computed(() => {
 
 function startEditing() {
   resetDraft();
+  saveError.value = null;
   isEditing.value = true;
 }
 
 function cancelEditing() {
   resetDraft();
+  saveError.value = null;
   isEditing.value = false;
+}
+
+async function saveProduct() {
+  const results = await Promise.all([
+    validateTitle(),
+    validateCategory(),
+    validatePrice(),
+    validateStock(),
+  ]);
+  if (results.some((result) => !result.valid)) return;
+
+  try {
+    const saved = await api.products.updateProduct(props.product.id, {
+      title: title.value.trim(),
+      category: category.value,
+      price: Number(price.value),
+      stock: Number(stock.value),
+    });
+    emit("saved", saved);
+    isEditing.value = false;
+  } catch (error) {
+    saveError.value = error;
+  }
 }
 
 function resetDraft() {
