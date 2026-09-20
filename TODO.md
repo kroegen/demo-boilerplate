@@ -43,7 +43,7 @@ Legend: each task lists its expected result and a suggested verification command
 
 ## Phase 2 — `ClientAPI` correctness fixes
 
-- [ ] Fix token restoration fallback: `this.authToken ?? localStorage.getItem("token")`
+- [x] Fix token restoration fallback: `this.authToken ?? localStorage.getItem("token")`
       never falls back because `authToken` defaults to `""`. Change the check so an
       empty in-memory token still allows falling back to a stored token.
       Expected result: after a hard reload with a valid `localStorage` token,

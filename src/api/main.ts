@@ -40,7 +40,7 @@ export default class ClientAPI {
     method?: string,
     payload?: T | string | FormData
   ) {
-    const authToken = this.authToken ?? localStorage.getItem("token");
+    const authToken = this.authToken || localStorage.getItem("token");
     const headers: HeadersInit = {
       "Content-Type": "application/json",
       Authorization: authToken && authToken.length ? `Bearer ${authToken}` : "",
