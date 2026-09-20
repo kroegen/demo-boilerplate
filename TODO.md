@@ -205,7 +205,7 @@ Each item below is its own reviewable step; do not combine them.
 - [x] Add a success notification (reuse `FancySnack`).
 - [x] Add a failure notification (reuse `FancySnack`).
 - [x] Add component tests for edit/cancel interactions.
-- [ ] Add component tests for a successful update.
+- [x] Add component tests for a successful update.
 - [ ] Add component tests for a failed update.
 
 Design constraint: switching `this.products = new ProductsService(dummyJsonApi)` to

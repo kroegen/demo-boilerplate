@@ -1,8 +1,9 @@
-import { mount } from "@vue/test-utils";
+import { flushPromises, mount } from "@vue/test-utils";
 import { createI18n } from "vue-i18n";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import type { Category, Product } from "@/api/services/interfaces";
 import api from "@/api";
+import { emitter } from "@/utils/emitter";
 import en from "@/locales/en.json";
 import ProductsTableItem from "../ProductsTableItem.vue";
 
@@ -50,6 +51,33 @@ describe("ProductsTableItem", () => {
     await wrapper.find("button").trigger("click");
     expect((wrapper.find('input[type="text"]').element as HTMLInputElement).value).toBe(
       "Original product",
+    );
+  });
+
+  it("saves a valid draft and emits the updated product", async () => {
+    const saved: Product = { ...product, title: "Updated product" };
+    const updateProduct = vi
+      .spyOn(api.products, "updateProduct")
+      .mockResolvedValue(saved);
+    const showSnack = vi.spyOn(emitter, "emit");
+    const wrapper = mountRow();
+
+    await wrapper.find("button").trigger("click");
+    await wrapper.find('input[type="text"]').setValue("Updated product");
+    await wrapper.findAll("button")[1].trigger("click");
+    await flushPromises();
+
+    expect(updateProduct).toHaveBeenCalledWith(product.id, {
+      title: "Updated product",
+      category: "test",
+      price: 10,
+      stock: 2,
+    });
+    expect(wrapper.emitted("saved")?.[0]).toEqual([saved]);
+    expect(wrapper.classes()).not.toContain("table-item--editing");
+    expect(showSnack).toHaveBeenCalledWith(
+      "showSnack",
+      expect.objectContaining({ text: "Product saved successfully", type: "success" }),
     );
   });
 });
