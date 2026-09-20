@@ -104,7 +104,7 @@ Legend: each task lists its expected result and a suggested verification command
 
 ## Phase 5 — Dependency hygiene
 
-- [ ] Run `npm audit` and evaluate reported vulnerabilities; apply safe
+- [x] Run `npm audit` and evaluate reported vulnerabilities; apply safe
       non-breaking fixes only (`npm audit fix` without `--force`), documenting any
       that require a major bump as a separate future TODO.
       Expected result: fewer/no vulnerabilities fixable without breaking changes;
@@ -198,3 +198,12 @@ Design constraint: switching `this.products = new ProductsService(dummyJsonApi)`
 - [ ] Evaluate migrating `UsersService`/`AuthService`/`PostsService` similarly, one
       at a time, only after Products migration is verified stable.
 - [ ] Remove DummyJSON entirely once no service depends on it.
+
+## Deferred dependency upgrades
+
+- [ ] Evaluate a coordinated Vitest and `@vitest/coverage-v8` major upgrade to
+      address the remaining `@vitest/mocker` advisory. `npm audit fix` reports
+      that this requires Vitest 5 and cannot be applied within the current range.
+- [ ] Resolve the `uuid` advisory through a supported Storybook addon upgrade.
+      `npm audit fix` proposes an incompatible `@storybook/addon-essentials`
+      version change; assess the Storybook migration separately.
