@@ -39,7 +39,9 @@ describe("ProductsView", () => {
       "Loading products",
     );
     expect(wrapper.find(".loader").exists()).toBe(true);
-    expect(wrapper.find("select").attributes("disabled")).toBeDefined();
+    expect(
+      wrapper.find('input[role="combobox"]').attributes("disabled"),
+    ).toBeDefined();
 
     resolveProducts({ products: [], total: 0, limit: 25, skip: 0 });
     await flushPromises();

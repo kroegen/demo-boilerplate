@@ -1,43 +1,30 @@
 <template>
   <f-view>
     <div class="products-toolbar">
-      <label>
-        {{ $t("labels.category") }}
-        <select
-          v-model="category"
-          :disabled="loading"
-          @change="handleCategoryChange"
-        >
-          <option value="">{{ $t("labels.allCategories") }}</option>
-          <option
-            v-for="item in categories"
-            :key="item.slug"
-            :value="item.slug"
-          >
-            {{ item.name }}
-          </option>
-        </select>
-      </label>
-      <label>
-        {{ $t("labels.sortBy") }}
-        <select v-model="sortBy" :disabled="loading" @change="handleSortChange">
-          <option value="">{{ $t("labels.defaultOrder") }}</option>
-          <option value="title">{{ $t("labels.title") }}</option>
-          <option value="price">{{ $t("labels.price") }}</option>
-          <option value="stock">{{ $t("labels.stock") }}</option>
-        </select>
-      </label>
-      <label>
-        {{ $t("labels.sortDirection") }}
-        <select
-          v-model="order"
-          :disabled="loading || !sortBy"
-          @change="handleSortChange"
-        >
-          <option value="asc">{{ $t("labels.ascending") }}</option>
-          <option value="desc">{{ $t("labels.descending") }}</option>
-        </select>
-      </label>
+      <FancySelect
+        name="products-category"
+        :label="$t('labels.category')"
+        :model-value="category"
+        :options="categoryOptions"
+        :disabled="loading"
+        @update:model-value="handleCategorySelect"
+      />
+      <FancySelect
+        name="products-sort"
+        :label="$t('labels.sortBy')"
+        :model-value="sortBy"
+        :options="sortOptions"
+        :disabled="loading"
+        @update:model-value="handleSortSelect"
+      />
+      <FancySelect
+        name="products-order"
+        :label="$t('labels.sortDirection')"
+        :model-value="order"
+        :options="orderOptions"
+        :disabled="loading || !sortBy"
+        @update:model-value="handleOrderSelect"
+      />
       <button
         type="button"
         :disabled="loading || !categories.length"
@@ -117,6 +104,11 @@ import ProductsTableItem from "./ProductsView/ProductsTableItem.vue";
 import ProductsCreateModal from "./ProductsView/ProductsCreateModal.vue";
 import ConfirmModal from "@/components/modals/ConfirmModal.vue";
 import FancyPagination from "@/components/common/FancyPagination.vue";
+import FancySelect from "@/components/common/FancySelect.vue";
+import type {
+  SelectOption,
+  SelectValue,
+} from "@/components/common/select.types";
 import type { Category, Product } from "@/api/services/interfaces";
 import { useAdminProductsStore } from "@/stores/adminProducts";
 import { useI18n } from "vue-i18n";
@@ -143,6 +135,20 @@ const pages = computed(() => Math.ceil(total.value / limit));
 const removeId = ref<number | null>(null);
 const deleting = ref(false);
 const { t } = useI18n();
+const categoryOptions = computed<SelectOption[]>(() => [
+  { value: "", label: t("labels.allCategories") },
+  ...categories.value.map((item) => ({ value: item.slug, label: item.name })),
+]);
+const sortOptions = computed<SelectOption[]>(() => [
+  { value: "", label: t("labels.defaultOrder") },
+  { value: "title", label: t("labels.title") },
+  { value: "price", label: t("labels.price") },
+  { value: "stock", label: t("labels.stock") },
+]);
+const orderOptions = computed<SelectOption[]>(() => [
+  { value: "asc", label: t("labels.ascending") },
+  { value: "desc", label: t("labels.descending") },
+]);
 const listErrorMessage = computed(() =>
   listError.value instanceof ClientAPIError
     ? listError.value.message
@@ -201,9 +207,20 @@ async function handleSortChange() {
   await loadProducts();
 }
 
-async function handleCategoryChange() {
+async function handleCategorySelect(value: SelectValue) {
+  category.value = String(value);
   page.value = 1;
   await loadProducts();
+}
+
+async function handleSortSelect(value: SelectValue) {
+  sortBy.value = String(value);
+  await handleSortChange();
+}
+
+async function handleOrderSelect(value: SelectValue) {
+  order.value = value === "desc" ? "desc" : "asc";
+  await handleSortChange();
 }
 
 async function clearCategory() {
@@ -277,6 +294,10 @@ async function handleRemoveProduct() {
   align-items: center;
   gap: 16px;
   padding: 12px 20px;
+
+  :deep(.f-select) {
+    max-width: 200px;
+  }
 }
 
 .products-state {

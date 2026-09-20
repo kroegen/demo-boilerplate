@@ -240,7 +240,7 @@ and `FancyPopper` rather than adding another native product select.
 - [x] Handle opening, selection, outside click, and closing; support arrow
       keys, Enter, Escape, and Tab with combobox/listbox semantics and focus
       management.
-- [ ] Replace the native category, sort, and order selects in the admin
+- [x] Replace the native category, sort, and order selects in the admin
       products toolbar without changing their query behavior.
 - [ ] Replace the category selects in the create product form and current edit
       UI; preserve validation errors and disabled states.
