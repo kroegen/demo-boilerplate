@@ -58,7 +58,7 @@ Legend: each task lists its expected result and a suggested verification command
 - [x] Treat every HTTP 2xx response as success (not only `200`).
       Expected result: `201`/`204`/etc. responses are returned normally instead of
       throwing. Verify: `ClientAPI` unit test with a mocked `204` response.
-- [x] Add a `patch` method to `ClientAPI` (needed for Phase 6 product editing).
+- [x] Add a `patch` method to `ClientAPI` (needed for Phase 8 product editing).
       Expected result: `client.patch(url, payload)` sends a `PATCH` request with a
       JSON body. Verify: `ClientAPI` unit test.
 - [x] Fix `Content-Type` header handling so it is omitted (or set correctly) for
@@ -122,11 +122,10 @@ Legend: each task lists its expected result and a suggested verification command
       remove the version-range drift noted in the audit.
       Expected result: `npm install` produces no changes; declared ranges match
       reality.
-- [ ] Re-confirm the `FavoritesStore`/`FavoritesView` route is intentionally
-      disabled; either wire the commented-out `/favorites` route back up or remove
-      the dead store/view if it is not planned. (Decision only — do not silently
-      delete without confirming with the user.)
-      Expected result: no orphaned store/view left ambiguous in the codebase.
+- [x] Re-confirm the Favorites feature direction. `FavoritesStore` is already used
+      by product heart controls and the header dropdown; `FavoritesView` is a
+      placeholder and its route is disabled. Build the full page from the shared
+      product grid in Phase 7, keeping the existing store and dropdown.
 
 ## Phase 6 — Products backend-migration seam (frontend-only prep)
 
@@ -136,7 +135,51 @@ Legend: each task lists its expected result and a suggested verification command
       for the table-editing feature, without touching `backendApi` yet.
       Verify: `ProductsService` unit tests using a mocked `ClientAPI`.
 
-## Phase 7 — First major UI feature: editable product rows (admin table)
+## Phase 7 — Shared product grid and Favorites page
+
+Each item below is its own reviewable step; keep existing landing behavior while
+extracting the shared display structure.
+
+- [ ] Define the shared component boundary: the grid owns the product-card layout
+      and optional drag interaction; each view owns its data source, loading state,
+      and page-specific controls. Record the contract in `SPEC.md`.
+      Verify: the plan leaves landing pagination and category routing in
+      `LandingView`, and the header's compact `ProductListItem` dropdown separate.
+- [ ] Move `ProductCard`, `FavoriteButton`, and `RatingStars` out of the
+      `LandingView` directory into a shared product-component location; update
+      imports without changing their behavior. Verify: `npm run type-check` and
+      `npx vitest run`.
+- [ ] Extract the full-card grid markup and styles from `LandingView`
+      into a shared product-grid component that accepts `Product[]`. Keep the
+      existing card actions and list transition. Verify: the landing page renders
+      the same cards and responsive layout.
+- [ ] Move landing drag/reorder handling behind the grid's explicit props and
+      event contract. Make card dragging conditional on that prop, let the owning
+      view apply the reordered list, and remove the `DataTransfer` type cast used
+      for the card's drag payload. Verify: dragging still reorders landing cards,
+      with a focused interaction test.
+- [ ] Switch `LandingView` to the shared grid while leaving its fetch, category,
+      loading, and pagination logic in the view. Verify: landing and category
+      routes still load and paginate as before.
+- [ ] Replace the `FavoritesView` loading placeholder with the same shared card
+      grid backed by `FavoritesStore.favorites`; do not fetch products again.
+      Verify: add/remove actions update both the page and header dropdown
+      immediately, including after navigating between views.
+- [ ] Disable drag reordering in `FavoritesView` through the grid's prop; keep
+      the current `FavoritesStore` order. Verify: favorite cards cannot be dragged
+      and removing one leaves the remaining order unchanged.
+- [ ] Add an empty Favorites state and translations in both supported locales.
+      Verify: the page is clear when the store has no favorites and updates when
+      the first item is added.
+- [ ] Enable the `/favorites` route under `MainLayout` and provide a visible path
+      to it while preserving the header's existing dropdown behavior. Verify:
+      direct navigation, browser back/forward, and mobile layout.
+- [ ] Add focused component and route tests for shared card rendering, Favorites
+      add/remove synchronization, disabled dragging, empty state, and route
+      access. Verify: `npx vitest run`, `npm run type-check`, `npm run build`,
+      and `npm run lint`.
+
+## Phase 8 — First major UI feature: editable product rows (admin table)
 
 Each item below is its own reviewable step; do not combine them.
 
@@ -169,7 +212,7 @@ Design constraint: switching `this.products = new ProductsService(dummyJsonApi)`
 `new ProductsService(backendApi)` later must not require any change to
 `ProductsTable`/`ProductsTableItem`.
 
-## Phase 8 — Later product features (separate phases, not started yet)
+## Phase 9 — Later product features (separate phases, not started yet)
 
 - [ ] Create product flow.
 - [ ] Delete product flow with confirmation modal (reuse `ConfirmModal.vue`).
@@ -183,7 +226,7 @@ Design constraint: switching `this.products = new ProductsService(dummyJsonApi)`
 - [ ] Product list API error state.
 - [ ] Product detail screen.
 
-## Phase 9 — Users (deferred, DummyJSON-first)
+## Phase 10 — Users (deferred, DummyJSON-first)
 
 - [ ] User list backend-readiness review (no change yet).
 - [ ] User detail view.
@@ -192,7 +235,7 @@ Design constraint: switching `this.products = new ProductsService(dummyJsonApi)`
 - [ ] Disable/delete user.
 - [ ] Roles support.
 
-## Phase 10 — Backend integration (deferred, not implemented in this repo)
+## Phase 11 — Backend integration (deferred, not implemented in this repo)
 
 - [ ] Point `ProductsService` at `backendApi` once `be-boileplate` exposes the
       documented `/api/products` contract (first domain to migrate).
