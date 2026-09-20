@@ -161,7 +161,7 @@ extracting the shared display structure.
 - [x] Switch `LandingView` to the shared grid while leaving its fetch, category,
       loading, and pagination logic in the view. Verify: landing and category
       routes still load and paginate as before.
-- [ ] Replace the `FavoritesView` loading placeholder with the same shared card
+- [x] Replace the `FavoritesView` loading placeholder with the same shared card
       grid backed by `FavoritesStore.favorites`; do not fetch products again.
       Verify: add/remove actions update both the page and header dropdown
       immediately, including after navigating between views.
