@@ -94,7 +94,7 @@ Legend: each task lists its expected result and a suggested verification command
 
 ## Phase 4 — CI hardening
 
-- [ ] Replace `rm -rf node_modules package-lock.json && npm install` with
+- [x] Replace `rm -rf node_modules package-lock.json && npm install` with
       `npm ci` in `.github/workflows/main.yml`.
       Expected result: CI installs are reproducible from the committed lockfile.
 - [ ] Run the full `npm run build` (includes type-check) instead of
