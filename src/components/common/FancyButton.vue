@@ -11,7 +11,7 @@
     <span v-if="$slots.before" class="f-button__icon">
       <slot name="before"></slot>
     </span>
-    <span class="f-button__label">
+    <span v-if="$slots.default" class="f-button__label">
       <slot></slot>
     </span>
     <span v-if="$slots.after" class="f-button__icon">

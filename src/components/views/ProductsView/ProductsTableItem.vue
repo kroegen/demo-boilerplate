@@ -75,12 +75,14 @@
       <FancyButton
         v-if="!isEditing"
         type="button"
-        class="table-item__action"
+        class="table-item__action--icon"
         variant="text"
         size="tiny"
+        :aria-label="$t('actions.edit')"
+        :title="$t('actions.edit')"
         @click="startEditing"
       >
-        {{ $t("actions.edit") }}
+        <template #before><SvgIcon :src="EditIcon" /></template>
       </FancyButton>
       <FancyButton
         v-else
@@ -107,12 +109,14 @@
       <FancyButton
         v-if="!isEditing"
         type="button"
-        class="table-item__action"
+        class="table-item__action--icon"
         variant="text"
         size="tiny"
+        :aria-label="$t('actions.delete')"
+        :title="$t('actions.delete')"
         @click="emit('remove', product.id)"
       >
-        {{ $t("actions.delete") }}
+        <template #before><SvgIcon :src="DeleteIcon" /></template>
       </FancyButton>
       <small
         v-if="isEditing && saveErrorMessage"
@@ -133,6 +137,9 @@ import { useI18n } from "vue-i18n";
 import api from "@/api";
 import FancyInput from "@/components/common/FancyInput.vue";
 import FancyButton from "@/components/common/FancyButton.vue";
+import SvgIcon from "@/components/common/SvgIcon.vue";
+import EditIcon from "@/assets/icons/pencil-line.svg";
+import DeleteIcon from "@/assets/icons/delete-bin-line.svg";
 import FancySelect from "@/components/common/FancySelect.vue";
 import type {
   SelectOption,
@@ -368,6 +375,29 @@ function resetDraft() {
   &__actions {
     flex: 1;
     min-width: 100px;
+    gap: 4px;
+  }
+
+  & > .table-item__actions {
+    flex-direction: row;
+  }
+
+  &__action--icon {
+    padding: 6px;
+
+    :deep(.f-button__icon) {
+      width: 22px;
+      height: 22px;
+      margin: 0;
+    }
+
+    :deep(.svg-icon) {
+      --icon-color: var(--black-color);
+    }
+
+    &:hover :deep(.svg-icon) {
+      --icon-color: var(--blue-color);
+    }
   }
 
   &__field {
