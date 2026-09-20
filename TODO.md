@@ -186,7 +186,7 @@ Each item below is its own reviewable step; do not combine them.
 - [x] Audit current `ProductsTable.vue` and `ProductsTableItem.vue` responsibilities
       and document the intended edit/display mode boundary (comment or short note
       in SPEC.md), no behavior change.
-- [ ] Add explicit display/edit mode state to a product row (no editable fields
+- [x] Add explicit display/edit mode state to a product row (no editable fields
       yet, just the mode toggle and conditional rendering scaffold).
 - [ ] Add an "Edit" action that switches a row into edit mode.
 - [ ] Add a "Cancel" action that reverts a row to display mode without saving.

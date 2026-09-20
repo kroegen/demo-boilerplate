@@ -1,8 +1,9 @@
 <template>
   <div class="table-item">
-    <span class="table-item__title">
+    <span v-if="!isEditing" class="table-item__title">
       {{ product.title }}
     </span>
+    <span v-else class="table-item__title">{{ product.title }}</span>
     <span class="table-item__brand">
       {{ product.brand }}
     </span>
@@ -21,7 +22,7 @@
 
 <script lang="ts" setup>
 import type { Product } from "@/api/services/interfaces";
-import { computed } from "vue";
+import { computed, ref } from "vue";
 
 interface Props {
   product: Product;
@@ -29,6 +30,7 @@ interface Props {
 }
 
 const props = defineProps<Props>();
+const isEditing = ref(false);
 
 const product = computed(() => {
   return props.product;
