@@ -16,7 +16,7 @@ Legend: each task lists its expected result and a suggested verification command
 - [x] Add `dev-dist/` to `.gitignore` and remove it from git tracking.
       Expected result: `dev-dist/` no longer committed; still generated locally by
       `vite dev`/PWA dev options. Verify: `git status` clean after `npm run dev`.
-- [ ] Rename `package.json` `name` from `"test-project"` to the real project name.
+- [x] Rename `package.json` `name` from `"test-project"` to the real project name.
       Expected result: no other references to the old name remain.
       Verify: `grep -r "test-project" .` (excluding lockfile) returns nothing
       relevant.

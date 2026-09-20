@@ -1,4 +1,4 @@
-# test-project
+# demo-boilerplate
 
 This is a demo vue3 + ts boilerplate project made to cover the dummyJSON api with UI ([Link to Demo](https://d38gr50hwwazmm.cloudfront.net/))
 
