@@ -31,7 +31,7 @@ Legend: each task lists its expected result and a suggested verification command
       `.env.example`; document them in `README.md`.
       Expected result: `.env.example` committed, `.env*` (except `.env.example`)
       git-ignored.
-- [ ] Move the hardcoded `"https://dummyjson.com"` base URL in `src/api/index.ts`
+- [x] Move the hardcoded `"https://dummyjson.com"` base URL in `src/api/index.ts`
       to `import.meta.env.VITE_DUMMY_JSON_API_URL`.
       Expected result: app behavior unchanged when `.env` sets the same value.
       Verify: `npm run dev`, confirm products/users/posts/login still load.

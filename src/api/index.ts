@@ -16,7 +16,7 @@ class API {
   public users: UsersService;
 
   constructor() {
-    const JSON_API_URL = "https://dummyjson.com";
+    const JSON_API_URL = import.meta.env.VITE_DUMMY_JSON_API_URL;
     this.jsonApi = new clientAPI(JSON_API_URL);
 
     // Initialize services
