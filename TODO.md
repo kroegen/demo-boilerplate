@@ -86,7 +86,7 @@ Legend: each task lists its expected result and a suggested verification command
 
 ## Phase 3 — Type-check / build fix
 
-- [ ] Fix `src/stories/Dropdown.stories.ts` `showDropdown` typing error (align
+- [x] Fix `src/stories/Dropdown.stories.ts` `showDropdown` typing error (align
       `data()`/`setup()` usage so `vue-tsc` can resolve the template's
       `showDropdown` reference).
       Expected result: `npm run type-check` passes.

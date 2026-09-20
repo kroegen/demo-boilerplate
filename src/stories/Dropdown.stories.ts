@@ -1,6 +1,7 @@
 import type { Meta, StoryObj, StoryFn } from '@storybook/vue3';
 import FancyDropdown from '@/components/common/FancyDropdown.vue';
 import FancyButton from '@/components/common/FancyButton.vue';
+import { ref } from 'vue';
 
 export default {
   title: 'FancyDropdown',
@@ -17,7 +18,12 @@ export default {
 export const Dropdown: StoryFn<typeof FancyDropdown> = (args) => ({
   components: { FancyDropdown, FancyButton },
   setup() {
-    return { args };
+    const showDropdown = ref(false);
+    const toggleDropdown = () => {
+      showDropdown.value = !showDropdown.value;
+    };
+
+    return { args, showDropdown, toggleDropdown };
   },
   template: `
     <div style="padding: 20px;">
@@ -29,14 +35,4 @@ export const Dropdown: StoryFn<typeof FancyDropdown> = (args) => ({
       </FancyDropdown>
     </div>
   `,
-  data() {
-    return {
-      showDropdown: false,
-    };
-  },
-  methods: {
-    toggleDropdown() {
-      this.showDropdown = !this.showDropdown;
-    },
-  },
 }) as StoryObj<typeof FancyDropdown>;
