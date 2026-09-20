@@ -59,11 +59,22 @@ describe("FancyInput component", () => {
     const wrapper = mount(FancyInput, {
       props: {
         modelValue: "",
+        name: "example",
         error: "This field is required",
       },
     });
 
     expect(wrapper.find(".f-input__error-message").exists()).toBe(true);
-    expect(wrapper.find(".f-input__error-message").text()).toBe("This field is required");
+    expect(wrapper.find(".f-input__error-message").text()).toBe(
+      "This field is required",
+    );
+    expect(wrapper.find(".f-input__error-message").attributes("role")).toBe(
+      "alert",
+    );
+    expect(wrapper.find("input").attributes("aria-invalid")).toBe("true");
+    expect(wrapper.find("input").attributes("aria-describedby")).toBe(
+      "example-error",
+    );
+    expect(wrapper.classes()).toContain("f-input--error");
   });
 });

@@ -15,8 +15,12 @@
         :value="modelValue"
         :placeholder="placeholder"
         :aria-label="ariaLabel"
+        :aria-invalid="!!error"
+        :aria-describedby="error && name ? `${name}-error` : undefined"
         :disabled="disabled"
         :readonly="readonly"
+        :min="min"
+        :step="step"
         autocomplete="nope"
         @input="handleInput"
         @blur="handleBlur"
@@ -35,7 +39,12 @@
       </span>
     </div>
     <div class="f-input__error">
-      <span class="f-input__error-message" v-if="error">
+      <span
+        class="f-input__error-message"
+        v-if="error"
+        :id="name ? `${name}-error` : undefined"
+        role="alert"
+      >
         {{ error }}
       </span>
     </div>
@@ -93,6 +102,12 @@ export default defineComponent({
     type: {
       type: String,
       default: () => "text",
+    },
+    min: {
+      type: [String, Number],
+    },
+    step: {
+      type: [String, Number],
     },
     fullWidth: {
       type: Boolean,

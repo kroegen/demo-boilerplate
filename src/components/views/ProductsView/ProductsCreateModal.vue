@@ -4,14 +4,23 @@
       ><h2>{{ $t("actions.createProduct") }}</h2></template
     >
     <form class="create-product" @submit.prevent="createProduct">
-      <label>
-        {{ $t("labels.title") }}
-        <input v-model="title" type="text" />
-        <small v-if="titleError" role="alert">{{ titleError }}</small>
-      </label>
+      <FancyInput
+        v-model="title"
+        name="create-title"
+        :label="$t('labels.title')"
+        :error="titleError"
+        full-width
+      />
       <label>
         {{ $t("labels.category") }}
-        <select v-model="category">
+        <select
+          v-model="category"
+          :class="{ 'create-product__field--error': categoryError }"
+          :aria-invalid="!!categoryError"
+          :aria-describedby="
+            categoryError ? 'create-category-error' : undefined
+          "
+        >
           <option value="">{{ $t("placeholders.selectCategory") }}</option>
           <option
             v-for="item in categories"
@@ -21,18 +30,32 @@
             {{ item.name }}
           </option>
         </select>
-        <small v-if="categoryError" role="alert">{{ categoryError }}</small>
+        <small v-if="categoryError" id="create-category-error" role="alert">{{
+          categoryError
+        }}</small>
       </label>
-      <label>
-        {{ $t("labels.price") }}
-        <input v-model.number="price" type="number" min="0" step="0.01" />
-        <small v-if="priceError" role="alert">{{ priceError }}</small>
-      </label>
-      <label>
-        {{ $t("labels.stock") }}
-        <input v-model.number="stock" type="number" min="0" step="1" />
-        <small v-if="stockError" role="alert">{{ stockError }}</small>
-      </label>
+      <FancyInput
+        :model-value="price"
+        name="create-price"
+        type="number"
+        :label="$t('labels.price')"
+        :error="priceError"
+        :min="0"
+        step="0.01"
+        full-width
+        @update:model-value="setPrice"
+      />
+      <FancyInput
+        :model-value="stock"
+        name="create-stock"
+        type="number"
+        :label="$t('labels.stock')"
+        :error="stockError"
+        :min="0"
+        :step="1"
+        full-width
+        @update:model-value="setStock"
+      />
       <small v-if="errorMessage" role="alert">{{ errorMessage }}</small>
       <div class="create-product__actions">
         <button type="button" :disabled="saving" @click="$emit('close')">
@@ -51,6 +74,7 @@ import { computed, ref } from "vue";
 import { useField } from "vee-validate";
 import { useI18n } from "vue-i18n";
 import api from "@/api";
+import FancyInput from "@/components/common/FancyInput.vue";
 import { ClientAPIError } from "@/api/main";
 import type { Category, Product } from "@/api/services/interfaces";
 import { emitter } from "@/utils/emitter";
@@ -115,6 +139,14 @@ const {
     t("validation.wholeNonnegative"),
   { initialValue: 0 },
 );
+
+function setPrice(value: string | number) {
+  price.value = value === "" ? "" : Number(value);
+}
+
+function setStock(value: string | number) {
+  stock.value = value === "" ? "" : Number(value);
+}
 
 async function createProduct() {
   if (saving.value) return;
@@ -191,6 +223,10 @@ async function createProduct() {
 
   small {
     color: var(--red-color);
+  }
+
+  &__field--error {
+    border-color: var(--red-color);
   }
 
   &__actions {

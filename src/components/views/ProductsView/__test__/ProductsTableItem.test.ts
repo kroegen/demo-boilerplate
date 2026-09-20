@@ -39,6 +39,24 @@ function mountRow() {
 afterEach(() => vi.restoreAllMocks());
 
 describe("ProductsTableItem", () => {
+  it("marks each invalid edit field with its error state", async () => {
+    const updateProduct = vi.spyOn(api.products, "updateProduct");
+    const wrapper = mountRow();
+
+    await wrapper.find("button").trigger("click");
+    await wrapper.find('input[type="text"]').setValue("");
+    await wrapper.find("select").setValue("");
+    await wrapper.findAll('input[type="number"]')[0].setValue("-1");
+    await wrapper.findAll('input[type="number"]')[1].setValue("1.5");
+    await wrapper.findAll("button")[1].trigger("click");
+    await flushPromises();
+
+    expect(updateProduct).not.toHaveBeenCalled();
+    expect(wrapper.findAll('input[aria-invalid="true"]')).toHaveLength(3);
+    expect(wrapper.find('select[aria-invalid="true"]').exists()).toBe(true);
+    expect(wrapper.findAll('[role="alert"]')).toHaveLength(4);
+  });
+
   it("requests deletion without calling the API before confirmation", async () => {
     const removeProduct = vi.spyOn(api.products, "deleteProduct");
     const wrapper = mountRow();

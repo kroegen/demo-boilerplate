@@ -10,15 +10,14 @@
       </router-link>
     </span>
     <span v-else class="table-item__title">
-      <input
+      <FancyInput
         v-model="title"
         class="table-item__field"
-        type="text"
+        :error="titleError"
+        :name="`edit-title-${product.id}`"
         :aria-label="$t('labels.title')"
+        full-width
       />
-      <small v-if="titleError" class="table-item__error" role="alert">{{
-        titleError
-      }}</small>
     </span>
     <span class="table-item__brand">
       {{ product.brand }}
@@ -33,8 +32,14 @@
       <select
         v-model="category"
         class="table-item__field"
+        :class="{ 'table-item__field--error': categoryError }"
         :aria-label="$t('labels.category')"
+        :aria-invalid="!!categoryError"
+        :aria-describedby="
+          categoryError ? `edit-category-${product.id}-error` : undefined
+        "
       >
+        <option value="">{{ $t("placeholders.selectCategory") }}</option>
         <option
           v-for="category in categories"
           :key="category.slug"
@@ -43,39 +48,45 @@
           {{ category.name }}
         </option>
       </select>
-      <small v-if="categoryError" class="table-item__error" role="alert">{{
-        categoryError
-      }}</small>
+      <small
+        v-if="categoryError"
+        :id="`edit-category-${product.id}-error`"
+        class="table-item__error"
+        role="alert"
+        >{{ categoryError }}</small
+      >
     </span>
     <span v-if="!isEditing" class="table-item__price">
       {{ product.price }}
     </span>
     <span v-else class="table-item__price">
-      <input
-        v-model.number="price"
+      <FancyInput
+        :model-value="price"
         class="table-item__field"
         type="number"
-        min="0"
+        :min="0"
         step="0.01"
         :aria-label="$t('labels.price')"
+        :error="priceError"
+        :name="`edit-price-${product.id}`"
+        full-width
+        @update:model-value="setPrice"
       />
-      <small v-if="priceError" class="table-item__error" role="alert">{{
-        priceError
-      }}</small>
     </span>
     <span v-if="!isEditing" class="table-item__stock">{{ product.stock }}</span>
     <span v-else class="table-item__stock">
-      <input
-        v-model.number="stock"
+      <FancyInput
+        :model-value="stock"
         class="table-item__field"
         type="number"
-        min="0"
-        step="1"
+        :min="0"
+        :step="1"
         :aria-label="$t('labels.stock')"
+        :error="stockError"
+        :name="`edit-stock-${product.id}`"
+        full-width
+        @update:model-value="setStock"
       />
-      <small v-if="stockError" class="table-item__error" role="alert">{{
-        stockError
-      }}</small>
     </span>
     <span class="table-item__actions">
       <button
@@ -129,6 +140,7 @@ import { computed, ref } from "vue";
 import { useField } from "vee-validate";
 import { useI18n } from "vue-i18n";
 import api from "@/api";
+import FancyInput from "@/components/common/FancyInput.vue";
 import { ClientAPIError } from "@/api/main";
 import { emitter } from "@/utils/emitter";
 import {
@@ -204,6 +216,14 @@ const saveErrorMessage = computed(() =>
       ? t("notifications.product.saveError")
       : "",
 );
+
+function setPrice(value: string | number) {
+  price.value = value === "" ? "" : Number(value);
+}
+
+function setStock(value: string | number) {
+  stock.value = value === "" ? "" : Number(value);
+}
 
 function startEditing() {
   resetDraft();
@@ -355,9 +375,16 @@ function resetDraft() {
   &__field {
     width: 100%;
     min-width: 0;
+  }
+
+  select.table-item__field {
     padding: 6px;
     border: 1px solid var(--blue-color);
     border-radius: 4px;
+  }
+
+  select.table-item__field--error {
+    border-color: var(--red-color);
   }
 
   &__error {
