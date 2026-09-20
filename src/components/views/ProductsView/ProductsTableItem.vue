@@ -33,6 +33,17 @@
         :aria-label="$t('labels.price')"
       />
     </span>
+    <span v-if="!isEditing" class="table-item__stock">{{ product.stock }}</span>
+    <span v-else class="table-item__stock">
+      <input
+        v-model.number="draft.stock"
+        class="table-item__field"
+        type="number"
+        min="0"
+        step="1"
+        :aria-label="$t('labels.stock')"
+      />
+    </span>
     <span class="table-item__actions">
       <button
         v-if="!isEditing"
@@ -151,6 +162,11 @@ function resetDraft() {
   &__price {
     flex: 1;
     min-width: 100px;
+  }
+
+  &__stock {
+    flex: 1;
+    min-width: 80px;
   }
 
   &__actions {

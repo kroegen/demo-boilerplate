@@ -6,6 +6,7 @@
       <span class="table__header-description">description</span>
       <span class="table__header-category">category</span>
       <span class="table__header-price">price</span>
+      <span class="table__header-stock">stock</span>
       <span class="table__header-actions"></span>
     </div>
     <div class="table__body">
@@ -80,6 +81,11 @@
   &__header-actions {
     flex: 1;
     min-width: 100px;
+  }
+
+  &__header-stock {
+    flex: 1;
+    min-width: 80px;
   }
 
   &__body {
