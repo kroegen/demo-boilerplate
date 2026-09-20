@@ -127,7 +127,7 @@ Legend: each task lists its expected result and a suggested verification command
 
 ## Phase 6 — Products backend-migration seam (frontend-only prep)
 
-- [ ] Add `create`/`update` (`PATCH`)/`delete` methods to `ProductsService`,
+- [x] Add `create`/`update` (`PATCH`)/`delete` methods to `ProductsService`,
       still targeting `dummyJsonApi` (DummyJSON supports mock CRUD responses).
       Expected result: `ProductsService.updateProduct(id, payload)` etc. available
       for the table-editing feature, without touching `backendApi` yet.

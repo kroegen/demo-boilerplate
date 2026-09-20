@@ -12,6 +12,18 @@ export interface Product {
   title: string;
 }
 
+export type CreateProductPayload = Pick<Product, "title"> &
+  Partial<Omit<Product, "id" | "title">>;
+
+export type CreatedProduct = CreateProductPayload & Pick<Product, "id">;
+
+export type UpdateProductPayload = Partial<Omit<Product, "id">>;
+
+export type DeletedProduct = Product & {
+  isDeleted: boolean;
+  deletedOn: string;
+};
+
 export interface User {
   id: number;
   firstName: string;

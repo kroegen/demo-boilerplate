@@ -1,5 +1,13 @@
 import Base from "../base";
-import type { Category, Product, ProductsResponse } from "./interfaces";
+import type {
+  Category,
+  CreateProductPayload,
+  CreatedProduct,
+  DeletedProduct,
+  Product,
+  ProductsResponse,
+  UpdateProductPayload,
+} from "./interfaces";
 
 export default class ProductsService extends Base {
   public async fetchProducts(
@@ -23,5 +31,28 @@ export default class ProductsService extends Base {
     category: string,
   ): Promise<ProductsResponse> {
     return this.api.get<ProductsResponse>(`products/category/${category}`);
+  }
+
+  public async createProduct(
+    payload: CreateProductPayload,
+  ): Promise<CreatedProduct> {
+    return this.api.post<CreateProductPayload, CreatedProduct>(
+      "products/add",
+      payload,
+    );
+  }
+
+  public async updateProduct(
+    productId: number,
+    payload: UpdateProductPayload,
+  ): Promise<Product> {
+    return this.api.patch<UpdateProductPayload, Product>(
+      `products/${productId}`,
+      payload,
+    );
+  }
+
+  public async deleteProduct(productId: number): Promise<DeletedProduct> {
+    return this.api.delete<DeletedProduct>(`products/${productId}`);
   }
 }
