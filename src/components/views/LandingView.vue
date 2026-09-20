@@ -1,18 +1,7 @@
 <template>
-  <section
-    @dragover.prevent="handleDragover"
-    @dragleave.prevent="handleDragleave"
-    @drop.prevent="onDrop"
-  >
+  <section>
     <Loader v-if="loading" />
-    <transition-group name="list" tag="ul" v-else>
-      <ProductCard
-        v-for="product in products"
-        :key="product.id"
-        :product="product"
-        draggable
-      />
-    </transition-group>
+    <ProductGrid v-else :products="products" reorderable @reorder="handleReorder" />
     <FancyPagination
       v-if="!category"
       :pages="pages"
@@ -27,20 +16,12 @@ import { ref, watch, type Ref, computed } from "vue";
 
 import type { Product } from "@/api/services/interfaces";
 
-interface DragHandler {
-  (e: DragEvent): void;
-}
-interface LeaveHandler {
-  (): void;
-}
-
 import Loader from "@/components/common/SpinnerLoader.vue";
-import ProductCard from "@/components/products/ProductCard.vue";
+import ProductGrid from "@/components/products/ProductGrid.vue";
 import FancyPagination from "@/components/common/FancyPagination.vue";
 
 import { ProductsStore } from "@/stores/products";
 import { useRoute, useRouter } from "vue-router";
-import { findParentElementByClassName, debounce } from "@/utils/helpers";
 
 const productsStore = ProductsStore();
 const loading = ref(true);
@@ -105,60 +86,7 @@ function handleChangePage(page: number) {
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
-function handleDragover(e: DragEvent) {
-  const debouncedDragover = debounce<DragHandler>(onDragover, 600);
-  debouncedDragover(e);
-}
-
-function handleDragleave() {
-  const debouncedDragleave = debounce<LeaveHandler>(onDragleave, 200);
-  debouncedDragleave();
-}
-
-function onDragover(e: DragEvent): void {
-  const target = findParentElementByClassName(e.target as Element, "product");
-
-  target?.classList.add("product--active");
-}
-
-function onDragleave(): void {
-  const activeNodes = document.querySelectorAll("li.product--active");
-
-  for (const activeNode of activeNodes) {
-    activeNode.classList.remove("product--active");
-  }
-}
-
-function onDrop(e: DragEvent) {
-  if (e.dataTransfer) {
-    const sourceId = Number(e.dataTransfer.getData("text/plain"));
-    const sourceIndex = products.value.findIndex((item) => item.id === sourceId);
-    const target = findParentElementByClassName(e.target as Element, "product");
-    const targetIndex =
-      target && target.parentNode
-        ? [...target.parentNode.children].indexOf(target)
-        : null;
-
-    if (targetIndex !== null && targetIndex !== undefined && sourceIndex >= 0) {
-      [products.value[targetIndex], products.value[sourceIndex]] = [
-        products.value[sourceIndex],
-        products.value[targetIndex],
-      ];
-    }
-
-    target?.classList.remove("product--active");
-  }
+function handleReorder(reordered: Product[]) {
+  products.value = reordered;
 }
 </script>
-
-<style lang="scss" scoped>
-ul {
-  list-style: none;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: center;
-  padding: 0px;
-  padding-top: 50px;
-}
-</style>

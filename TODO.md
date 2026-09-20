@@ -158,7 +158,7 @@ extracting the shared display structure.
       view apply the reordered list, and remove the `DataTransfer` type cast used
       for the card's drag payload. Verify: dragging still reorders landing cards,
       with a focused interaction test.
-- [ ] Switch `LandingView` to the shared grid while leaving its fetch, category,
+- [x] Switch `LandingView` to the shared grid while leaving its fetch, category,
       loading, and pagination logic in the view. Verify: landing and category
       routes still load and paginate as before.
 - [ ] Replace the `FavoritesView` loading placeholder with the same shared card
