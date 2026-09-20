@@ -233,7 +233,7 @@ and `FancyPopper` rather than adding another native product select.
 - [x] Define the `FancySelect` interface for `v-model`, labeled options,
       placeholder, disabled state, and the existing input error prop. Keep
       option values separate from visible labels.
-- [ ] Add reusable list and list-item components for dropdown options, with
+- [x] Add reusable list and list-item components for dropdown options, with
       selected, active, and disabled states.
 - [ ] Build `FancySelect` with a `FancyInput` trigger and an option list inside
       `FancyDropdown` positioned by `FancyPopper`.
