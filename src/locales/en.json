@@ -86,6 +86,7 @@
       "cartAdded": "The {item} has been added to the Cart",
       "favoritesAdded": "The {item} has been added to the Favorites List",
       "favoritesRemoved": "The {item} has been removed from the Favorites List",
+      "saveSuccess": "Product saved successfully",
       "saveError": "Could not save the product"
     }
   }

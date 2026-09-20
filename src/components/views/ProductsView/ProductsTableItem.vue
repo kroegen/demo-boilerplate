@@ -120,6 +120,8 @@ import { useField } from "vee-validate";
 import { useI18n } from "vue-i18n";
 import api from "@/api";
 import { ClientAPIError } from "@/api/main";
+import { emitter } from "@/utils/emitter";
+import { SnackType, type SnackConfig } from "@/components/common/FancySnack.vue";
 
 interface Props {
   product: Product;
@@ -221,6 +223,13 @@ async function saveProduct() {
       stock: Number(stock.value),
     });
     emit("saved", saved);
+    const snackConfig: SnackConfig = {
+      text: t("notifications.product.saveSuccess"),
+      type: SnackType.success,
+      icon: true,
+      closable: true,
+    };
+    emitter.emit("showSnack", snackConfig);
     isEditing.value = false;
   } catch (error) {
     saveError.value = error;

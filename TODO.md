@@ -202,7 +202,7 @@ Each item below is its own reviewable step; do not combine them.
       shape from Phase 2).
 - [x] Update `ProductsStore`/local row state with the saved values after a
       successful update.
-- [ ] Add a success notification (reuse `FancySnack`).
+- [x] Add a success notification (reuse `FancySnack`).
 - [ ] Add a failure notification (reuse `FancySnack`).
 - [ ] Add component tests for edit/cancel interactions.
 - [ ] Add component tests for a successful update.
