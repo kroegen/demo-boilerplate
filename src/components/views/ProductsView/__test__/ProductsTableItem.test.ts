@@ -3,6 +3,7 @@ import { createI18n } from "vue-i18n";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import type { Category, Product } from "@/api/services/interfaces";
 import api from "@/api";
+import { ClientAPIError } from "@/api/main";
 import { emitter } from "@/utils/emitter";
 import en from "@/locales/en.json";
 import ProductsTableItem from "../ProductsTableItem.vue";
@@ -78,6 +79,32 @@ describe("ProductsTableItem", () => {
     expect(showSnack).toHaveBeenCalledWith(
       "showSnack",
       expect.objectContaining({ text: "Product saved successfully", type: "success" }),
+    );
+  });
+
+  it("keeps the draft open and shows the API error after a failed update", async () => {
+    const updateProduct = vi
+      .spyOn(api.products, "updateProduct")
+      .mockRejectedValue(new ClientAPIError(500, "Save failed"));
+    const showSnack = vi.spyOn(emitter, "emit");
+    const wrapper = mountRow();
+
+    await wrapper.find("button").trigger("click");
+    await wrapper.find('input[type="text"]').setValue("Updated product");
+    await wrapper.findAll("button")[1].trigger("click");
+    await flushPromises();
+
+    expect(updateProduct).toHaveBeenCalledOnce();
+    expect(wrapper.classes()).toContain("table-item--editing");
+    expect(wrapper.find('input[type="text"]').element).toHaveProperty(
+      "value",
+      "Updated product",
+    );
+    expect(wrapper.find(".table-item__save-error").text()).toBe("Save failed");
+    expect(wrapper.emitted("saved")).toBeUndefined();
+    expect(showSnack).toHaveBeenCalledWith(
+      "showSnack",
+      expect.objectContaining({ text: "Save failed", type: "warning" }),
     );
   });
 });
