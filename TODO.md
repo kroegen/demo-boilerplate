@@ -65,7 +65,7 @@ Legend: each task lists its expected result and a suggested verification command
       `FormData` bodies instead of always sending `application/json`.
       Expected result: FormData uploads are not mislabeled. Verify: `ClientAPI`
       unit test asserting no `Content-Type` header is set for `FormData` payloads.
-- [ ] Introduce a structured API error shape (e.g. `{ status, message, details? }`)
+- [x] Introduce a structured API error shape (e.g. `{ status, message, details? }`)
       thrown by `ClientAPI` on non-2xx responses and on network failures, replacing
       the current inconsistent `throw new Error(json.message)` /
       `throw await apiError.response.text()` (dead branch) logic.

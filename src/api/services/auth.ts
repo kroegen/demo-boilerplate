@@ -3,7 +3,7 @@ import type { Auth, AuthPayload } from "./interfaces";
 
 export default class AuthService extends Base {
   async login(payload: AuthPayload): Promise<Auth> {
-    return this.api.post("auth/login", payload);
+    return this.api.post<AuthPayload, Auth>("auth/login", payload);
   }
 
   setAuthorization(token: string): void {
