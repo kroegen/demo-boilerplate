@@ -16,7 +16,11 @@
     <span class="table-item__price">
       {{ product.price }}
     </span>
-    <span class="table-item__actions"></span>
+    <span class="table-item__actions">
+      <button v-if="!isEditing" type="button" class="table-item__action" @click="startEditing">
+        {{ $t("actions.edit") }}
+      </button>
+    </span>
   </div>
 </template>
 
@@ -35,6 +39,10 @@ const isEditing = ref(false);
 const product = computed(() => {
   return props.product;
 });
+
+function startEditing() {
+  isEditing.value = true;
+}
 </script>
 
 <style lang="scss" scoped>
@@ -99,6 +107,13 @@ const product = computed(() => {
   &__actions {
     flex: 1;
     min-width: 100px;
+  }
+
+  &__action {
+    border: 0;
+    background: transparent;
+    color: var(--blue-color);
+    cursor: pointer;
   }
 }
 </style>
