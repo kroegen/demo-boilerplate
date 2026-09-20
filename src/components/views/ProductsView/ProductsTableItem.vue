@@ -102,6 +102,13 @@
       >
         {{ saving ? $t("actions.saving") : $t("actions.save") }}
       </button>
+      <small
+        v-if="isEditing && saveErrorMessage"
+        class="table-item__save-error"
+        role="alert"
+      >
+        {{ saveErrorMessage }}
+      </small>
     </span>
   </div>
 </template>
@@ -112,6 +119,7 @@ import { computed, ref } from "vue";
 import { useField } from "vee-validate";
 import { useI18n } from "vue-i18n";
 import api from "@/api";
+import { ClientAPIError } from "@/api/main";
 
 interface Props {
   product: Product;
@@ -173,6 +181,13 @@ const {
 const product = computed(() => {
   return props.product;
 });
+const saveErrorMessage = computed(() =>
+  saveError.value instanceof ClientAPIError
+    ? saveError.value.message
+    : saveError.value
+      ? t("notifications.product.saveError")
+      : "",
+);
 
 function startEditing() {
   resetDraft();
@@ -188,6 +203,7 @@ function cancelEditing() {
 
 async function saveProduct() {
   if (saving.value) return;
+  saveError.value = null;
   const results = await Promise.all([
     validateTitle(),
     validateCategory(),
@@ -314,6 +330,12 @@ function resetDraft() {
   &__error {
     color: var(--red-color);
     font-size: 0.7rem;
+  }
+
+  &__save-error {
+    color: var(--red-color);
+    font-size: 0.7rem;
+    text-align: center;
   }
 }
 </style>

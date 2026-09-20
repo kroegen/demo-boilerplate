@@ -85,7 +85,8 @@
     "product": {
       "cartAdded": "{item} було додано до кошика",
       "favoritesAdded": "{item} було додано до списку обраного",
-      "favoritesRemoved": "{item} було видалено зі списку обраного"
+      "favoritesRemoved": "{item} було видалено зі списку обраного",
+      "saveError": "Не вдалося зберегти товар"
     }
   }
 }
