@@ -10,7 +10,7 @@ Legend: each task lists its expected result and a suggested verification command
 
 ## Phase 0 — Repo hygiene (safe, isolated cleanups)
 
-- [ ] Remove empty legacy `.eslintrc.cjs`.
+- [x] Remove empty legacy `.eslintrc.cjs`.
       Expected result: file deleted; `eslint.config.ts` remains the only ESLint
       config. Verify: `npm run lint`.
 - [ ] Add `dev-dist/` to `.gitignore` and remove it from git tracking.
