@@ -183,7 +183,7 @@ extracting the shared display structure.
 
 Each item below is its own reviewable step; do not combine them.
 
-- [ ] Audit current `ProductsTable.vue` and `ProductsTableItem.vue` responsibilities
+- [x] Audit current `ProductsTable.vue` and `ProductsTableItem.vue` responsibilities
       and document the intended edit/display mode boundary (comment or short note
       in SPEC.md), no behavior change.
 - [ ] Add explicit display/edit mode state to a product row (no editable fields

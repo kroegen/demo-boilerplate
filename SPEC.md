@@ -263,6 +263,14 @@ component. `LandingView` owns fetching, category routing, loading, and paginatio
 The header keeps its compact `ProductListItem` dropdown. Both pages use the same
 full `ProductCard` controls, and neither duplicates product-card markup.
 
+### Admin product row editing
+`ProductsTable.vue` owns the table columns and scroll container. Each
+`ProductsTableItem.vue` owns its temporary edit state, field validation, saving,
+and row-level loading/error display. `ProductsView.vue` owns the fetched product
+list and replaces the saved product after a successful row update. The row calls
+`ProductsService.updateProduct` through the existing API container, so moving the
+service to the backend later does not change either component.
+
 ### Validation
 `vee-validate` is already used for form validation (`LoginView`); this remains the
 validation approach for new forms (e.g. product edit fields) rather than introducing
