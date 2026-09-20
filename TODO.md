@@ -109,7 +109,7 @@ Legend: each task lists its expected result and a suggested verification command
       that require a major bump as a separate future TODO.
       Expected result: fewer/no vulnerabilities fixable without breaking changes;
       no version left unexplained.
-- [ ] Resolve the `eslint-plugin-storybook` peer-dependency warning against
+- [x] Resolve the `eslint-plugin-storybook` peer-dependency warning against
       ESLint 9 (upgrade the plugin if a compatible release exists, otherwise
       document the constraint).
       Expected result: `npm install` no longer warns about this conflict, or the
