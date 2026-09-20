@@ -235,7 +235,7 @@ and `FancyPopper` rather than adding another native product select.
       option values separate from visible labels.
 - [x] Add reusable list and list-item components for dropdown options, with
       selected, active, and disabled states.
-- [ ] Build `FancySelect` with a `FancyInput` trigger and an option list inside
+- [x] Build `FancySelect` with a `FancyInput` trigger and an option list inside
       `FancyDropdown` positioned by `FancyPopper`.
 - [ ] Handle opening, selection, outside click, and closing; support arrow
       keys, Enter, Escape, and Tab with combobox/listbox semantics and focus
